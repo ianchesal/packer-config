@@ -6,8 +6,9 @@ module Packer
   class Provisioner < Packer::DataObject
     class File < Provisioner
       def initialize
-        super()
+        super
         self.data['type'] = FILE
+        self.add_required('source', 'destination')
       end
 
       def source(filename)

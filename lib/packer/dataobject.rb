@@ -67,6 +67,19 @@ module Packer
       end
     end
 
+    def __add_array_of_hashes(key, values, exclusives = [])
+      self.__exclusive_key_error(key, exclusives)
+      raise TypeError.new() unless Array.try_convert(values)
+      self.data[key.to_s] = []
+      values.each do |v|
+        raise TypeError.new() unless v.is_a?(Hash)
+        self.data[key.to_s].push({})
+        v.keys.each do |k|
+          self.data[key.to_s][-1][k] = v[k].to_s
+        end
+      end
+    end
+
     def __add_string(key, data, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
       self.data[key.to_s] = data.to_s
@@ -78,10 +91,20 @@ module Packer
     end
 
     def __add_boolean(key, bool, exclusives = [])
+      self.__exclusive_key_error(key, exclusives)
       if bool
         self.data[key.to_s] = true
       else
         self.data[key.to_s] = false
+      end
+    end
+
+    def __add_hash(key, data, exclusives = [])
+      self.__exclusive_key_error(key, exclusives)
+      raise TypeError.new() unless data.is_a?(Hash)
+      self.data[key.to_s] = {}
+      data.keys.each do |k|
+        self.data[key.to_s][k] = data[k].to_s
       end
     end
   end

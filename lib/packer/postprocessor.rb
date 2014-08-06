@@ -33,6 +33,11 @@ module Packer
       VALID_POST_PROCESSOR_TYPES
     end
 
+    def initialize
+      super
+      self.add_required('type')
+    end
+
     def only(buildname)
       unless self.data.has_key? 'only'
         self.data['only'] = []

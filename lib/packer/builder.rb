@@ -35,6 +35,11 @@ module Packer
       VALID_BUILDER_TYPES
     end
 
+    def initialize
+      super
+      self.add_required('type')
+    end
+
     def name(name)
       self.__add_string('name', name)
     end

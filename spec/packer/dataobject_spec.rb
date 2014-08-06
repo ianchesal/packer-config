@@ -2,14 +2,16 @@
 require 'spec_helper'
 
 RSpec.describe Packer::DataObject do
-  let(:dataobject) { Packer::DataObject.new }
-  let(:some_string) { 'some string' }
-  let(:keys) { %w[key1 key2] }
+  let(:dataobject)            { Packer::DataObject.new }
+  let(:some_string)           { 'some string' }
+  let(:keys)                  { %w[key1 key2] }
   let(:some_array_of_strings) { %w[value1 value2 value3] }
-  let(:some_array_of_ints) { [1, 2, 3] }
-  let(:in_commands_strings)  { [["command1", "1"], ["command2", "2"]] }
-  let(:in_commands_mixed)    { [["command1",  1 ], ["command2",  2 ]] }
-  let(:out_commands_strings) { [["command1", "1"], ["command2", "2"]] }
+  let(:some_array_of_ints)    { [1, 2, 3] }
+  let(:some_hash_of_mixed)    { { 'a' =>  1,  'b' =>  2  } }
+  let(:some_hash_of_strings)  { { 'a' => '1', 'b' => '2' } }
+  let(:in_commands_strings)   { [["command1", "1"], ["command2", "2"]] }
+  let(:in_commands_mixed)     { [["command1",  1 ], ["command2",  2 ]] }
+  let(:out_commands_strings)  { [["command1", "1"], ["command2", "2"]] }
 
   describe "#initialize" do
     it 'has a data hash' do
@@ -19,7 +21,8 @@ RSpec.describe Packer::DataObject do
 
   describe '#add_required' do
     it 'tracks required settings' do
-      dataobject.add_required('a', 'b', ['c', 'd'])
+      dataobject.add_required('a', 'b')
+      dataobject.add_required(['c', 'd'])
       expect(dataobject.required).to eq(['a', 'b', ['c', 'd']])
     end
   end
@@ -163,6 +166,48 @@ RSpec.describe Packer::DataObject do
       dataobject.__add_boolean('key', false)
       expect(dataobject.data['key']).to be_falsey
       dataobject.data.delete('key')
+    end
+  end
+
+  describe '#__add_hash' do
+    it 'assigns a hash to a key' do
+      dataobject.__add_hash('key', some_hash_of_strings)
+      expect(dataobject.data['key']).to eq(some_hash_of_strings)
+      dataobject.data.delete('key')
+    end
+
+    it 'converts a hash of non-strings to strings and assigns them to key' do
+      dataobject.__add_hash('key', some_hash_of_mixed)
+      expect(dataobject.data['key']).to eq(some_hash_of_strings)
+      dataobject.data.delete('key')
+    end
+
+    it 'raises an error if the values argument is not a Hash' do
+      expect { dataobject.__add_hash('key', 'some string') }.to raise_error(TypeError)
+    end
+  end
+
+  describe '#__add_array_of_hashes' do
+    it 'assigns an array of hashes to a key' do
+      array = [some_hash_of_strings, some_hash_of_strings]
+      dataobject.__add_array_of_hashes('key', array)
+      expect(dataobject.data['key']).to eq(array)
+      dataobject.data.delete('key')
+    end
+
+    it 'converts non-strings in the hashes to strings during assignment to key' do
+      array = [some_hash_of_mixed, some_hash_of_mixed]
+      dataobject.__add_array_of_hashes('key', array)
+      expect(dataobject.data['key']).to eq([some_hash_of_strings, some_hash_of_strings])
+      dataobject.data.delete('key')
+    end
+
+    it 'raises an error if the values argument is not an array' do
+      expect { dataobject.__add_array_of_hashes('key', 'some string') }.to raise_error(TypeError)
+    end
+
+    it 'raises an error if any element in the values argument is not a Hash' do
+      expect { dataobject.__add_array_of_hashes('key', [some_hash_of_strings, 'illegal']) }.to raise_error(TypeError)
     end
   end
 

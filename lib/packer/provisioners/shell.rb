@@ -6,8 +6,9 @@ module Packer
   class Provisioner < Packer::DataObject
     class Shell < Provisioner
       def initialize
-        super()
+        super
         self.data['type'] = SHELL
+        self.add_required(['inline', 'script', 'scripts'])
       end
 
       def inline(commands)

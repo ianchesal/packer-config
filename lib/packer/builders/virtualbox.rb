@@ -6,8 +6,14 @@ module Packer
   class Builder < Packer::DataObject
     class VirtualBoxISO < Builder
       def initialize
-        super()
+        super
         self.data['type'] = VIRTUALBOX_ISO
+        self.add_required(
+          'iso_checksum',
+          'iso_checksum_type',
+          'iso_url',
+          'ssh_username'
+        )
       end
 
       def iso_checksum(checksum)

@@ -6,8 +6,12 @@ module Packer
   class Builder < Packer::DataObject
     class Docker < Builder
       def initialize
-        super()
+        super
         self.data['type'] = DOCKER
+        self.add_required(
+          'export_path',
+          'image'
+        )
       end
 
       def export_path(path)
