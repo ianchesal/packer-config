@@ -27,12 +27,16 @@ module Packer
         AMAZON_EBS      => Packer::Builder::Amazon::EBS,
         AMAZON_INSTANCE => Packer::Builder::Amazon::Instance,
         DOCKER          => Packer::Builder::Docker,
-        VIRTUALBOX_ISO  => Packer::Builder::VirtualBox::ISO
+        VIRTUALBOX_ISO  => Packer::Builder::VirtualBoxISO
       }.fetch(type).new
     end
 
     def self.types
       VALID_BUILDER_TYPES
+    end
+
+    def name(name)
+      self.__add_string('name', name)
     end
 
     private

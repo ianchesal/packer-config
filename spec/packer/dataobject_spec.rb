@@ -2,25 +2,14 @@
 require 'spec_helper'
 
 RSpec.describe Packer::DataObject do
-  let(:dataobject) do
-    Packer::DataObject.new
-  end
-
-  let(:some_string) do
-    'some string'
-  end
-
-  let(:keys) do
-    %w[key1 key2]
-  end
-
-  let(:some_array_of_strings) do
-    %w[value1 value2 value3]
-  end
-
-  let(:some_array_of_ints) do
-    [1, 2, 3]
-  end
+  let(:dataobject) { Packer::DataObject.new }
+  let(:some_string) { 'some string' }
+  let(:keys) { %w[key1 key2] }
+  let(:some_array_of_strings) { %w[value1 value2 value3] }
+  let(:some_array_of_ints) { [1, 2, 3] }
+  let(:in_commands_strings)  { [["command1", "1"], ["command2", "2"]] }
+  let(:in_commands_mixed)    { [["command1",  1 ], ["command2",  2 ]] }
+  let(:out_commands_strings) { [["command1", "1"], ["command2", "2"]] }
 
   describe "#initialize" do
     it 'has a data hash' do
@@ -58,6 +47,28 @@ RSpec.describe Packer::DataObject do
 
     it 'raises an error if the values cannot be turned in to an Array' do
       expect { dataobject.__add_array_of_strings('key', 'some string') }.to raise_error(TypeError)
+    end
+  end
+
+  describe "#__add_array_of_array_of_strings" do
+    it 'assigns an array of array of strings to key' do
+      dataobject.__add_array_of_array_of_strings('key', in_commands_strings)
+      expect(dataobject.data['key']).to eq(out_commands_strings)
+      dataobject.data.delete('key')
+    end
+
+    it 'converts non-strings to strings in the sub-arrays during assignment to key' do
+      dataobject.__add_array_of_array_of_strings('key', in_commands_mixed)
+      expect(dataobject.data['key']).to eq(out_commands_strings)
+      dataobject.data.delete('key')
+    end
+
+    it 'raises an error if the values argument is not an array' do
+      expect { dataobject.__add_array_of_array_of_strings('key', 'some string') }.to raise_error(TypeError)
+    end
+
+    it 'raises an error if any element in the values argument is not an array' do
+      expect { dataobject.__add_array_of_array_of_strings('key', [['legal'], 'illegal']) }.to raise_error(TypeError)
     end
   end
 

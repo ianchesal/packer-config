@@ -27,6 +27,16 @@ module Packer
       self.data[key.to_s] = values.to_ary.map{ |c| c.to_s }
     end
 
+    def __add_array_of_array_of_strings(key, values, exclusives = [])
+      self.__exclusive_key_error(key, exclusives)
+      raise TypeError.new() unless Array.try_convert(values)
+      self.data[key.to_s] = []
+      values.each do |v|
+        raise TypeError.new() unless Array.try_convert(v)
+        self.data[key.to_s].push(v.to_ary.map{ |c| c.to_s })
+      end
+    end
+
     def __add_string(key, data, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
       self.data[key.to_s] = data.to_s

@@ -4,9 +4,7 @@ require 'spec_helper'
 RSpec.describe Packer::Builder do
   VALID_BUILDER_TYPE = Packer::Builder::VIRTUALBOX_ISO
 
-  let(:packer_builder) do
-    Packer::Builder.new
-  end
+  let(:builder) { Packer::Builder.new }
 
   describe '.get_builder' do
     it 'returns a builder' do
@@ -15,6 +13,14 @@ RSpec.describe Packer::Builder do
 
     it 'raises an error when the builder type is not recognized' do
       expect { Packer::Builder.get_builder('unknown-type') }.to raise_error(Packer::Builder::UnrecognizedBuilderTypeError)
+    end
+  end
+
+  describe '#name' do
+    it 'lets you set a custom name on the builder instance' do
+      builder.name('fancy name')
+      expect(builder.data['name']).to eq('fancy name')
+      builder.data.delete('name')
     end
   end
 end
