@@ -29,6 +29,10 @@ module Packer
       }.fetch(type).new
     end
 
+    def self.types
+      VALID_POST_PROCESSOR_TYPES
+    end
+
     def only(buildname)
       unless self.data.has_key? 'only'
         self.data['only'] = []

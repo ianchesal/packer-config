@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 RSpec.describe Packer::Builder do
-  VALID_BUILDER_TYPE = 'virtualbox-iso'
+  VALID_BUILDER_TYPE = Packer::Builder::VIRTUALBOX_ISO
 
   let(:packer_builder) do
     Packer::Builder.new
@@ -14,7 +14,7 @@ RSpec.describe Packer::Builder do
     end
 
     it 'raises an error when the builder type is not recognized' do
-      expect { Packer::Builder.get_builder('unknown-type') }.to raise_error(Packer::Builder::UnrecognizedBuilderType)
+      expect { Packer::Builder.get_builder('unknown-type') }.to raise_error(Packer::Builder::UnrecognizedBuilderTypeError)
     end
   end
 end

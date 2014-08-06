@@ -2,34 +2,37 @@
 require 'packer/builders/all'
 
 module Packer
-  class Builder
+  class Builder < DataObject
 
-    VALID_BUILDER_TYPES = %w[
-      amazon-ebs
-      amazon-instance
-      docker
-      virtualbox-iso
+    AMAZON_EBS      = 'amazon-ebs'
+    AMAZON_INSTANCE = 'amazon-instance'
+    DOCKER          = 'docker'
+    VIRTUALBOX_ISO  = 'virtualbox-iso'
+
+    VALID_BUILDER_TYPES = [
+      AMAZON_EBS,
+      AMAZON_INSTANCE,
+      DOCKER,
+      VIRTUALBOX_ISO
     ]
 
-    class UnrecognizedBuilderType < StandardError
+    class UnrecognizedBuilderTypeError < StandardError
     end
 
     def self.get_builder(type)
       unless validate_type(type)
-        raise UnrecognizedBuilderType.new("Unrecognized builder type #{type}")
+        raise UnrecognizedBuilderTypeError.new("Unrecognized builder type #{type}")
       end
       {
-        'amazon-ebs' => Packer::Builder::Amazon::EBS,
-        'amazon-instance' => Packer::Builder::Amazon::Instance,
-        'docker' => Packer::Builder::Docker,
-        'virtualbox-iso' => Packer::Builder::VirtualBox::ISO
+        AMAZON_EBS      => Packer::Builder::Amazon::EBS,
+        AMAZON_INSTANCE => Packer::Builder::Amazon::Instance,
+        DOCKER          => Packer::Builder::Docker,
+        VIRTUALBOX_ISO  => Packer::Builder::VirtualBox::ISO
       }.fetch(type).new
     end
 
-    attr_accessor :data
-
-    def initialize
-      self.data = {}
+    def self.types
+      VALID_BUILDER_TYPES
     end
 
     private

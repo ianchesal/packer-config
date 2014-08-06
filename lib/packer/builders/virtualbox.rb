@@ -1,8 +1,9 @@
 # Encoding: utf-8
 require 'packer/builder'
+require 'packer/dataobject'
 
 module Packer
-  class Builder
+  class Builder < Packer::DataObject
     class VirtualBox < Builder
       class ISO < VirtualBox
       end
