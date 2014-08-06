@@ -1,4 +1,4 @@
-# coding: utf-8
+# Encoding: utf-8
 
 Gem::Specification.new do |spec|
   spec.name          = "packer-config"
