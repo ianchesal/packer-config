@@ -1,10 +1,10 @@
 # Encoding: utf-8
 require "json"
 require 'packer/builder'
+require 'packer/provisioner'
 
-module Packer
-  class Config
-    def instance
-    end
+class Packer::Config
+  def initialize
+    @data = {}
   end
 end

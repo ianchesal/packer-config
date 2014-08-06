@@ -26,6 +26,12 @@ module Packer
       }.fetch(type).new
     end
 
+    attr_accessor :data
+
+    def initialize
+      self.data = {}
+    end
+
     private
     def self.validate_type(type)
       VALID_BUILDER_TYPES.include? type
