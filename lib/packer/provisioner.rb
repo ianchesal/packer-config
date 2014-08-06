@@ -5,7 +5,13 @@ require 'packer/dataobject'
 module Packer
   class Provisioner < Packer::DataObject
 
-    VALID_PROVISIONER_TYPES = %w[shell file]
+    SHELL = 'shell'
+    FILE = 'file'
+
+    VALID_PROVISIONER_TYPES = [
+      SHELL,
+      FILE
+    ]
 
     class UnrecognizedProvisionerTypeError < StandardError
     end
@@ -15,8 +21,8 @@ module Packer
         raise UnrecognizedProvisionerTypeError.new("Unrecognized provisioner type #{type}")
       end
       {
-        'shell' => Packer::Provisioner::Shell,
-        'file' => Packer::Provisioner::File,
+        SHELL => Packer::Provisioner::Shell,
+        FILE  => Packer::Provisioner::File,
       }.fetch(type).new
     end
 

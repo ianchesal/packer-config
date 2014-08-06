@@ -32,6 +32,11 @@ module Packer
       self.data[key.to_s] = data.to_s
     end
 
+    def __add_integer(key, data, exclusives = [])
+      self.__exclusive_key_error(key, exclusives)
+      self.data[key.to_s] = data.to_i
+    end
+
     def __add_boolean(key, bool, exclusives = [])
       if bool
         self.data[key.to_s] = true

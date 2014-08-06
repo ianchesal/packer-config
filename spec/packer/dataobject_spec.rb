@@ -75,6 +75,20 @@ RSpec.describe Packer::DataObject do
     end
   end
 
+  describe '#__add_integer' do
+    it 'accepts anything that can be converted to an integer with #to_i' do
+      dataobject.__add_integer(keys[0], 1)
+      dataobject.__add_integer(keys[1], "2")
+      expect(dataobject.data[keys[0]]).to eq(1)
+      expect(dataobject.data[keys[1]]).to eq(2)
+      dataobject.data.delete(keys)
+    end
+
+    it 'raises an error if the value cannot be converted to an integer with #to_i' do
+      expect { dataobject.__add_integer('key', StandardError.new("not convertable")) }.to raise_error(NoMethodError)
+    end
+  end
+
   describe '#__add_boolean' do
     it 'accepts any truthy value and converts it to true' do
       dataobject.__add_boolean('key', some_string)

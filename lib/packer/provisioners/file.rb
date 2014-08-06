@@ -7,7 +7,7 @@ module Packer
     class File < Provisioner
       def initialize
         super()
-        self.data['type'] = 'file'
+        self.data['type'] = FILE
       end
 
       def source(filename)

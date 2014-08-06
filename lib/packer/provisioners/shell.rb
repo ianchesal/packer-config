@@ -7,7 +7,7 @@ module Packer
     class Shell < Provisioner
       def initialize
         super()
-        self.data['type'] = 'shell'
+        self.data['type'] = SHELL
       end
 
       def inline(commands)
