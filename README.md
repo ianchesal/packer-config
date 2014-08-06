@@ -9,7 +9,7 @@ model to build the Packer configurations in that would easily write to the
 correct JSON format. It also saved me having to remember the esoteric Packer
 syntax for referencing variables and whatnot in the JSON.
 
-Bonus: you can really go to down with templates when it's all done it Ruby.
+Bonus: you can really go to town with templates when it's all done it Ruby.
 
 ## Installation
 
@@ -36,8 +36,6 @@ Note: This is subject to change!
 ### Continuous Integration
 
 I'm using Travis CI to build and test on every push to the public github repository. You can find the Travis CI page for this project here: https://travis-ci.org/ianchesal/packer-config/
-
-The project is currently setup in Travis to test Ruby 2.0.0 and 2.1.1.
 
 ### Branching in Git
 
