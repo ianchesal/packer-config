@@ -27,19 +27,19 @@ module Packer
       end
 
       def environment_vars(envpairs)
-        self.__add_array_of_strings('environment_vars', envpairs, [])
+        self.__add_array_of_strings('environment_vars', envpairs)
       end
 
       def execute_command(command)
-        self.__add_string('execute_command', command, [])
+        self.__add_string('execute_command', command)
       end
 
       def inline_shebang(command)
-        self.__add_string('inline_shebang', command, [])
+        self.__add_string('inline_shebang', command)
       end
 
       def remote_path(command)
-        self.__add_string('remote_path', command, [])
+        self.__add_string('remote_path', command)
       end
     end
   end

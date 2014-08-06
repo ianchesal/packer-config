@@ -5,6 +5,18 @@ require 'packer/dataobject'
 module Packer
   class Provisioner < Packer::DataObject
     class File < Provisioner
+      def initialize
+        super()
+        self.data['type'] = 'file'
+      end
+
+      def source(filename)
+        self.__add_string('source', filename)
+      end
+
+      def destination(filename)
+        self.__add_string('destination', filename)
+      end
     end
   end
 end
