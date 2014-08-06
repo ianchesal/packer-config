@@ -4,9 +4,39 @@ module Packer
   class DataObject
 
     attr_accessor :data
+    attr_accessor :required
 
     def initialize
       self.data = {}
+      self.required = []
+    end
+
+    class DataValidationError < StandardError
+    end
+
+    def validate
+      self.required.each do |r|
+        if (r.is_a? Array) && (r.length > 0)
+          if r.length - (r - self.data.keys).length == 0
+            raise DataValidationError.new("Missing one required setting from the set #{r}")
+          end
+          if r.length - (r - self.data.keys).length > 1
+            raise DataValidationError.new("Found more than one exclusive setting in data from set #{r}")
+          end
+        else
+          if ! self.data.keys.include? r
+            raise DataValidationError.new("Missing required setting #{r}")
+          end
+        end
+      end
+      # TODO(ianc) Also validate the data with the packer command?
+      true
+    end
+
+    def add_required(*keys)
+      keys.each do |k|
+        self.required.push(k)
+      end
     end
 
     class ExclusiveKeyError < StandardError

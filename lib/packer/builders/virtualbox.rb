@@ -138,6 +138,10 @@ module Packer
         self.__add_array_of_array_of_strings('vboxmanage_post', array_of_commands)
       end
 
+      def virtualbox_version_file(file)
+        self.__add_string('virtualbox_version_file', file)
+      end
+
       def vm_name(name)
         self.__add_string('vm_name', name)
       end

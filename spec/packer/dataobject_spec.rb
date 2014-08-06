@@ -17,6 +17,58 @@ RSpec.describe Packer::DataObject do
     end
   end
 
+  describe '#add_required' do
+    it 'tracks required settings' do
+      dataobject.add_required('a', 'b', ['c', 'd'])
+      expect(dataobject.required).to eq(['a', 'b', ['c', 'd']])
+    end
+  end
+
+  describe '#validate' do
+    it 'returns true when all required settings are present' do
+      dataobject.add_required('key')
+      dataobject.__add_string('key', 'value')
+      expect(dataobject.validate).to be_truthy
+      dataobject.data = []
+      dataobject.required = []
+    end
+
+    it 'raises an error when a required setting is missing' do
+      dataobject.add_required('key')
+      expect { dataobject.validate }.to raise_error(Packer::DataObject::DataValidationError)
+      dataobject.data = []
+      dataobject.required = []
+    end
+
+    it 'returns true when exactly one setting from an exclusive set is preset' do
+      dataobject.add_required(['key1', 'key2'])
+      dataobject.__add_string('key1', 'value')
+      expect(dataobject.validate).to be_truthy
+      dataobject.data = []
+      dataobject.required = []
+    end
+
+    it 'raises an error when no settings from an exclusive set are present' do
+      dataobject.add_required(['key1', 'key2'])
+      expect { dataobject.validate }.to raise_error(Packer::DataObject::DataValidationError)
+      dataobject.data = []
+      dataobject.required = []
+    end
+
+    it 'raises an error when more than one setting from an exclusive set is present' do
+      dataobject.add_required(['key1', 'key2'])
+      dataobject.__add_string('key1', 'value')
+      dataobject.__add_string('key2', 'value')
+      expect { dataobject.validate }.to raise_error(Packer::DataObject::DataValidationError)
+      dataobject.data = []
+      dataobject.required = []
+    end
+
+    it 'returns true when there are no required settings to validate' do
+      expect(dataobject.validate).to be_truthy
+    end
+  end
+
   describe "#__exclusive_key_error" do
     it 'returns true when the key is exclusive' do
       dataobject.data[keys[0]] = 'value'
