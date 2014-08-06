@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "packer-config"
-  spec.version       = "0.0.0"
+  spec.version       = "0.0.1"
   # For deploying alpha versions via Travis CI
   spec.version       = "#{spec.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
   spec.authors       = ["Ian Chesal"]
