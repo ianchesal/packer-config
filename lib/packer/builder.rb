@@ -1,3 +1,4 @@
+# Encoding: utf-8
 require 'packer/builders/all'
 
 module Packer

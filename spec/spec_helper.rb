@@ -1,3 +1,4 @@
+# Encoding: utf-8
 require 'packer-config'
 
 # RSpec.configure do |c|
