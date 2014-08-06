@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   spec.name          = "packer-config"
   spec.version       = "0.0.0"
   # For deploying alpha versions via Travis CI
-  spec.version       = "#{s.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
+  spec.version       = "#{spec.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
   spec.authors       = ["Ian Chesal"]
   spec.email         = ["ian.chesal@gmail.colm"]
   spec.summary       = 'An object model to build packer.io configurations in Ruby.'
