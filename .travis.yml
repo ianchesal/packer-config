@@ -1,0 +1,14 @@
+language: ruby
+rvm:
+- 1.9.3
+- 2.0.0
+- 2.1.1
+- ruby-head
+deploy:
+  provider: rubygems
+  api_key:
+    secure: tVFZXrXKFV6i+9EmXsud4dZcZY90kejr49POUSVDuOqtyV/hlhmXtIwR2zTFeg2xgpu0cCV063nTVBLsaqS/MikgzIwvDidikaiB1iYTBMARok04ORoJFM0u5+pf8oFYxRlIDFRNuvj3ojKlUDs15E5gB0IFDwNw+Hav/XW3cq4=
+  gem: packer-config
+  on:
+    tags: true
+    repo: ianchesal/packer-config
