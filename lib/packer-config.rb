@@ -1,4 +1,17 @@
 # Encoding: utf-8
+# Copyright 2014 Ian Chesal
+#
+#    Licensed under the Apache License, Version 2.0 (the "License");
+#    you may not use this file except in compliance with the License.
+#    You may obtain a copy of the License at
+#
+#        http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
 require 'json'
 require 'yaml'
 require 'packer/dataobject'
@@ -12,21 +25,22 @@ module Packer
     attr_accessor :builders
     attr_accessor :postprocessors
     attr_accessor :provisioners
-    attr_accessor :variables
     attr_reader   :output_file
 
     def initialize(file)
       super()
-      self.output_file = file
-      self.data['builders'] = []
-      self.data['postprocessors'] = []
-      self.data['provisioners'] = []
       self.data['variables'] = {}
-      self.add_required('builders')
+      self.output_file = file
+      self.builders = []
+      self.provisioners = []
+      self.postprocessors = []
     end
 
     def validate
       super
+      if self.builders.length == 0
+        raise DataValidationError.new("At least one builder is required")
+      end
       self.builders.each do |thing|
         thing.validate
       end
@@ -42,9 +56,22 @@ module Packer
     end
 
     def dump(format='json')
-      data_copy = Marshal.load(Marshal.dump(self.data))
-      ['postprocessors', 'provisioners', 'variables'].each do |optional|
-        data_copy.delete(optional) if data_copy[optional].empty?
+      data_copy = self.deep_copy
+      data_copy['builders'] = []
+      self.builders.each do |thing|
+        data_copy['builders'].push(thing.deep_copy)
+      end
+      if self.provisioners.length > 0
+        data_copy['provisioners'] = []
+        self.provisioners.each do |thing|
+          data_copy['provisioners'].push(thing.deep_copy)
+        end
+      end
+      if self.postprocessors.length > 0
+        data_copy['postprocessors'] = []
+        self.postprocessors.each do |thing|
+          data_copy['postprocessors'].push(thing.deep_copy)
+        end
       end
       case format
       when 'json'
@@ -66,18 +93,6 @@ module Packer
 
     def min_packer_version(version)
       self.__add_string('min_packer_version', version)
-    end
-
-    def builders
-      self.data['builders']
-    end
-
-    def provisioners
-      self.data['provisioners']
-    end
-
-    def postprocessors
-      self.data['postprocessors']
     end
 
     def variables
@@ -111,14 +126,14 @@ module Packer
     class UndefinedVariableError < StandardError
     end
 
-    def ref_variable(name)
+    def variable(name)
       unless self.variables.has_key? name
         raise UndefinedVariableError.new("No variable named #{name} has been defined -- did you forget to call add_variable?")
       end
       "{{user `#{name}`}}"
     end
 
-    def ref_envvar(name)
+    def envvar(name)
       "{{env `#{name}`}}"
     end
 
