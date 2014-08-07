@@ -12,35 +12,35 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
-require 'packer/builder'
+require 'packer/postprocessor'
 require 'packer/dataobject'
 
 module Packer
-  class Builder < Packer::DataObject
-    class Docker < Builder
+  class PostProcessor < Packer::DataObject
+    class Vagrant < PostProcessor
       def initialize
-        super
-        self.data['type'] = DOCKER
-        self.add_required(
-          'export_path',
-          'image'
-        )
+        super()
+        self.data['type'] = VAGRANT
       end
 
-      def export_path(path)
-        self.__add_string('export_path', path)
+      def compression_level(level)
+        self.__add_integer('compression_level', level)
       end
 
-      def image(name)
-        self.__add_string('image', name)
+      def include(files)
+        self.__add_array_of_strings('include', files)
       end
 
-      def pull(bool)
-        self.__add_boolean('pull', bool)
+      def keep_input_artifact(bool)
+        self.__add_boolean('keep_input_artifact', bool)
       end
 
-      def run_command(commands)
-        self.__add_array_of_strings('run_command', commands)
+      def output(file)
+        self.__add_string('output', file)
+      end
+
+      def vagrantfile_template(file)
+        self.__add_string('vagrantfile_template', file)
       end
     end
   end

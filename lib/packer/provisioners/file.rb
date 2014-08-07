@@ -12,6 +12,25 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
-require 'packer/builders/amazon'
-require 'packer/builders/docker'
-require 'packer/builders/virtualbox'
+require 'packer/provisioner'
+require 'packer/dataobject'
+
+module Packer
+  class Provisioner < Packer::DataObject
+    class File < Provisioner
+      def initialize
+        super
+        self.data['type'] = FILE
+        self.add_required('source', 'destination')
+      end
+
+      def source(filename)
+        self.__add_string('source', filename)
+      end
+
+      def destination(filename)
+        self.__add_string('destination', filename)
+      end
+    end
+  end
+end
