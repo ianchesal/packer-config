@@ -30,7 +30,7 @@ Bonus: you can really go to town with templates when it's all done it Ruby.
     builder = pconfig.add_builder Packer::Builder::VIRTUALBOX_ISO
     builder.iso_checksum '32c7695b97f7dcd1f59a77a71f64f2957dddf738'
     builder.iso_checksum_type 'sha1'
-    builder.iso_url "#{pconfig.ref_variable 'mirror'}/6.5/isos/x86_64/CentOS-6.5-x86_64-bin-DVD1.iso"
+    builder.iso_url "#{pconfig.variable 'mirror'}/6.5/isos/x86_64/CentOS-6.5-x86_64-bin-DVD1.iso"
     builder.ssh_username 'vagrant'
     builder.ssh_password 'vagrant'
     builder.boot_command ["<tab> text ks=http://#{pconfig.macro 'HTTPIP'}:#{pconfig.macro 'HTTPPort'}/centos-6.5/ks.cfg<enter><wait>"]
@@ -48,17 +48,16 @@ Bonus: you can really go to town with templates when it's all done it Ruby.
         'tmp/minimize.sh'
     ]
     provisioner.environment_vars [
-        "CHEF_VERSION=\"#{pconfig.ref_variable 'chef_version'}\"",
-        "MY_VERSION=\"#{pconfig.ref_variable 'my_version'}\"",
-        "MY_NAME"=\"#{pconfig.ref_envvar 'USER'\""
+        "CHEF_VERSION=\"#{pconfig.variable 'chef_version'}\"",
+        "MY_VERSION=\"#{pconfig.variable 'my_version'}\"",
+        "MY_NAME"=\"#{pconfig.envvar 'USER'}\""
     ]
     provisioner.execute_command "echo 'vagrant' | #{pconfig.macro 'Vars'} sudo -S -E bash '#{pconfig.macro 'Path'}'"
 
     postprocessor = pconfig.new_postprocessor Packer::PostProcessor::VAGRANT
-    postprocessor.output File.join('builds', pconfig.macro 'Provider', "centos-6.5-x86_64-#{pconfig.ref_variable 'my_version'}.box")
+    postprocessor.output File.join('builds', pconfig.macro 'Provider', "centos-6.5-x86_64-#{pconfig.variable 'my_version'}.box")
 
-    pconfig.validate
-    pconfig.run_packer # Does an implicit pconfig.write to put the configuration on disk
+    pconfig.build # Does a #validate and #write
 
 ## Development
 

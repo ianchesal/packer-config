@@ -25,7 +25,7 @@ RSpec.describe Packer::Builder do
     end
 
     it 'raises an error when the builder type is not recognized' do
-      expect { Packer::Builder.get_builder('unknown-type') }.to raise_error(Packer::Builder::UnrecognizedBuilderTypeError)
+      expect { Packer::Builder.get_builder('unknown-type') }.to raise_error
     end
   end
 

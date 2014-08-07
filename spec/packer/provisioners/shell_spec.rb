@@ -51,15 +51,15 @@ RSpec.describe Packer::Provisioner::Shell do
     end
 
     it 'raises an error if the commands argument cannot be made an Array' do
-      expect { provisioner.inline(some_string) }.to raise_error(TypeError)
+      expect { provisioner.inline(some_string) }.to raise_error
     end
 
     it 'raises an error if #script or #scripts method was already called' do
       provisioner.data['script'] = 1
-      expect { provisioner.inline(some_array_of_strings) }.to raise_error(Packer::DataObject::ExclusiveKeyError)
+      expect { provisioner.inline(some_array_of_strings) }.to raise_error
       provisioner.data.delete('script')
       provisioner.data['scripts'] = 1
-      expect { provisioner.inline(some_array_of_strings) }.to raise_error(Packer::DataObject::ExclusiveKeyError)
+      expect { provisioner.inline(some_array_of_strings) }.to raise_error
       provisioner.data.delete('scripts')
     end
   end
@@ -79,10 +79,10 @@ RSpec.describe Packer::Provisioner::Shell do
 
     it 'raises an error if #inline or #scripts method was already called' do
       provisioner.data['inline'] = 1
-      expect { provisioner.script(some_string) }.to raise_error(Packer::DataObject::ExclusiveKeyError)
+      expect { provisioner.script(some_string) }.to raise_error
       provisioner.data.delete('inline')
       provisioner.data['scripts'] = 1
-      expect { provisioner.script(some_string) }.to raise_error(Packer::DataObject::ExclusiveKeyError)
+      expect { provisioner.script(some_string) }.to raise_error
       provisioner.data.delete('scripts')
     end
   end
@@ -101,15 +101,15 @@ RSpec.describe Packer::Provisioner::Shell do
     end
 
     it 'raises an error if the commands argument cannot be made an Array' do
-      expect { provisioner.scripts(some_string) }.to raise_error(TypeError)
+      expect { provisioner.scripts(some_string) }.to raise_error
     end
 
     it 'raises an error if #inline or #script method was already called' do
       provisioner.data['script'] = 1
-      expect { provisioner.scripts(some_array_of_strings) }.to raise_error(Packer::DataObject::ExclusiveKeyError)
+      expect { provisioner.scripts(some_array_of_strings) }.to raise_error
       provisioner.data.delete('scripts')
       provisioner.data['inline'] = 1
-      expect { provisioner.scripts(some_array_of_strings) }.to raise_error(Packer::DataObject::ExclusiveKeyError)
+      expect { provisioner.scripts(some_array_of_strings) }.to raise_error
       provisioner.data.delete('scripts')
     end
   end

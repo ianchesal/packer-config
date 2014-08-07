@@ -13,7 +13,7 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 require 'json'
-require 'yaml'
+require 'open3'
 require 'packer/dataobject'
 require 'packer/builder'
 require 'packer/provisioner'
@@ -25,6 +25,8 @@ module Packer
     attr_accessor :builders
     attr_accessor :postprocessors
     attr_accessor :provisioners
+    attr_accessor :packer
+    attr_accessor :packer_options
     attr_reader   :output_file
 
     def initialize(file)
@@ -34,6 +36,8 @@ module Packer
       self.builders = []
       self.provisioners = []
       self.postprocessors = []
+      self.packer = 'packer'
+      self.packer_options = []
     end
 
     def validate
@@ -68,23 +72,33 @@ module Packer
         end
       end
       if self.postprocessors.length > 0
-        data_copy['postprocessors'] = []
+        data_copy['post-processors'] = []
         self.postprocessors.each do |thing|
-          data_copy['postprocessors'].push(thing.deep_copy)
+          data_copy['post-processors'].push(thing.deep_copy)
         end
       end
       case format
       when 'json'
         data_copy.to_json
-      when 'yaml', 'yml'
-        data_copy.to_yaml
       else
-        raise DumpError.new("Unrecognized format #{format} use one of ['json', 'yaml']")
+        raise DumpError.new("Unrecognized format #{format} use one of ['json']")
       end
     end
 
     def write(format='json')
       File.write(self.output_file, self.dump(format))
+    end
+
+    class PackerBuildError < StandardError
+    end
+
+    def build
+      self.validate
+      self.write
+      cmd = [self.packer, 'build', self.packer_options, self.output_file].join(' ')
+      stdout, stderr, status = Open3.capture3(cmd)
+      raise PackerBuildError.new(stderr) unless status == 0
+      stdout
     end
 
     def description(description)
@@ -101,19 +115,19 @@ module Packer
 
     def add_builder(type)
       builder = Packer::Builder.get_builder(type)
-      self.builders.append(builder)
+      self.builders.push(builder)
       builder
     end
 
     def add_provisioner(type)
       provisioner = Packer::Provisioner.get_provisioner(type)
-      self.provisioners.append(provisioner)
+      self.provisioners.push(provisioner)
       provisioner
     end
 
     def add_postprocessor(type)
       postprocessor = Packer::PostProcessor.get_postprocessor(type)
-      self.postprocessors.append(postprocessor)
+      self.postprocessors.push(postprocessor)
       postprocessor
     end
 

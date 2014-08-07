@@ -34,7 +34,7 @@ RSpec.describe Packer::PostProcessor do
     end
 
     it 'raises an error when the post-processor type is not recognized' do
-      expect { Packer::PostProcessor.get_postprocessor('unknown-type') }.to raise_error(Packer::PostProcessor::UnrecognizedPostProcessorTypeError)
+      expect { Packer::PostProcessor.get_postprocessor('unknown-type') }.to raise_error
     end
   end
 

@@ -34,7 +34,7 @@ RSpec.describe Packer::Provisioner do
     end
 
     it 'raises an error when the provisioner type is not recognized' do
-      expect { Packer::Provisioner.get_provisioner('unknown-type') }.to raise_error(Packer::Provisioner::UnrecognizedProvisionerTypeError)
+      expect { Packer::Provisioner.get_provisioner('unknown-type') }.to raise_error
     end
   end
 
@@ -72,7 +72,7 @@ RSpec.describe Packer::Provisioner do
     end
 
     it 'raises a TypeError when the overrides are not a hash' do
-      expect { provisioner.override('build', 10) }.to raise_error(TypeError)
+      expect { provisioner.override('build', 10) }.to raise_error
     end
   end
 end

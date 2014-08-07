@@ -51,7 +51,7 @@ RSpec.describe Packer::DataObject do
 
     it 'raises an error when a required setting is missing' do
       dataobject.add_required('key')
-      expect { dataobject.validate }.to raise_error(Packer::DataObject::DataValidationError)
+      expect { dataobject.validate }.to raise_error
       dataobject.data = []
       dataobject.required = []
     end
@@ -66,7 +66,7 @@ RSpec.describe Packer::DataObject do
 
     it 'raises an error when no settings from an exclusive set are present' do
       dataobject.add_required(['key1', 'key2'])
-      expect { dataobject.validate }.to raise_error(Packer::DataObject::DataValidationError)
+      expect { dataobject.validate }.to raise_error
       dataobject.data = []
       dataobject.required = []
     end
@@ -75,7 +75,7 @@ RSpec.describe Packer::DataObject do
       dataobject.add_required(['key1', 'key2'])
       dataobject.__add_string('key1', 'value')
       dataobject.__add_string('key2', 'value')
-      expect { dataobject.validate }.to raise_error(Packer::DataObject::DataValidationError)
+      expect { dataobject.validate }.to raise_error
       dataobject.data = []
       dataobject.required = []
     end
@@ -107,7 +107,7 @@ RSpec.describe Packer::DataObject do
     it 'raises an error when the key is not exclusive' do
       dataobject.data[keys[0]] = 'value'
       dataobject.data[keys[1]] = 'value'
-      expect { dataobject.__exclusive_key_error(keys[0], keys[1..-1]) }.to raise_error(Packer::DataObject::ExclusiveKeyError)
+      expect { dataobject.__exclusive_key_error(keys[0], keys[1..-1]) }.to raise_error
       dataobject.data.delete(keys)
     end
   end
@@ -126,7 +126,7 @@ RSpec.describe Packer::DataObject do
     end
 
     it 'raises an error if the values cannot be turned in to an Array' do
-      expect { dataobject.__add_array_of_strings('key', 'some string') }.to raise_error(TypeError)
+      expect { dataobject.__add_array_of_strings('key', 'some string') }.to raise_error
     end
   end
 
@@ -144,11 +144,11 @@ RSpec.describe Packer::DataObject do
     end
 
     it 'raises an error if the values argument is not an array' do
-      expect { dataobject.__add_array_of_array_of_strings('key', 'some string') }.to raise_error(TypeError)
+      expect { dataobject.__add_array_of_array_of_strings('key', 'some string') }.to raise_error
     end
 
     it 'raises an error if any element in the values argument is not an array' do
-      expect { dataobject.__add_array_of_array_of_strings('key', [['legal'], 'illegal']) }.to raise_error(TypeError)
+      expect { dataobject.__add_array_of_array_of_strings('key', [['legal'], 'illegal']) }.to raise_error
     end
   end
 
@@ -176,7 +176,7 @@ RSpec.describe Packer::DataObject do
     end
 
     it 'raises an error if the value cannot be converted to an integer with #to_i' do
-      expect { dataobject.__add_integer('key', StandardError.new("not convertable")) }.to raise_error(NoMethodError)
+      expect { dataobject.__add_integer('key', StandardError.new("not convertable")) }.to raise_error
     end
   end
 
@@ -208,7 +208,7 @@ RSpec.describe Packer::DataObject do
     end
 
     it 'raises an error if the values argument is not a Hash' do
-      expect { dataobject.__add_hash('key', 'some string') }.to raise_error(TypeError)
+      expect { dataobject.__add_hash('key', 'some string') }.to raise_error
     end
   end
 
@@ -228,11 +228,11 @@ RSpec.describe Packer::DataObject do
     end
 
     it 'raises an error if the values argument is not an array' do
-      expect { dataobject.__add_array_of_hashes('key', 'some string') }.to raise_error(TypeError)
+      expect { dataobject.__add_array_of_hashes('key', 'some string') }.to raise_error
     end
 
     it 'raises an error if any element in the values argument is not a Hash' do
-      expect { dataobject.__add_array_of_hashes('key', [some_hash_of_strings, 'illegal']) }.to raise_error(TypeError)
+      expect { dataobject.__add_array_of_hashes('key', [some_hash_of_strings, 'illegal']) }.to raise_error
     end
   end
 
