@@ -28,5 +28,6 @@ END
   spec.add_development_dependency "rake", "~> 10.3"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-mocks", "~> 3.0"
+  spec.add_development_dependency "fakefs", "~> 0.5"
   spec.add_development_dependency "rubocop", "~> 0.24"
 end
