@@ -24,6 +24,8 @@ require 'packer/envvar'
 module Packer
   class Config < Packer::DataObject
 
+    VERSION = '0.0.2'
+
     attr_accessor :builders
     attr_accessor :postprocessors
     attr_accessor :provisioners
