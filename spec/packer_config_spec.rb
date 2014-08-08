@@ -170,13 +170,13 @@ RSpec.describe Packer::Config do
 
   describe '#envvar' do
     it 'creates a packer reference to an environment variable' do
-      expect(packer.envvar 'TEST').to eq('{{env `TEST`}}')
+      expect(packer.envvar.TEST).to eq('{{env `TEST`}}')
     end
   end
 
   describe '#macro' do
-    it 'creates a packer macro reference' do
-      expect(packer.macro 'Var').to eq('{{ .Var }}')
+    it 'creates a packer macro reference for any method call' do
+      expect(packer.macro.var).to eq('{{ .Var }}')
     end
   end
 
