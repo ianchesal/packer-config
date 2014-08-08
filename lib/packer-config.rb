@@ -18,6 +18,8 @@ require 'packer/dataobject'
 require 'packer/builder'
 require 'packer/provisioner'
 require 'packer/postprocessor'
+require 'packer/macro'
+require 'packer/envvar'
 
 module Packer
   class Config < Packer::DataObject
@@ -27,6 +29,8 @@ module Packer
     attr_accessor :provisioners
     attr_accessor :packer
     attr_accessor :packer_options
+    attr_reader   :macro
+    attr_reader   :envvar
     attr_reader   :output_file
 
     def initialize(file)
@@ -38,6 +42,8 @@ module Packer
       self.postprocessors = []
       self.packer = 'packer'
       self.packer_options = []
+      self.macro = Macro.new
+      self.envvar = EnvVar.new
     end
 
     def validate
@@ -147,16 +153,10 @@ module Packer
       "{{user `#{name}`}}"
     end
 
-    def envvar(name)
-      "{{env `#{name}`}}"
-    end
-
-    def macro(name)
-      "{{ .#{name} }}"
-    end
-
     private
     attr_writer :output_file
+    attr_writer :macro
+    attr_writer :envvar
 
   end
 end
