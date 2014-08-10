@@ -17,13 +17,28 @@ require 'rubocop/rake_task'
 require 'rspec/core/rake_task'
 
 RuboCop::RakeTask.new(:lint)
-RSpec::Core::RakeTask.new(:spec)
 
-task :default => [:test]
+task :default => [:lint, 'test:spec']
 
-desc "Run all tests and validations"
-task :test => [:lint, :spec]
-
-task :build => [:test] do
+task :build => ['test:spec'] do
   `gem build packer-config.gemspec`
+end
+
+namespace :test do
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    t.pattern = Dir['spec/**/*_spec.rb'].reject{ |f| f['/integration'] }
+  end
+
+  RSpec::Core::RakeTask.new(:integration) do |t|
+    t.pattern = "spec/integration/**/*_spec.rb"
+  end
+end
+
+task :clean do
+  FileList['spec/integration/packer_cache/*'].each do |f|
+    File.delete(f)
+  end
+  FileList['spec/integration/builds/*'].each do |f|
+    File.delete(f)
+  end
 end
