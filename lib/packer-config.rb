@@ -18,15 +18,21 @@ require 'packer/dataobject'
 require 'packer/builder'
 require 'packer/provisioner'
 require 'packer/postprocessor'
+require 'packer/macro'
+require 'packer/envvar'
 
 module Packer
   class Config < Packer::DataObject
+
+    VERSION = '0.0.2'
 
     attr_accessor :builders
     attr_accessor :postprocessors
     attr_accessor :provisioners
     attr_accessor :packer
     attr_accessor :packer_options
+    attr_reader   :macro
+    attr_reader   :envvar
     attr_reader   :output_file
 
     def initialize(file)
@@ -38,6 +44,8 @@ module Packer
       self.postprocessors = []
       self.packer = 'packer'
       self.packer_options = []
+      self.macro = Macro.new
+      self.envvar = EnvVar.new
     end
 
     def validate
@@ -54,12 +62,19 @@ module Packer
       self.postprocessors.each do |thing|
         thing.validate
       end
+      self.write
+      Dir.chdir(File.dirname(self.output_file)) do
+        cmd = [self.packer, 'validate', File.basename(self.output_file)].join(' ')
+        stdout, stderr, status = Open3.capture3(cmd)
+        raise PackerBuildError.new(stderr) unless status == 0
+      end
+      self.delete
     end
 
     class DumpError < StandardError
     end
 
-    def dump(format='json')
+    def dump(format='json', pretty=false)
       data_copy = self.deep_copy
       data_copy['builders'] = []
       self.builders.each do |thing|
@@ -79,7 +94,11 @@ module Packer
       end
       case format
       when 'json'
-        data_copy.to_json
+        if pretty
+          JSON.pretty_generate(data_copy)
+        else
+          data_copy.to_json
+        end
       else
         raise DumpError.new("Unrecognized format #{format} use one of ['json']")
       end
@@ -89,16 +108,22 @@ module Packer
       File.write(self.output_file, self.dump(format))
     end
 
+    def delete
+      File.delete(self.output_file)
+    end
+
     class PackerBuildError < StandardError
     end
 
     def build
       self.validate
       self.write
-      cmd = [self.packer, 'build', self.packer_options, self.output_file].join(' ')
-      stdout, stderr, status = Open3.capture3(cmd)
-      raise PackerBuildError.new(stderr) unless status == 0
-      stdout
+      Dir.chdir(File.dirname(self.output_file)) do
+        cmd = [self.packer, 'build', self.packer_options, File.basename(self.output_file)].join(' ')
+        stdout, stderr, status = Open3.capture3(cmd)
+        raise PackerBuildError.new(stderr) unless status == 0
+      end
+      self.delete
     end
 
     def description(description)
@@ -147,16 +172,10 @@ module Packer
       "{{user `#{name}`}}"
     end
 
-    def envvar(name)
-      "{{env `#{name}`}}"
-    end
-
-    def macro(name)
-      "{{ .#{name} }}"
-    end
-
     private
     attr_writer :output_file
+    attr_writer :macro
+    attr_writer :envvar
 
   end
 end
