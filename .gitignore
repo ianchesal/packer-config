@@ -6,6 +6,7 @@
 /InstalledFiles
 /pkg/
 /spec/reports/
+/spec/integration/*.json
 /test/tmp/
 /test/version_tmp/
 /tmp/

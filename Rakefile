@@ -15,6 +15,7 @@
 
 require 'rubocop/rake_task'
 require 'rspec/core/rake_task'
+require 'fileutils'
 
 RuboCop::RakeTask.new(:lint)
 
@@ -34,11 +35,13 @@ namespace :test do
   end
 end
 
+CLEAN = FileList['deployment_dir/**/*'].exclude('*.txt')
+
 task :clean do
   FileList['spec/integration/packer_cache/*'].each do |f|
-    File.delete(f)
+    FileUtils.rm_f(f)
   end
-  FileList['spec/integration/builds/*'].each do |f|
-    File.delete(f)
+  Dir.glob('spec/integration/builds/*').select {|f| File.directory? f}.each do |d|
+    FileUtils.rm_rf(d)
   end
 end
