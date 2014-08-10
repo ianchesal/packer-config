@@ -19,7 +19,7 @@ Bonus: you can really go to town with templates when it's all done it Ruby.
 
 ### Packing a Vagrant Basebox from a CentOS ISO Using VirtualBox
 
-    require packer-config
+    require 'packer-config'
 
     pconfig = Packer::Config.new 'my_config.json'
     pconfig.description "My VirtualBox-ISO build"
