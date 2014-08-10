@@ -87,7 +87,7 @@ module Packer
       end
       case format
       when 'json'
-        data_copy.to_json
+        JSON.pretty_generate(data_copy)
       else
         raise DumpError.new("Unrecognized format #{format} use one of ['json']")
       end
