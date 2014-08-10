@@ -42,7 +42,7 @@ module Packer
       end
 
       def iso_urls(urls)
-        self.__add_array_of_string('iso_urls', urls, %[iso_url])
+        self.__add_array_of_strings('iso_urls', urls, %[iso_url])
       end
 
       def ssh_username(username)
@@ -50,7 +50,7 @@ module Packer
       end
 
       def boot_command(commands)
-        self.__add_array_of_string('boot_command', commands)
+        self.__add_array_of_strings('boot_command', commands)
       end
 
       def boot_wait(time)
@@ -62,11 +62,11 @@ module Packer
       end
 
       def export_opts(vboxmanage_export_options)
-        self.__add_array_of_string('export_opts', vboxmanage_export_options)
+        self.__add_array_of_strings('export_opts', vboxmanage_export_options)
       end
 
       def floppy_files(files)
-        self.__add_array_of_string('floppy_files', files)
+        self.__add_array_of_strings('floppy_files', files)
       end
 
       def format(format)

@@ -1,26 +1,7 @@
-# packer-config
+require 'spec_helper'
 
-A Ruby model that lets you build [Packer](http://packer.io) configurations in Ruby.
-
-Building the Packer JSON configurations in raw JSON can be quite an adventure.
-There's limited facilities for variable expansion and absolutely no support for
-nice things like comments. I decided it would just be easier to have an object
-model to build the Packer configurations in that would easily write to the
-correct JSON format. It also saved me having to remember the esoteric Packer
-syntax for referencing variables and whatnot in the JSON.
-
-Bonus: you can really go to town with templates when it's all done it Ruby.
-
-## Installation
-
-    gem install packer-config
-
-## Examples
-
-### Packing a Vagrant Basebox from a CentOS ISO Using VirtualBox
-
-This example is based on the integration test [spec/integration/centos_vagrant_spec.rb](spec/integration/centos_vagrant_spec.rb). It produces a Vagrant Basebox that's provisionable with [Chef](http://www.getchef.com/) and the packer config and provisioning is taken from the [Bento](https://github.com/opscode/bento) project from the OpsCode crew.
-
+RSpec.describe Packer::Config do
+  it 'can build a centos-6.5 Vagrant base box' do
     OS = 'centos-6.5'
 
     pconfig = Packer::Config.new "#{OS}-vagrant.json"
@@ -85,23 +66,10 @@ This example is based on the integration test [spec/integration/centos_vagrant_s
     postprocessor = pconfig.add_postprocessor Packer::PostProcessor::VAGRANT
     postprocessor.output File.join('builds', pconfig.macro.Provider, "#{OS}-x86_64-#{pconfig.variable 'my_version'}.box")
 
-    pconfig.validate
-    pconfig.build
+    Dir.chdir('spec/integration')
+    expect(pconfig.validate).to be_truthy
+    expect(pconfig.build).to be_truthy
+    Dir.chdir('../..')
+  end
+end
 
-## Development
-
-### Continuous Integration
-
-I'm using Travis CI to build and test on every push to the public github repository. You can find the Travis CI page for this project here: https://travis-ci.org/ianchesal/packer-config/
-
-### Branching in Git
-
-I'm using [git-flow](http://nvie.com/posts/a-successful-git-branching-model/) for development in git via github. I've loved the branching model git-flow proposed from day one and the addon to git makes it very intuitive and easy to follow. I generally don't push my `feature/*` branches to the public repository; I do keep `development` and `master` up to date here though.
-
-### TODO Work
-
-Please see [TODO.md](TODO.md) for the short list of big things I thought worth writing down.
-
-## Contact Me
-
-Questions or comments about `packer-config`? Hit me up at ian.chesal@gmail.com or ianc@squareup.com.
