@@ -62,12 +62,19 @@ module Packer
       self.postprocessors.each do |thing|
         thing.validate
       end
+      self.write
+      Dir.chdir(File.dirname(self.output_file)) do
+        cmd = [self.packer, 'validate', File.basename(self.output_file)].join(' ')
+        stdout, stderr, status = Open3.capture3(cmd)
+        raise PackerBuildError.new(stderr) unless status == 0
+      end
+      self.delete
     end
 
     class DumpError < StandardError
     end
 
-    def dump(format='json')
+    def dump(format='json', pretty=false)
       data_copy = self.deep_copy
       data_copy['builders'] = []
       self.builders.each do |thing|
@@ -87,7 +94,11 @@ module Packer
       end
       case format
       when 'json'
-        data_copy.to_json
+        if pretty
+          JSON.pretty_generate(data_copy)
+        else
+          data_copy.to_json
+        end
       else
         raise DumpError.new("Unrecognized format #{format} use one of ['json']")
       end
@@ -97,16 +108,22 @@ module Packer
       File.write(self.output_file, self.dump(format))
     end
 
+    def delete
+      File.delete(self.output_file)
+    end
+
     class PackerBuildError < StandardError
     end
 
     def build
       self.validate
       self.write
-      cmd = [self.packer, 'build', self.packer_options, self.output_file].join(' ')
-      stdout, stderr, status = Open3.capture3(cmd)
-      raise PackerBuildError.new(stderr) unless status == 0
-      stdout
+      Dir.chdir(File.dirname(self.output_file)) do
+        cmd = [self.packer, 'build', self.packer_options, File.basename(self.output_file)].join(' ')
+        stdout, stderr, status = Open3.capture3(cmd)
+        raise PackerBuildError.new(stderr) unless status == 0
+      end
+      self.delete
     end
 
     def description(description)

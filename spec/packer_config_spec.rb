@@ -34,12 +34,18 @@ RSpec.describe Packer::Config do
   describe "#validate" do
     it 'returns true for a valid instance' do
       expect(packer.builders).to receive(:length).and_return(1)
-      expect(packer.validate).to be_truthy
+      open3 = class_double("Open3").as_stubbed_const(:transfer_nested_constants => true)
+      expect(open3).to receive(:capture3).and_return(['output', 'error', 0])
+      FakeFS do
+        expect(packer.validate).to be_truthy
+      end
     end
 
     it 'raises an error for an invalid instance' do
       expect(packer.builders).to receive(:length).and_return(0)
-      expect { packer.validate }.to raise_error
+      FakeFS do
+        expect { packer.validate }.to raise_error
+      end
     end
   end
 
@@ -70,7 +76,9 @@ RSpec.describe Packer::Config do
     end
 
     it 'raises an error if the format is not recognized' do
-      expect { packer.dump 'invalid-format' }.to raise_error
+      FakeFS do
+        expect { packer.dump 'invalid-format' }.to raise_error
+      end
     end
   end
 
@@ -80,12 +88,16 @@ RSpec.describe Packer::Config do
       expect(packer).to receive(:write).and_return(true)
       open3 = class_double("Open3").as_stubbed_const(:transfer_nested_constants => true)
       expect(open3).to receive(:capture3).and_return(['output', 'error', 0])
-      expect(packer.build).to be_truthy
+      FakeFS do
+        expect(packer.build).to be_truthy
+      end
     end
 
     it 'raises an error if the data is not valid' do
       expect(packer).to receive(:validate).and_raise(Packer::DataObject::DataValidationError)
-      expect { packer.build }.to raise_error
+      FakeFS do
+        expect { packer.build }.to raise_error
+      end
     end
 
     it 'raises an error if the config cannot be written to disk' do
@@ -99,7 +111,9 @@ RSpec.describe Packer::Config do
       expect(packer).to receive(:write).and_return(true)
       open3 = class_double("Open3").as_stubbed_const(:transfer_nested_constants => true)
       expect(open3).to receive(:capture3).and_return(['output', 'error', 1])
-      expect { packer.build }.to raise_error
+      FakeFS do
+        expect { packer.build }.to raise_error
+      end
     end
   end
 
