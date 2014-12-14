@@ -23,7 +23,6 @@ require 'packer/envvar'
 
 module Packer
   class Config < Packer::DataObject
-
     VERSION = '0.0.2'
 
     attr_accessor :builders
@@ -53,15 +52,9 @@ module Packer
       if self.builders.length == 0
         raise DataValidationError.new("At least one builder is required")
       end
-      self.builders.each do |thing|
-        thing.validate
-      end
-      self.provisioners.each do |thing|
-        thing.validate
-      end
-      self.postprocessors.each do |thing|
-        thing.validate
-      end
+      self.builders.each(&:validate)
+      self.provisioners.each(&:validate)
+      self.postprocessors.each(&:validate)
       self.write
       stdout = nil
       Dir.chdir(File.dirname(self.output_file)) do
@@ -184,6 +177,5 @@ module Packer
     attr_writer :output_file
     attr_writer :macro
     attr_writer :envvar
-
   end
 end

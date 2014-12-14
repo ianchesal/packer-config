@@ -121,7 +121,7 @@ RSpec.describe Packer::DataObject do
 
     it 'converts an array of non-strings to strings and assigns them to key' do
       dataobject.__add_array_of_strings('key', some_array_of_ints)
-      expect(dataobject.data['key']).to eq(some_array_of_ints.map{ |c| c.to_s })
+      expect(dataobject.data['key']).to eq(some_array_of_ints.map(&:to_s))
       dataobject.data.delete('key')
     end
 
@@ -235,5 +235,4 @@ RSpec.describe Packer::DataObject do
       expect { dataobject.__add_array_of_hashes('key', [some_hash_of_strings, 'illegal']) }.to raise_error
     end
   end
-
 end

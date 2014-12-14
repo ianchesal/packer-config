@@ -17,7 +17,6 @@ require 'packer/dataobject'
 
 module Packer
   class PostProcessor < Packer::DataObject
-
     DOCKER_IMPORT = 'docker-import'
     DOCKER_PUSH = 'docker-push'
     VAGRANT = 'vagrant'

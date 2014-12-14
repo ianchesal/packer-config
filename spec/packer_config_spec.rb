@@ -190,5 +190,4 @@ RSpec.describe Packer::Config do
       expect(packer.macro.var).to eq('{{ .Var }}')
     end
   end
-
 end

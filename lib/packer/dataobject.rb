@@ -15,7 +15,6 @@
 
 module Packer
   class DataObject
-
     attr_accessor :data
     attr_accessor :required
 
@@ -71,7 +70,7 @@ module Packer
     def __add_array_of_strings(key, values, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
       raise TypeError.new() unless Array.try_convert(values)
-      self.data[key.to_s] = values.to_ary.map{ |c| c.to_s }
+      self.data[key.to_s] = values.to_ary.map(&:to_s)
     end
 
     def __add_array_of_array_of_strings(key, values, exclusives = [])
@@ -80,7 +79,7 @@ module Packer
       self.data[key.to_s] = []
       values.each do |v|
         raise TypeError.new() unless Array.try_convert(v)
-        self.data[key.to_s].push(v.to_ary.map{ |c| c.to_s })
+        self.data[key.to_s].push(v.to_ary.map(&:to_s))
       end
     end
 
