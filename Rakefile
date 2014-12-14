@@ -21,7 +21,7 @@ RuboCop::RakeTask.new(:lint)
 
 task :default => [:lint, 'test:spec']
 
-task :build => ['test:spec', :clean] do
+task :build => [:lint, 'test:spec', :clean] do
   `gem build packer-config.gemspec`
 end
 

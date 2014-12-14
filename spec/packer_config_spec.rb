@@ -34,8 +34,7 @@ RSpec.describe Packer::Config do
   describe "#validate" do
     it 'returns true for a valid instance' do
       expect(packer.builders).to receive(:length).and_return(1)
-      open3 = class_double("Open3").as_stubbed_const(:transfer_nested_constants => true)
-      expect(open3).to receive(:capture3).and_return(['output', 'error', 0])
+      expect(Packer::Runner).to receive(:run!).and_return('')
       FakeFS do
         expect(packer.validate).to be_truthy
       end
@@ -86,8 +85,7 @@ RSpec.describe Packer::Config do
     it 'returns successfully if the build command returns a successful exit code' do
       expect(packer).to receive(:validate).and_return(true)
       expect(packer).to receive(:write).and_return(true)
-      open3 = class_double("Open3").as_stubbed_const(:transfer_nested_constants => true)
-      expect(open3).to receive(:capture3).and_return(['output', 'error', 0])
+      expect(Packer::Runner).to receive(:run!).and_return('')
       FakeFS do
         expect(packer.build).to be_truthy
       end
@@ -109,8 +107,7 @@ RSpec.describe Packer::Config do
     it 'raises an error if the build command returns an unsuccessful exit code' do
       expect(packer).to receive(:validate).and_return(true)
       expect(packer).to receive(:write).and_return(true)
-      open3 = class_double("Open3").as_stubbed_const(:transfer_nested_constants => true)
-      expect(open3).to receive(:capture3).and_return(['output', 'error', 1])
+      expect(Packer::Runner).to receive(:run!).and_raise(Packer::Runner::CommandExecutionError)
       FakeFS do
         expect { packer.build }.to raise_error
       end
