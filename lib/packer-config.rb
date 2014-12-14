@@ -13,7 +13,7 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 require 'json'
-require 'open3'
+require 'packer/runner'
 require 'packer/dataobject'
 require 'packer/builder'
 require 'packer/provisioner'
@@ -64,9 +64,11 @@ module Packer
       end
       self.write
       Dir.chdir(File.dirname(self.output_file)) do
-        cmd = [self.packer, 'validate', File.basename(self.output_file)].join(' ')
-        stdout, stderr, status = Open3.capture3(cmd)
-        raise PackerBuildError.new(stderr) unless status == 0
+        begin
+          Packer::Runner.run! self.packer, 'validate', File.basename(self.output_file), quiet: true
+        rescue Packer::Runner::CommandExecutionError => e
+          raise PackerBuildError.new(e.to_s)
+        end
       end
       self.delete
     end
@@ -115,13 +117,15 @@ module Packer
     class PackerBuildError < StandardError
     end
 
-    def build
+    def build(quiet: false)
       self.validate
       self.write
       Dir.chdir(File.dirname(self.output_file)) do
-        cmd = [self.packer, 'build', self.packer_options, File.basename(self.output_file)].join(' ')
-        stdout, stderr, status = Open3.capture3(cmd)
-        raise PackerBuildError.new(stderr) unless status == 0
+        begin
+          Packer::Runner.run! self.packer, 'build', self.packer_options, File.basename(self.output_file), quiet: quiet
+        rescue Packer::Runner::CommandExecutionError => e
+          raise PackerBuildError.new(e.to_s)
+        end
       end
       self.delete
     end
