@@ -15,6 +15,32 @@ Bonus: you can really go to town with templates when it's all done it Ruby.
 
     gem install packer-config
 
+## Use
+
+### Builders
+
+The following [Packer builders](http://www.packer.io/docs/templates/builders.html) are currently implemented:
+
+* [amazon-ebs](http://www.packer.io/docs/builders/amazon-ebs.html)
+* [amazon-instance](http://www.packer.io/docs/builders/amazon-instance.html)
+* [docker](http://www.packer.io/docs/builders/docker.html)
+* [virtualbox-iso](http://www.packer.io/docs/builders/virtualbox-iso.html)
+
+### Provisioners
+
+The following [Packer provisioners](http://www.packer.io/docs/templates/provisioners.html) are currently implemented:
+
+* [file](http://www.packer.io/docs/provisioners/file.html)
+* [shell](http://www.packer.io/docs/provisioners/shell.html)
+
+### Post-Processors
+
+The following [Packer post-processors](http://www.packer.io/docs/templates/post-processors.html) are currently implemented:
+
+* [docker-import](http://www.packer.io/docs/post-processors/docker-import.html)
+* [docker-push](http://www.packer.io/docs/post-processors/docker-push.html)
+* [vagrant](http://www.packer.io/docs/post-processors/vagrant.html)
+
 ## Examples
 
 ### Packing a Vagrant Basebox from a CentOS ISO Using VirtualBox
@@ -29,7 +55,7 @@ This example is based on the integration test [spec/integration/centos_vagrant_s
     pconfig.add_variable 'my_version', '0.0.1'
     pconfig.add_variable 'chef_version', 'latest'
 
-    builder = pconfig.add_builder Packer::Builder::VIRTUALBOX_ISO
+    builder = pconfig.add_builder 'virtualbox-iso'
     builder.boot_command ["<tab> text ks=http://#{pconfig.macro.HTTPIP}:#{pconfig.macro.HTTPPort}/#{OS}-ks.cfg<enter><wait>"]
     builder.boot_wait '10s'
     builder.disk_size 40960
@@ -62,11 +88,11 @@ This example is based on the integration test [spec/integration/centos_vagrant_s
     builder.virtualbox_version_file ".vbox_version"
     builder.vm_name "packer-#{OS}-x86_64"
 
-    provisioner = pconfig.add_provisioner Packer::Provisioner::FILE
+    provisioner = pconfig.add_provisioner 'file'
     provisioner.source 'scripts/hello.sh'
     provisioner.destination '/home/vagrant/hello.sh'
 
-    provisioner = pconfig.add_provisioner Packer::Provisioner::SHELL
+    provisioner = pconfig.add_provisioner 'shell'
     provisioner.scripts [
       'scripts/fix-slow-dns.sh',
       'scripts/sshd.sh',
@@ -82,7 +108,7 @@ This example is based on the integration test [spec/integration/centos_vagrant_s
     ]
     provisioner.execute_command "echo 'vagrant' | #{pconfig.macro.Vars} sudo -S -E bash '#{pconfig.macro.Path}'"
 
-    postprocessor = pconfig.add_postprocessor Packer::PostProcessor::VAGRANT
+    postprocessor = pconfig.add_postprocessor 'vagrant'
     postprocessor.output File.join('builds', pconfig.macro.Provider, "#{OS}-x86_64-#{pconfig.variable 'my_version'}.box")
 
     pconfig.validate

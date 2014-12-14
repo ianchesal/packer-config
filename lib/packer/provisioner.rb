@@ -17,7 +17,6 @@ require 'packer/dataobject'
 
 module Packer
   class Provisioner < Packer::DataObject
-
     SHELL = 'shell'
     FILE = 'file'
 

@@ -18,7 +18,6 @@ require 'packer/dataobject'
 module Packer
   class Builder < Packer::DataObject
     class Amazon < Builder
-
       def initialize
         super
         self.add_required(

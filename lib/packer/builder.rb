@@ -16,7 +16,6 @@ require 'packer/builders/all'
 
 module Packer
   class Builder < DataObject
-
     AMAZON_EBS      = 'amazon-ebs'
     AMAZON_INSTANCE = 'amazon-instance'
     DOCKER          = 'docker'

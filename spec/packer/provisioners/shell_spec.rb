@@ -46,7 +46,7 @@ RSpec.describe Packer::Provisioner::Shell do
 
     it 'converts all commands to strings' do
       provisioner.inline(some_array_of_ints)
-      expect(provisioner.data['inline']).to eq(some_array_of_ints.map{ |c| c.to_s })
+      expect(provisioner.data['inline']).to eq(some_array_of_ints.map(&:to_s))
       provisioner.data.delete('inline')
     end
 
@@ -96,7 +96,7 @@ RSpec.describe Packer::Provisioner::Shell do
 
     it 'converts all commands to strings' do
       provisioner.scripts(some_array_of_ints)
-      expect(provisioner.data['scripts']).to eq(some_array_of_ints.map{ |c| c.to_s })
+      expect(provisioner.data['scripts']).to eq(some_array_of_ints.map(&:to_s))
       provisioner.data.delete('scripts')
     end
 
