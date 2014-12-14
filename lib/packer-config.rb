@@ -62,26 +62,17 @@ module Packer
       self.postprocessors.each do |thing|
         thing.validate
       end
-<<<<<<< HEAD
       self.write
-      Dir.chdir(File.dirname(self.output_file)) do
-        cmd = [self.packer, 'validate', File.basename(self.output_file)].join(' ')
-        stdout, stderr, status = Open3.capture3(cmd)
-        raise PackerBuildError.new(stderr) unless status == 0
-      end
-      self.delete
-||||||| merged common ancestors
-=======
-      self.write
+      stdout = nil
       Dir.chdir(File.dirname(self.output_file)) do
         begin
-          Packer::Runner.run! self.packer, 'validate', File.basename(self.output_file), quiet: true
+          stdout = Packer::Runner.run! self.packer, 'validate', File.basename(self.output_file), quiet: true
         rescue Packer::Runner::CommandExecutionError => e
           raise PackerBuildError.new(e.to_s)
         end
       end
       self.delete
->>>>>>> release/0.0.4
+      stdout
     end
 
     class DumpError < StandardError
@@ -131,6 +122,7 @@ module Packer
     def build(quiet: false)
       self.validate
       self.write
+      stdout = nil
       Dir.chdir(File.dirname(self.output_file)) do
         begin
           stdout = Packer::Runner.run! self.packer, 'build', self.packer_options, File.basename(self.output_file), quiet: quiet
