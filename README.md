@@ -1,5 +1,9 @@
 # packer-config
 
+[![Gem Version](https://badge.fury.io/rb/packer-config.svg)](http://badge.fury.io/rb/packer-config)
+
+[![Build Status](https://travis-ci.org/ianchesal/packer-config.svg?branch=master)](https://travis-ci.org/ianchesal/packer-config)
+
 A Ruby model that lets you build [Packer](http://packer.io) configurations in Ruby.
 
 Building the Packer JSON configurations in raw JSON can be quite an adventure.
