@@ -17,12 +17,20 @@ require 'packer/dataobject'
 
 module Packer
   class Provisioner < Packer::DataObject
-    SHELL = 'shell'
-    FILE = 'file'
+    SHELL             = 'shell'
+    FILE              = 'file'
+    SALT              = 'salt-masterless'
+    ANSIBLE           = 'ansible-local'
+    CHEF_CLIENT       = 'chef-client'
+    CHEF_SOLO         = 'chef-solo'
 
     VALID_PROVISIONER_TYPES = [
       SHELL,
-      FILE
+      FILE,
+      SALT,
+      ANSIBLE,
+      CHEF_CLIENT,
+      CHEF_SOLO
     ]
 
     class UnrecognizedProvisionerTypeError < StandardError
@@ -33,8 +41,12 @@ module Packer
         raise UnrecognizedProvisionerTypeError.new("Unrecognized provisioner type #{type}")
       end
       {
-        SHELL => Packer::Provisioner::Shell,
-        FILE  => Packer::Provisioner::File,
+        SHELL             => Packer::Provisioner::Shell,
+        FILE              => Packer::Provisioner::File,
+        SALT              => Packer::Provisioner::Salt,
+        ANSIBLE           => Packer::Provisioner::Ansible,
+        CHEF_CLIENT       => Packer::Provisioner::Chef::Client,
+        CHEF_SOLO         => Packer::Provisioner::Chef::Solo
       }.fetch(type).new
     end
 

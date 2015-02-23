@@ -36,6 +36,10 @@ The following [Packer provisioners](http://www.packer.io/docs/templates/provisio
 
 * [file](http://www.packer.io/docs/provisioners/file.html)
 * [shell](http://www.packer.io/docs/provisioners/shell.html)
+* [ansible](https://www.packer.io/docs/provisioners/ansible-local.html)
+* [chef-client](https://www.packer.io/docs/provisioners/chef-client.html)
+* [chef-solo](https://www.packer.io/docs/provisioners/chef-solo.html)
+* [salt](https://www.packer.io/docs/provisioners/salt-masterless.html)
 
 ### Post-Processors
 
