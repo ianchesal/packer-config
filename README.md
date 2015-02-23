@@ -29,6 +29,7 @@ The following [Packer builders](http://www.packer.io/docs/templates/builders.htm
 * [amazon-instance](http://www.packer.io/docs/builders/amazon-instance.html)
 * [docker](http://www.packer.io/docs/builders/docker.html)
 * [virtualbox-iso](http://www.packer.io/docs/builders/virtualbox-iso.html)
+* [null](https://www.packer.io/docs/builders/null.html)
 
 ### Provisioners
 

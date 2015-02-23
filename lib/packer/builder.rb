@@ -20,12 +20,14 @@ module Packer
     AMAZON_INSTANCE = 'amazon-instance'
     DOCKER          = 'docker'
     VIRTUALBOX_ISO  = 'virtualbox-iso'
+    NULL            = 'null'
 
     VALID_BUILDER_TYPES = [
       AMAZON_EBS,
       AMAZON_INSTANCE,
       DOCKER,
-      VIRTUALBOX_ISO
+      VIRTUALBOX_ISO,
+      NULL
     ]
 
     class UnrecognizedBuilderTypeError < StandardError
@@ -39,7 +41,8 @@ module Packer
         AMAZON_EBS      => Packer::Builder::Amazon::EBS,
         AMAZON_INSTANCE => Packer::Builder::Amazon::Instance,
         DOCKER          => Packer::Builder::Docker,
-        VIRTUALBOX_ISO  => Packer::Builder::VirtualBoxISO
+        VIRTUALBOX_ISO  => Packer::Builder::VirtualBoxISO,
+        NULL            => Packer::Builder::Null
       }.fetch(type).new
     end
 
