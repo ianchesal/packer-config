@@ -41,6 +41,8 @@ The following [Packer provisioners](http://www.packer.io/docs/templates/provisio
 * [chef-client](https://www.packer.io/docs/provisioners/chef-client.html)
 * [chef-solo](https://www.packer.io/docs/provisioners/chef-solo.html)
 * [salt](https://www.packer.io/docs/provisioners/salt-masterless.html)
+* [puppet server](https://www.packer.io/docs/provisioners/puppet-server.html)
+* [puppet masterless](https://www.packer.io/docs/provisioners/puppet-masterless.html)
 
 ### Post-Processors
 

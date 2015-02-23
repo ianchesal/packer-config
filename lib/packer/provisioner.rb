@@ -10,6 +10,8 @@ module Packer
     ANSIBLE           = 'ansible-local'
     CHEF_CLIENT       = 'chef-client'
     CHEF_SOLO         = 'chef-solo'
+    PUPPET_MASTERLESS = 'puppet-masterless'
+    PUPPET_SERVER     = 'puppet-server'
 
     VALID_PROVISIONER_TYPES = [
       SHELL,
@@ -17,7 +19,9 @@ module Packer
       SALT,
       ANSIBLE,
       CHEF_CLIENT,
-      CHEF_SOLO
+      CHEF_SOLO,
+      PUPPET_MASTERLESS,
+      PUPPET_SERVER
     ]
 
     class UnrecognizedProvisionerTypeError < StandardError
@@ -33,7 +37,9 @@ module Packer
         SALT              => Packer::Provisioner::Salt,
         ANSIBLE           => Packer::Provisioner::Ansible,
         CHEF_CLIENT       => Packer::Provisioner::Chef::Client,
-        CHEF_SOLO         => Packer::Provisioner::Chef::Solo
+        CHEF_SOLO         => Packer::Provisioner::Chef::Solo,
+        PUPPET_MASTERLESS => Packer::Provisioner::Puppet::Masterless,
+        PUPPET_SERVER     => Packer::Provisioner::Puppet::Server
       }.fetch(type).new
     end
 

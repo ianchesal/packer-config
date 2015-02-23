@@ -11,7 +11,7 @@ RSpec.describe Packer::Provisioner::Shell do
   end
 
   let(:some_array_of_strings) do
-    %w[commmand1 command2]
+    %w[command1 command2]
   end
 
   let(:some_array_of_ints) do

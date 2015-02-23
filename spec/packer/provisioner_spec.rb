@@ -35,7 +35,7 @@ RSpec.describe Packer::Provisioner do
   end
 
   describe '#except' do
-    it 'adds an execpt exception' do
+    it 'adds an except exception' do
       provisioner.except('thing3')
       expect(provisioner.data['except']).to eq(%w[thing3])
       provisioner.except('thing4')
