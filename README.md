@@ -55,24 +55,24 @@ The following [Packer post-processors](http://www.packer.io/docs/templates/post-
 
 This example is based on the integration test [spec/integration/centos_vagrant_spec.rb](spec/integration/centos_vagrant_spec.rb). It produces a Vagrant Basebox that's provisionable with [Chef](http://www.getchef.com/) and the packer config and provisioning is taken from the [Bento](https://github.com/opscode/bento) project from the OpsCode crew.
 
-    OS = 'centos-6.5'
+    OS = 'centos-6.6'
 
     pconfig = Packer::Config.new "#{OS}-vagrant.json"
     pconfig.description "#{OS} VirtualBox Vagrant"
-    pconfig.add_variable 'mirror', 'http://mirrors.kernel.org/centos'
+    pconfig.add_variable 'mirror', 'http://mirrors.sonic.net/centos/'
     pconfig.add_variable 'my_version', '0.0.1'
     pconfig.add_variable 'chef_version', 'latest'
 
-    builder = pconfig.add_builder 'virtualbox-iso'
+    builder = pconfig.add_builder Packer::Builder::VIRTUALBOX_ISO
     builder.boot_command ["<tab> text ks=http://#{pconfig.macro.HTTPIP}:#{pconfig.macro.HTTPPort}/#{OS}-ks.cfg<enter><wait>"]
     builder.boot_wait '10s'
     builder.disk_size 40960
     builder.guest_additions_path "VBoxGuestAdditions_#{pconfig.macro.Version}.iso"
     builder.guest_os_type "RedHat_64"
     builder.http_directory "scripts/kickstart"
-    builder.iso_checksum '32c7695b97f7dcd1f59a77a71f64f2957dddf738'
+    builder.iso_checksum '08be09fd7276822bd3468af8f96198279ffc41f0'
     builder.iso_checksum_type 'sha1'
-    builder.iso_url "#{pconfig.variable 'mirror'}/6.5/isos/x86_64/CentOS-6.5-x86_64-bin-DVD1.iso"
+    builder.iso_url "#{pconfig.variable 'mirror'}/6.6/isos/x86_64/CentOS-6.6-x86_64-bin-DVD1.iso"
     builder.output_directory "#{OS}-x86_64-virtualbox"
     builder.shutdown_command "echo 'vagrant'|sudo -S /sbin/halt -h -p"
     builder.ssh_password "vagrant"
@@ -96,11 +96,11 @@ This example is based on the integration test [spec/integration/centos_vagrant_s
     builder.virtualbox_version_file ".vbox_version"
     builder.vm_name "packer-#{OS}-x86_64"
 
-    provisioner = pconfig.add_provisioner 'file'
+    provisioner = pconfig.add_provisioner Packer::Provisioner::FILE
     provisioner.source 'scripts/hello.sh'
     provisioner.destination '/home/vagrant/hello.sh'
 
-    provisioner = pconfig.add_provisioner 'shell'
+    provisioner = pconfig.add_provisioner Packer::Provisioner::SHELL
     provisioner.scripts [
       'scripts/fix-slow-dns.sh',
       'scripts/sshd.sh',
@@ -116,7 +116,7 @@ This example is based on the integration test [spec/integration/centos_vagrant_s
     ]
     provisioner.execute_command "echo 'vagrant' | #{pconfig.macro.Vars} sudo -S -E bash '#{pconfig.macro.Path}'"
 
-    postprocessor = pconfig.add_postprocessor 'vagrant'
+    postprocessor = pconfig.add_postprocessor Packer::PostProcessor::VAGRANT
     postprocessor.output File.join('builds', pconfig.macro.Provider, "#{OS}-x86_64-#{pconfig.variable 'my_version'}.box")
 
     pconfig.validate
