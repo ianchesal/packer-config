@@ -3,11 +3,11 @@ require 'spec_helper'
 
 RSpec.describe Packer::Config do
   it 'can build a centos-6.5 Vagrant base box' do
-    OS = 'centos-6.5'
+    OS = 'centos-6.6'
 
     pconfig = Packer::Config.new "#{OS}-vagrant.json"
     pconfig.description "#{OS} VirtualBox Vagrant"
-    pconfig.add_variable 'mirror', 'http://mirrors.kernel.org/centos'
+    pconfig.add_variable 'mirror', 'http://mirrors.sonic.net/centos/'
     pconfig.add_variable 'my_version', '0.0.1'
     pconfig.add_variable 'chef_version', 'latest'
 
@@ -18,9 +18,9 @@ RSpec.describe Packer::Config do
     builder.guest_additions_path "VBoxGuestAdditions_#{pconfig.macro.Version}.iso"
     builder.guest_os_type "RedHat_64"
     builder.http_directory "scripts/kickstart"
-    builder.iso_checksum '32c7695b97f7dcd1f59a77a71f64f2957dddf738'
+    builder.iso_checksum '08be09fd7276822bd3468af8f96198279ffc41f0'
     builder.iso_checksum_type 'sha1'
-    builder.iso_url "#{pconfig.variable 'mirror'}/6.5/isos/x86_64/CentOS-6.5-x86_64-bin-DVD1.iso"
+    builder.iso_url "#{pconfig.variable 'mirror'}/6.6/isos/x86_64/CentOS-6.6-x86_64-bin-DVD1.iso"
     builder.output_directory "#{OS}-x86_64-virtualbox"
     builder.shutdown_command "echo 'vagrant'|sudo -S /sbin/halt -h -p"
     builder.ssh_password "vagrant"
