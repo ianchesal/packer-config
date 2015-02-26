@@ -1,9 +1,11 @@
-# Encoding: utf-8
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'packer/version'
+
 Gem::Specification.new do |spec|
   spec.name          = "packer-config"
-  spec.version       = "1.0.0"
-  # For deploying alpha versions via Travis CI
-  spec.version       = "#{spec.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
+  spec.version       = Packer::VERSION
   spec.authors       = ["Ian Chesal", "Fraser Cobb"]
   spec.email         = ["ian.chesal@gmail.com"]
   spec.summary       = 'An object model to build packer.io configurations in Ruby.'
@@ -24,10 +26,11 @@ END
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.6"
+  spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.3"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-mocks", "~> 3.0"
   spec.add_development_dependency "fakefs", "~> 0.5"
   spec.add_development_dependency "rubocop", "~> 0.24"
+  spec.add_development_dependency "rubygems-tasks", "~> 0.2"
 end
