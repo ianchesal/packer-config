@@ -4,8 +4,8 @@ Gem::Specification.new do |spec|
   spec.version       = "0.0.4"
   # For deploying alpha versions via Travis CI
   spec.version       = "#{spec.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
-  spec.authors       = ["Ian Chesal"]
-  spec.email         = ["ian.chesal@gmail.colm"]
+  spec.authors       = ["Ian Chesal", "Fraser Cobb"]
+  spec.email         = ["ian.chesal@gmail.com"]
   spec.summary       = 'An object model to build packer.io configurations in Ruby.'
   spec.description   = <<-END
 Building the Packer JSON configurations in raw JSON can be quite an adventure.
