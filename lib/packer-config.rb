@@ -7,11 +7,10 @@ require 'packer/provisioner'
 require 'packer/postprocessor'
 require 'packer/macro'
 require 'packer/envvar'
+require 'packer/version'
 
 module Packer
   class Config < Packer::DataObject
-    VERSION = '1.0.0'
-
     attr_accessor :builders
     attr_accessor :postprocessors
     attr_accessor :provisioners
