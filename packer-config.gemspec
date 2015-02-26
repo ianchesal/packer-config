@@ -1,25 +1,11 @@
 # Encoding: utf-8
-# Copyright 2014 Ian Chesal
-#
-#    Licensed under the Apache License, Version 2.0 (the "License");
-#    you may not use this file except in compliance with the License.
-#    You may obtain a copy of the License at
-#
-#        http://www.apache.org/licenses/LICENSE-2.0
-#
-#    Unless required by applicable law or agreed to in writing, software
-#    distributed under the License is distributed on an "AS IS" BASIS,
-#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#    See the License for the specific language governing permissions and
-#    limitations under the License.
-
 Gem::Specification.new do |spec|
   spec.name          = "packer-config"
-  spec.version       = "0.0.4"
+  spec.version       = "1.0.0"
   # For deploying alpha versions via Travis CI
   spec.version       = "#{spec.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
-  spec.authors       = ["Ian Chesal"]
-  spec.email         = ["ian.chesal@gmail.colm"]
+  spec.authors       = ["Ian Chesal", "Fraser Cobb"]
+  spec.email         = ["ian.chesal@gmail.com"]
   spec.summary       = 'An object model to build packer.io configurations in Ruby.'
   spec.description   = <<-END
 Building the Packer JSON configurations in raw JSON can be quite an adventure.
@@ -31,6 +17,7 @@ syntax for referencing variables and whatnot in the JSON.
 END
   spec.homepage      = "https://github.com/ianchesal/packer-config"
   spec.license       = "Apache 2.0"
+  spec.required_ruby_version = '>= 2.0.0'
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
