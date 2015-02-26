@@ -32,5 +32,5 @@ END
   spec.add_development_dependency "rspec-mocks", "~> 3.0"
   spec.add_development_dependency "fakefs", "~> 0.5"
   spec.add_development_dependency "rubocop", "~> 0.24"
-  spec.add_development_dependency "rubygems-tasks"
+  spec.add_development_dependency "rubygems-tasks", "~> 0.2"
 end
