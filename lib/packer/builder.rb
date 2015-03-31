@@ -7,6 +7,7 @@ module Packer
     AMAZON_INSTANCE = 'amazon-instance'
     DOCKER          = 'docker'
     VIRTUALBOX_ISO  = 'virtualbox-iso'
+    VMWARE_VMX      = 'vmware-vmx'
     NULL            = 'null'
 
     VALID_BUILDER_TYPES = [
@@ -14,6 +15,7 @@ module Packer
       AMAZON_INSTANCE,
       DOCKER,
       VIRTUALBOX_ISO,
+      VMWARE_VMX,
       NULL
     ]
 
@@ -29,6 +31,7 @@ module Packer
         AMAZON_INSTANCE => Packer::Builder::Amazon::Instance,
         DOCKER          => Packer::Builder::Docker,
         VIRTUALBOX_ISO  => Packer::Builder::VirtualBoxISO,
+        VMWARE_VMX      => Packer::Builder::VMWareVMX,
         NULL            => Packer::Builder::Null
       }.fetch(type).new
     end
