@@ -1,5 +1,8 @@
 # packer-config Release Notes
 
+## 1.1.0
+* Thanks to [grepory](https://github.com/grepory) we have a `vmware-vmx` builder
+
 ## 1.0.0
 * A 1.0.0 release because...why not? You're either working or you're not and this is working so let's drop the `0.x.x` pretense and tango.
 * Thanks to [frasercobb](https://github.com/frasercobb) we have `puppet-server` and `puppet-masterless` provisioner interfaces

@@ -9,5 +9,8 @@ task :clean do
   Dir.glob('spec/integration/builds/*').select {|f| File.directory? f}.each do |d|
     FileUtils.rm_rf(d)
   end
+  Dir.glob('spec/integration/*.json').select {|f| File.file? f}.each do |d|
+    FileUtils.rm_f(d)
+  end
 end
 
