@@ -7,6 +7,7 @@
 /pkg/
 /spec/reports/
 /spec/integration/*.json
+spec/integration/centos-6.*-x86_64-virtualbox
 /test/tmp/
 /test/version_tmp/
 /tmp/
