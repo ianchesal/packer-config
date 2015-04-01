@@ -6,7 +6,7 @@ require 'packer/version'
 Gem::Specification.new do |spec|
   spec.name          = "packer-config"
   spec.version       = Packer::VERSION
-  spec.authors       = ["Ian Chesal", "Fraser Cobb"]
+  spec.authors       = ["Ian Chesal", "Fraser Cobb", "Greg Poirier"]
   spec.email         = ["ian.chesal@gmail.com"]
   spec.summary       = 'An object model to build packer.io configurations in Ruby.'
   spec.description   = <<-END
