@@ -121,7 +121,7 @@ RSpec.describe Packer::Provisioner do
     it 'accepts a boolean' do
       provisioner.prevent_sudo(some_boolean)
       expect(provisioner.data['prevent_sudo']).to be_truthy
-      provisioner.data.delete('some_boolean')
+      provisioner.data.delete('prevent_sudo')
     end
   end
 
