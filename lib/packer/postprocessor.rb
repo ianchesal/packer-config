@@ -6,11 +6,15 @@ module Packer
   class PostProcessor < Packer::DataObject
     DOCKER_IMPORT = 'docker-import'
     DOCKER_PUSH = 'docker-push'
+    DOCKER_SAVE = 'docker-save'
+    DOCKER_TAG = 'docker-tag'
     VAGRANT = 'vagrant'
 
     VALID_POST_PROCESSOR_TYPES = [
       DOCKER_IMPORT,
       DOCKER_PUSH,
+      DOCKER_SAVE,
+      DOCKER_TAG,
       VAGRANT
     ]
 
@@ -24,6 +28,8 @@ module Packer
       {
         DOCKER_IMPORT => Packer::PostProcessor::DockerImport,
         DOCKER_PUSH   => Packer::PostProcessor::DockerPush,
+        DOCKER_SAVE   => Packer::PostProcessor::DockerSave,
+        DOCKER_TAG    => Packer::PostProcessor::DockerTag,
         VAGRANT       => Packer::PostProcessor::Vagrant
       }.fetch(type).new
     end

@@ -1,9 +1,9 @@
 # Encoding: utf-8
 require 'spec_helper'
 
-RSpec.describe Packer::PostProcessor::DockerImport do
+RSpec.describe Packer::PostProcessor::DockerTag do
   let(:postprocessor) do
-    Packer::PostProcessor.get_postprocessor(Packer::PostProcessor::DOCKER_IMPORT)
+    Packer::PostProcessor.get_postprocessor(Packer::PostProcessor::DOCKER_TAG)
   end
 
   let(:some_string) do
@@ -16,7 +16,7 @@ RSpec.describe Packer::PostProcessor::DockerImport do
 
   describe '#initialize' do
     it 'has a type of shell' do
-      expect(postprocessor.data['type']).to eq(Packer::PostProcessor::DOCKER_IMPORT)
+      expect(postprocessor.data['type']).to eq(Packer::PostProcessor::DOCKER_TAG)
     end
   end
 
@@ -34,7 +34,7 @@ RSpec.describe Packer::PostProcessor::DockerImport do
     end
   end
 
-  describe 'tag' do
+  describe '#tag' do
     it 'accepts a string' do
       postprocessor.tag(some_string)
       expect(postprocessor.data['tag']).to eq(some_string)

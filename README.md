@@ -50,6 +50,8 @@ The following [Packer post-processors](http://www.packer.io/docs/templates/post-
 
 * [docker-import](http://www.packer.io/docs/post-processors/docker-import.html)
 * [docker-push](http://www.packer.io/docs/post-processors/docker-push.html)
+* [docker-save](http://www.packer.io/docs/post-processors/docker-save.html)
+* [docker-tag](http://www.packer.io/docs/post-processors/docker-tag.html)
 * [vagrant](http://www.packer.io/docs/post-processors/vagrant.html)
 
 ## Examples
