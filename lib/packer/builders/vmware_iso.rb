@@ -183,11 +183,11 @@ module Packer
       end
 
       def vmx_data(data)
-        self.__add_array_of_strings('vmx_data', data)
+        self.__add_hash('vmx_data', data)
       end
 
       def vmx_data_post(data)
-        self.__add_array_of_strings('vmx_data_post', data)
+        self.__add_hash('vmx_data_post', data)
       end
 
       def vmx_template_path(path)
