@@ -21,6 +21,8 @@ Bonus: you can really go to town with templates when it's all done it Ruby.
 
 ## Use
 
+    require 'packer-config'
+
 ### Builders
 
 The following [Packer builders](http://www.packer.io/docs/templates/builders.html) are currently implemented:
@@ -29,6 +31,8 @@ The following [Packer builders](http://www.packer.io/docs/templates/builders.htm
 * [amazon-instance](http://www.packer.io/docs/builders/amazon-instance.html)
 * [docker](http://www.packer.io/docs/builders/docker.html)
 * [virtualbox-iso](http://www.packer.io/docs/builders/virtualbox-iso.html)
+* [vmware-vmx](https://www.packer.io/docs/builders/vmware-vmx)
+* [vmware-iso](https://www.packer.io/docs/builders/vmware-iso)
 * [null](https://www.packer.io/docs/builders/null.html)
 
 ### Provisioners
@@ -136,6 +140,8 @@ I'm using Travis CI to build and test on every push to the public github reposit
 ### Branching in Git
 
 I'm using [git-flow](http://nvie.com/posts/a-successful-git-branching-model/) for development in git via github. I've loved the branching model git-flow proposed from day one and the addon to git makes it very intuitive and easy to follow. I generally don't push my `feature/*` branches to the public repository; I do keep `development` and `master` up to date here though.
+
+**PLEASE OPEN PULL REQUESTS AGAINST `develop` AND NOT `master`! THANK YOU!**
 
 ### TODO Work
 
