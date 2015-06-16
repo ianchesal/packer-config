@@ -8,6 +8,7 @@ module Packer
     DOCKER          = 'docker'
     VIRTUALBOX_ISO  = 'virtualbox-iso'
     VMWARE_VMX      = 'vmware-vmx'
+    VMWARE_ISO      = 'vmware-iso'
     NULL            = 'null'
 
     VALID_BUILDER_TYPES = [
@@ -16,6 +17,7 @@ module Packer
       DOCKER,
       VIRTUALBOX_ISO,
       VMWARE_VMX,
+      VMWARE_ISO,
       NULL
     ]
 
@@ -32,6 +34,7 @@ module Packer
         DOCKER          => Packer::Builder::Docker,
         VIRTUALBOX_ISO  => Packer::Builder::VirtualBoxISO,
         VMWARE_VMX      => Packer::Builder::VMWareVMX,
+        VMWARE_ISO      => Packer::Builder::VMWareISO,
         NULL            => Packer::Builder::Null
       }.fetch(type).new
     end
