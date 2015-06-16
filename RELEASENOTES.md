@@ -1,5 +1,9 @@
 # packer-config Release Notes
 
+## 1.3.0
+
+* Add support for vmware-vmx building (via [tduehr][])
+
 ## 1.2.0
 
 * Add support for docker-save post-processor (via [frasercobb][])
@@ -22,6 +26,7 @@
 * Started writing release notes!
 
 
+  [tduehr]: https://github.com/tduehr
   [frasercobb]: https://github.com/frasercobb
   [grepory]: https://github.com/grepory
   [ianchesal]: https://github.com/ianchesal
