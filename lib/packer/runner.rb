@@ -1,6 +1,5 @@
 require 'open3'
 require 'shellwords'
-require 'pty'
 
 module Packer
   class Runner
@@ -17,13 +16,23 @@ module Packer
         stdout, stderr, status = Open3.capture3(cmd)
       else
         # Run but stream as well as capture stdout to the screen
-        status = pty(cmd) do |r,w,pid|
-          while !r.eof?
-            c = r.getc
-            stdout << c
-            $stdout.write "#{c}"
+        # see: http://stackoverflow.com/a/1162850/83386
+        Open3.popen3(cmd) do |std_in, std_out, std_err, thread|
+          # read each stream from a new thread
+          Thread.new do
+            until (raw = std_out.getc).nil? do
+              stdout << raw
+              $stdout.write "#{raw}"
+            end
           end
-          Process.wait(pid)
+          Thread.new do
+            until (raw_line = std_err.gets).nil? do
+              stderr << raw_line
+            end
+          end
+
+          thread.join # don't exit until the external process is done
+          status = thread.value
         end
       end
       raise CommandExecutionError.new(stderr) unless status == 0
@@ -34,11 +43,6 @@ module Packer
       cmd = Shellwords.shelljoin(args.flatten)
       logger.debug "Exec'ing: #{cmd}, in: #{Dir.pwd}"
       Kernel.exec cmd
-    end
-
-    def self.pty(cmd, &block)
-      PTY.spawn(cmd, &block)
-      $?.exitstatus
     end
   end
 end
