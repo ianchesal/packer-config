@@ -1,5 +1,9 @@
 # packer-config Release Notes
 
+## 1.3.1
+
+* Adds a fix for [issue #8](https://github.com/ianchesal/packer-config/issues/8). Removes psuedo-terminals from the runner library which were causing the problem.
+
 ## 1.3.0
 
 * Add support for vmware-vmx building (via [tduehr][])
