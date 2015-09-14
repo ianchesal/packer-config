@@ -57,19 +57,39 @@ end
 RSpec.describe Packer::Builder::Amazon::EBS do
   let(:builder) { Packer::Builder.get_builder(Packer::Builder::AMAZON_EBS) }
 
-  describe '#initialize' do
-    it 'has a type of amazon-ebs' do
-      expect(builder.data['type']).to eq(Packer::Builder::AMAZON_EBS)
-    end
+  it 'has a type of amazon-ebs' do
+    expect(builder.data['type']).to eq(Packer::Builder::AMAZON_EBS)
+  end
+
+  it 'requires ami_name, instance_type, region, source_ami, and communicator' do
+    expect { builder.validate }.to raise_error(Packer::DataObject::DataValidationError)
+    builder.ami_name 'foo'
+    builder.instance_type 'foo'
+    builder.region 'foo'
+    builder.source_ami 'foo'
+    builder.communicator 'ssh'
+    expect { builder.validate }.not_to raise_error
   end
 end
 
 RSpec.describe Packer::Builder::Amazon::Instance do
   let(:builder) { Packer::Builder.get_builder(Packer::Builder::AMAZON_INSTANCE) }
 
-  describe '#initialize' do
-    it 'has a type of amazon-instance' do
-      expect(builder.data['type']).to eq(Packer::Builder::AMAZON_INSTANCE)
-    end
+  it 'has a type of amazon-instance' do
+    expect(builder.data['type']).to eq(Packer::Builder::AMAZON_INSTANCE)
+  end
+
+  it 'requires ami_name, instance_type, region, source_ami, account_id, s3_bucket, x509_cert_path, x509_key_path, and communicator' do
+    expect { builder.validate }.to raise_error(Packer::DataObject::DataValidationError)
+    builder.ami_name 'foo'
+    builder.instance_type 'foo'
+    builder.region 'foo'
+    builder.source_ami 'foo'
+    builder.account_id 'foo'
+    builder.s3_bucket 'foo'
+    builder.x509_cert_path 'foo'
+    builder.x509_key_path 'foo'
+    builder.communicator 'ssh'
+    expect { builder.validate }.not_to raise_error
   end
 end

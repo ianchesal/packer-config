@@ -4,19 +4,17 @@ require 'spec_helper'
 RSpec.describe Packer::Builder::VMWareISO do
   let(:builder) { Packer::Builder.get_builder(Packer::Builder::VMWARE_ISO) }
 
-  describe '#initialize' do
-    it 'has a type of VMWare ISO' do
-      expect(builder.data['type']).to eq(Packer::Builder::VMWARE_ISO)
-    end
+  it 'has a type of VMWare ISO' do
+    expect(builder.data['type']).to eq(Packer::Builder::VMWARE_ISO)
+  end
 
-    it 'requires iso_checksum' do
-      expect { builder.validate }.to raise_error(Packer::DataObject::DataValidationError)
-      builder.iso_checksum '88197272b2a442402820fcc788a8cc7a'
-      builder.iso_checksum_type "MD5"
-      builder.iso_url 'path'
-      builder.ssh_username 'user'
-      expect { builder.validate }.not_to raise_error
-    end
+  it 'requires iso_checksum, iso_checksum_type, iso_url and communicator' do
+    expect { builder.validate }.to raise_error(Packer::DataObject::DataValidationError)
+    builder.iso_checksum '88197272b2a442402820fcc788a8cc7a'
+    builder.iso_checksum_type "MD5"
+    builder.iso_url 'path'
+    builder.communicator 'ssh'
+    expect { builder.validate }.not_to raise_error
   end
 
   describe '#vmx_data' do
