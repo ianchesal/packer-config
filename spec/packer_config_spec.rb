@@ -22,6 +22,7 @@ RSpec.describe Packer::Config do
     it 'returns true for a valid instance' do
       expect(packer.builders).to receive(:length).and_return(1)
       expect(Packer::Runner).to receive(:run!).and_return('')
+      expect(LoweredExpectations).to receive(:expect).and_return(true)
       FakeFS do
         expect(packer.validate).to be_truthy
       end
@@ -29,9 +30,21 @@ RSpec.describe Packer::Config do
 
     it 'raises an error for an invalid instance' do
       expect(packer.builders).to receive(:length).and_return(0)
+      expect(LoweredExpectations).to receive(:expect).and_return(true)
       FakeFS do
         expect { packer.validate }.to raise_error
       end
+    end
+
+    it 'sets the minimum Packer version' do
+      expect(packer.builders).to receive(:length).and_return(1)
+      expect(Packer::Runner).to receive(:run!).and_return('')
+      expect(LoweredExpectations).to receive(:expect).and_return(true)
+      expect(packer.data['min_packer_version']).to be_falsey
+      FakeFS do
+        expect(packer.validate).to be_truthy
+      end
+      expect(packer.data['min_packer_version']).to eq(Packer::Config::PACKER_VERSION)
     end
   end
 

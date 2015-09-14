@@ -18,15 +18,16 @@ RSpec.describe Packer::Config do
     builder.guest_additions_path "VBoxGuestAdditions_#{pconfig.macro.Version}.iso"
     builder.guest_os_type "RedHat_64"
     builder.http_directory "scripts/kickstart"
-    builder.iso_checksum '08be09fd7276822bd3468af8f96198279ffc41f0'
+    builder.iso_checksum '7bb8c1c23a4fdef93e6f0a6347d570e5764d0b38'
     builder.iso_checksum_type 'sha1'
-    builder.iso_url "#{pconfig.variable 'mirror'}/6.6/isos/x86_64/CentOS-6.6-x86_64-bin-DVD1.iso"
+    builder.iso_url "#{pconfig.variable 'mirror'}/6.7/isos/x86_64/CentOS-6.7-x86_64-bin-DVD1.iso"
     builder.output_directory "#{OS}-x86_64-virtualbox"
     builder.shutdown_command "echo 'vagrant'|sudo -S /sbin/halt -h -p"
+    builder.communicator "ssh"
     builder.ssh_password "vagrant"
     builder.ssh_port 22
     builder.ssh_username "vagrant"
-    builder.ssh_wait_timeout "10000s"
+    builder.ssh_timeout "10000s"
     builder.vboxmanage [
       [
         "modifyvm",
