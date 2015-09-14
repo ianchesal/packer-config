@@ -23,4 +23,10 @@ RSpec.describe Packer::Builder do
       builder.data.delete('name')
     end
   end
+
+  describe '#communicator' do
+    it 'raises an error if you try to set an invalid communicator' do
+      expect { builder.communicator 'foo' }.to raise_error Packer::DataObject::DataValidationError
+    end
+  end
 end

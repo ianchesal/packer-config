@@ -12,8 +12,9 @@ module Packer
           'instance_type',
           'region',
           'source_ami',
-          ['ssh_username', 'communicator']
+          'communicator'
         )
+        self.communicators = %w(none ssh winrm)
       end
 
       def access_key(key)
@@ -34,10 +35,6 @@ module Packer
 
       def source_ami(name)
         self.__add_string('source_ami', name)
-      end
-
-      def ssh_username(username)
-        self.__add_string('ssh_username', username)
       end
 
       def secret_key(key)
@@ -104,18 +101,6 @@ module Packer
         self.__add_array_of_strings('security_group_ids', ids, %w[security_group_id])
       end
 
-      def ssh_port(port)
-        self.__add_integer('ssh_port', port)
-      end
-
-      def ssh_private_key_file(file)
-        self.__add_string('ssh_private_key_file', file)
-      end
-
-      def ssh_timeout(time)
-        self.__add_string('ssh_timeout', time)
-      end
-
       def subnet_id(id)
         self.__add_string('subnet_id', id)
       end
@@ -138,30 +123,6 @@ module Packer
 
       def vpc_id(id)
         self.__add_string('vpc_id', id)
-      end
-
-      def communicator(comm)
-        self.__add_string('communicator', comm)
-      end
-
-      def winrm_host(host)
-        self.__add_string('winrm_host', host)
-      end
-
-      def winrm_port(port)
-        self.__add_string('winrm_port', port)
-      end
-
-      def winrm_username(username)
-        self.__add_string('winrm_username', username)
-      end
-
-      def winrm_password(password)
-        self.__add_string('winrm_password', password)
-      end
-
-      def winrm_timeout(timeout)
-        self.__add_string('winrm_timeout', timeout)
       end
 
       class EBS < Amazon

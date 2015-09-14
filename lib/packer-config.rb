@@ -8,6 +8,7 @@ require 'packer/postprocessor'
 require 'packer/macro'
 require 'packer/envvar'
 require 'packer/version'
+require 'lowered/expectations'
 
 module Packer
   class Config < Packer::DataObject
@@ -19,6 +20,8 @@ module Packer
     attr_reader   :macro
     attr_reader   :envvar
     attr_reader   :output_file
+
+    PACKER_VERSION = '0.8.5'
 
     def initialize(file)
       super()
@@ -35,6 +38,7 @@ module Packer
 
     def validate
       super
+      verify_packer_version
       if self.builders.length == 0
         raise DataValidationError.new("At least one builder is required")
       end
@@ -117,10 +121,6 @@ module Packer
       self.__add_string('description', description)
     end
 
-    def min_packer_version(version)
-      self.__add_string('min_packer_version', version)
-    end
-
     def variables
       self.data['variables']
     end
@@ -160,8 +160,18 @@ module Packer
     end
 
     private
+
     attr_writer :output_file
     attr_writer :macro
     attr_writer :envvar
+
+    def min_packer_version(version)
+      self.__add_string('min_packer_version', version)
+    end
+
+    def verify_packer_version
+      min_packer_version PACKER_VERSION
+      LoweredExpectations.expect('packer', ">= #{PACKER_VERSION}", vopt: 'version')
+    end
   end
 end

@@ -6,20 +6,13 @@ module Packer
         data['type'] = VMWARE_VMX
         add_required(
           'source_path',
-          ['ssh_username', 'communicator']
+          'communicator'
         )
+        self.communicators = %w(none ssh winrm)
       end
 
       def source_path(path)
         __add_string('source_path', path)
-      end
-
-      def ssh_username(username)
-        __add_string('ssh_username', username)
-      end
-
-      def ssh_password(password)
-        __add_string('ssh_password', password)
       end
 
       def boot_command(commands)
@@ -70,22 +63,6 @@ module Packer
         __add_boolean('skip_compaction', bool)
       end
 
-      def ssh_key_path(path)
-        __add_string('ssh_key_path', path)
-      end
-
-      def ssh_port(port)
-        __add_integer('ssh_port', port)
-      end
-
-      def ssh_skip_request_pty(bool)
-        __add_boolean('ssh_skip_request_pty', bool)
-      end
-
-      def ssh_wait_timeout(timeout)
-        __add_string('ssh_wait_timeout', timeout)
-      end
-
       def vm_name(name)
         __add_string('vm_name', name)
       end
@@ -104,30 +81,6 @@ module Packer
 
       def vnc_port_max(port)
         __add_integer('vnc_port_max', port)
-      end
-
-      def communicator(comm)
-        self.__add_string('communicator', comm)
-      end
-
-      def winrm_host(host)
-        self.__add_string('winrm_host', host)
-      end
-
-      def winrm_port(port)
-        self.__add_string('winrm_port', port)
-      end
-
-      def winrm_username(username)
-        self.__add_string('winrm_username', username)
-      end
-
-      def winrm_password(password)
-        self.__add_string('winrm_password', password)
-      end
-
-      def winrm_timeout(timeout)
-        self.__add_string('winrm_timeout', timeout)
       end
     end
   end
