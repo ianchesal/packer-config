@@ -1,6 +1,5 @@
 # TODO
 
-* Use [lowered-expectations](https://rubygems.org/gems/lowered-expectations) to enforce a minimum version of `packer` exists in order to use this gem
 * Add an option to Packer::Config#validate to run the configuration through packer's `validate` command
 * Add spec tests for every method on every sub-class. Found during integration testing that some methods on the sub-classes had typos in the `__*` method calls. Spec tests would have caught this.
 * Look in to something like VCR to drive the tests of the child classes -- there's a lot of repetitive testing that could be done on them.
