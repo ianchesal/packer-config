@@ -25,6 +25,10 @@ RSpec.describe Packer::DataObject do
       dataobject.add_required(['c', 'd'])
       expect(dataobject.required).to eq(['a', 'b', ['c', 'd']])
     end
+
+    it 'raises an error when adding an empty array key' do
+      expect { dataobject.add_required([]) }.to raise_error(Packer::DataObject::DataValidationError)
+    end
   end
 
   describe '#validate' do
