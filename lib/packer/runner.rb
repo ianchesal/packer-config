@@ -8,10 +8,13 @@ module Packer
 
     def self.run!(*args, quiet: false)
       cmd = Shellwords.shelljoin(args.flatten)
+
+      debug = cmd.include? '-debug'
+
       status = 0
       stdout = ''
       stderr = ''
-      if quiet
+      if quiet && !debug
         # Run without streaming std* to any screen
         stdout, stderr, status = Open3.capture3(cmd)
       else
@@ -29,6 +32,10 @@ module Packer
             until (raw_line = std_err.gets).nil? do
               stderr << raw_line
             end
+          end
+
+          Thread.new do
+            std_in.puts $stdin.gets while thread.alive?
           end
 
           thread.join # don't exit until the external process is done
