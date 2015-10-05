@@ -27,48 +27,70 @@ RSpec.describe Packer::DataObject do
     end
   end
 
+  describe '#add_key_dependency' do
+    it 'tracks dependencies on a key' do
+      dataobject.add_key_dependencies({
+        'key' => ['a', 'b'],
+        'a' => ['b', 'c']
+      })
+
+      expect(dataobject.key_dependencies).to eq({
+        'key' => ['a', 'b'],
+        'a' => ['b', 'c']
+      })
+    end
+  end
+
   describe '#validate' do
-    it 'returns true when all required settings are present' do
-      dataobject.add_required('key')
-      dataobject.__add_string('key', 'value')
-      expect(dataobject.validate).to be_truthy
-      dataobject.data = []
-      dataobject.required = []
+    describe '#validate_required' do
+      it 'returns true when all required settings are present' do
+        dataobject.add_required('key')
+        dataobject.__add_string('key', 'value')
+        expect(dataobject.validate_required).to be_truthy
+        dataobject.data = []
+        dataobject.required = []
+      end
+
+      it 'raises an error when a required setting is missing' do
+        dataobject.add_required('key')
+        expect { dataobject.validate_required }.to raise_error
+        dataobject.data = []
+        dataobject.required = []
+      end
+
+      it 'returns true when exactly one setting from an exclusive set is preset' do
+        dataobject.add_required(['key1', 'key2'])
+        dataobject.__add_string('key1', 'value')
+        expect(dataobject.validate_required).to be_truthy
+        dataobject.data = []
+        dataobject.required = []
+      end
+
+      it 'raises an error when no settings from an exclusive set are present' do
+        dataobject.add_required(['key1', 'key2'])
+        expect { dataobject.validate_required }.to raise_error
+        dataobject.data = []
+        dataobject.required = []
+      end
+
+      it 'raises an error when more than one setting from an exclusive set is present' do
+        dataobject.add_required(['key1', 'key2'])
+        dataobject.__add_string('key1', 'value')
+        dataobject.__add_string('key2', 'value')
+        expect { dataobject.validate_required }.to raise_error
+        dataobject.data = []
+        dataobject.required = []
+      end
+
+      it 'returns true when there are no required settings to validate_required' do
+        expect(dataobject.validate_required).to be_truthy
+      end
     end
 
-    it 'raises an error when a required setting is missing' do
-      dataobject.add_required('key')
-      expect { dataobject.validate }.to raise_error
-      dataobject.data = []
-      dataobject.required = []
-    end
-
-    it 'returns true when exactly one setting from an exclusive set is preset' do
-      dataobject.add_required(['key1', 'key2'])
-      dataobject.__add_string('key1', 'value')
-      expect(dataobject.validate).to be_truthy
-      dataobject.data = []
-      dataobject.required = []
-    end
-
-    it 'raises an error when no settings from an exclusive set are present' do
-      dataobject.add_required(['key1', 'key2'])
-      expect { dataobject.validate }.to raise_error
-      dataobject.data = []
-      dataobject.required = []
-    end
-
-    it 'raises an error when more than one setting from an exclusive set is present' do
-      dataobject.add_required(['key1', 'key2'])
-      dataobject.__add_string('key1', 'value')
-      dataobject.__add_string('key2', 'value')
-      expect { dataobject.validate }.to raise_error
-      dataobject.data = []
-      dataobject.required = []
-    end
-
-    it 'returns true when there are no required settings to validate' do
-      expect(dataobject.validate).to be_truthy
+    describe '#validate_key_dependencies' do
+      # it 'raises an error when a key is missing a dependency' do
+      #  dataobject.add_required_dependency {}
+      # end
     end
   end
 
@@ -220,6 +242,23 @@ RSpec.describe Packer::DataObject do
 
     it 'raises an error if any element in the values argument is not a Hash' do
       expect { dataobject.__add_array_of_hashes('key', [some_hash_of_strings, 'illegal']) }.to raise_error
+    end
+  end
+
+  describe '#__add_array_of_ints' do
+    it 'assigns an array of ints to a key' do
+      array = some_array_of_ints
+      dataobject.__add_array_of_ints('key', array)
+      expect(dataobject.data['key']).to eq(array)
+      dataobject.data.delete('key')
+    end
+
+    it 'raises error if the values argument is not an array' do
+      expect { dataobject.__add_array_of_ints('key', some_hash_of_strings) }.to raise_error
+    end
+
+    it 'raises error if the array contains non-integer strings' do
+      expect { dataobject._add_array_of_ints('key', some_array_of_strings) }.to raise_error
     end
   end
 end

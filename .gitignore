@@ -12,6 +12,7 @@ spec/integration/centos-6.*-x86_64-virtualbox
 /test/version_tmp/
 /tmp/
 /.idea/
+tags
 
 ## Specific to RubyMotion:
 .dat*
