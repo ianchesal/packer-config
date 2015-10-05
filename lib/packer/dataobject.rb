@@ -33,16 +33,8 @@ module Packer
 
     def add_required(*keys)
       keys.each do |k|
-        if valid_key? k
-          self.required.push(k)
-        else
-          raise DataValidationError.new("Required key is invalid: #{k}")
-        end
+        self.required.push(k)
       end
-    end
-
-    def valid_key?(key)
-      !key.is_a?(Array) || (key.is_a?(Array) && key.size > 0)
     end
 
     def deep_copy
