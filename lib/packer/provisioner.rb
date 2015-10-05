@@ -5,6 +5,8 @@ require 'packer/dataobject'
 module Packer
   class Provisioner < Packer::DataObject
     SHELL             = 'shell'
+    WINDOWS_SHELL     = 'windows-shell'
+    POWERSHELL        = 'powershell'
     FILE              = 'file'
     SALT              = 'salt-masterless'
     ANSIBLE           = 'ansible-local'
@@ -15,6 +17,8 @@ module Packer
 
     VALID_PROVISIONER_TYPES = [
       SHELL,
+      WINDOWS_SHELL,
+      POWERSHELL,
       FILE,
       SALT,
       ANSIBLE,
@@ -33,6 +37,8 @@ module Packer
       end
       {
         SHELL             => Packer::Provisioner::Shell,
+        WINDOWS_SHELL     => Packer::Provisioner::WindowsShell,
+        POWERSHELL        => Packer::Provisioner::Powershell,
         FILE              => Packer::Provisioner::File,
         SALT              => Packer::Provisioner::Salt,
         ANSIBLE           => Packer::Provisioner::Ansible,
