@@ -9,7 +9,7 @@ module Packer
         def initialize
           super
           self.data['type'] = CHEF_SOLO
-          self.add_required([])
+          #self.add_required([])
         end
 
         def config_template(filename)
