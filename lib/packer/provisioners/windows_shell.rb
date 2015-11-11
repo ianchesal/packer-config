@@ -40,7 +40,7 @@ module Packer
       end
 
       def start_retry_timeout(time)
-        self.__add_string('start_retry_timeout', string)
+        self.__add_string('start_retry_timeout', time)
       end
     end
   end
