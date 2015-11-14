@@ -12,6 +12,7 @@ module Packer
     CHEF_SOLO         = 'chef-solo'
     PUPPET_MASTERLESS = 'puppet-masterless'
     PUPPET_SERVER     = 'puppet-server'
+    WINDOWS_RESTART   = 'windows-restart'
 
     VALID_PROVISIONER_TYPES = [
       SHELL,
@@ -21,7 +22,8 @@ module Packer
       CHEF_CLIENT,
       CHEF_SOLO,
       PUPPET_MASTERLESS,
-      PUPPET_SERVER
+      PUPPET_SERVER,
+      WINDOWS_RESTART
     ]
 
     class UnrecognizedProvisionerTypeError < StandardError
@@ -39,7 +41,8 @@ module Packer
         CHEF_CLIENT       => Packer::Provisioner::Chef::Client,
         CHEF_SOLO         => Packer::Provisioner::Chef::Solo,
         PUPPET_MASTERLESS => Packer::Provisioner::Puppet::Masterless,
-        PUPPET_SERVER     => Packer::Provisioner::Puppet::Server
+        PUPPET_SERVER     => Packer::Provisioner::Puppet::Server,
+        WINDOWS_RESTART   => Packer::Provisioner::WindowsRestart
       }.fetch(type).new
     end
 
