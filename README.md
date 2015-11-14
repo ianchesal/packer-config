@@ -53,6 +53,7 @@ The following [Packer provisioners](http://www.packer.io/docs/templates/provisio
 * [salt](https://www.packer.io/docs/provisioners/salt-masterless.html)
 * [puppet server](https://www.packer.io/docs/provisioners/puppet-server.html)
 * [puppet masterless](https://www.packer.io/docs/provisioners/puppet-masterless.html)
+* [windows-restart](https://www.packer.io/docs/provisioners/windows-restart.html)
 
 ### Post-Processors
 
