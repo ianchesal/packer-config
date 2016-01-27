@@ -148,6 +148,5 @@ module Packer
         self.data[key.to_s][k] = data[k]
       end
     end
-
   end
 end
