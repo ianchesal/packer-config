@@ -203,6 +203,24 @@ RSpec.describe Packer::DataObject do
     end
   end
 
+  describe '#__add_json' do
+    it 'assigns a hash to a key' do
+      dataobject.__add_json('key', some_hash_of_mixed)
+      expect(dataobject.data['key']).to eq(some_hash_of_mixed)
+      dataobject.data.delete('key')
+    end
+
+    it 'import the hash as it is and assigns them to key' do
+      dataobject.__add_json('key', some_hash_of_mixed)
+      expect(dataobject.data['key']).to eq(some_hash_of_mixed)
+      dataobject.data.delete('key')
+    end
+
+    it 'raises an error if the values argument is not a Hash' do
+      expect { dataobject.__add_json('key', 'some string') }.to raise_error
+    end
+  end
+
   describe '#__add_hash' do
     it 'assigns a hash to a key' do
       dataobject.__add_hash('key', some_hash_of_strings)

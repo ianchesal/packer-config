@@ -120,6 +120,7 @@ module Packer
       self.data[key.to_s] = data.to_i
     end
 
+
     def __add_boolean(key, bool, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
       if bool
@@ -137,5 +138,16 @@ module Packer
         self.data[key.to_s][k] = data[k].to_s
       end
     end
+
+
+    def __add_json(key, data, exclusives = [])
+      self.__exclusive_key_error(key, exclusives)
+      raise TypeError.new() unless data.is_a?(Hash)
+      self.data[key.to_s] = {}
+      data.keys.each do |k|
+        self.data[key.to_s][k] = data[k]
+      end
+    end
+
   end
 end
