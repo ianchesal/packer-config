@@ -12,8 +12,9 @@ module Packer
           'iso_checksum',
           'iso_checksum_type',
           'iso_url',
-          'ssh_username'
+          'communicator'
         )
+        self.communicators = %w(none ssh winrm)
       end
 
       def iso_checksum(checksum)
@@ -30,10 +31,6 @@ module Packer
 
       def iso_urls(urls)
         self.__add_array_of_strings('iso_urls', urls, %[iso_url])
-      end
-
-      def ssh_username(username)
-        self.__add_string('ssh_username', username)
       end
 
       def boot_command(commands)
@@ -110,30 +107,6 @@ module Packer
 
       def shutdown_timeout(time)
         self.__add_string('shutdown_timeout', time)
-      end
-
-      def ssh_host_port_min(port_number)
-        self.__add_integer('ssh_host_port_min', port_number)
-      end
-
-      def ssh_host_port_max(port_number)
-        self.__add_integer('ssh_host_port_max', port_number)
-      end
-
-      def ssh_key_path(path)
-        self.__add_string('ssh_key_path', path)
-      end
-
-      def ssh_password(password)
-        self.__add_string('ssh_password', password)
-      end
-
-      def ssh_port(port_number)
-        self.__add_integer('ssh_port', port_number)
-      end
-
-      def ssh_wait_timeout(time)
-        self.__add_string('ssh_wait_timeout', time)
       end
 
       def vboxmanage(array_of_commands)

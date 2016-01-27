@@ -39,6 +39,8 @@ module Packer
       }.fetch(type).new
     end
 
+    attr_reader :communicators
+
     def self.types
       VALID_BUILDER_TYPES
     end
@@ -46,13 +48,99 @@ module Packer
     def initialize
       super
       self.add_required('type')
+      self.communicators = []
     end
 
     def name(name)
       self.__add_string('name', name)
     end
 
+    # @ianchesal: Communicators are technically Templates in Packer land but
+    # they modify Builders. Weird. So we'll treat them as Builder attributes.
+    # See: https://packer.io/docs/templates/communicator.html
+    def communicator(comm)
+      raise(DataValidationError, "unknown communicator protocol #{comm}") unless communicators.include? comm
+      self.__add_string('communicator', comm)
+    end
+
+    # Technically these only apply if the communicator is ssh
+    def ssh_host(host)
+      self.__add_string('ssh_host', host)
+    end
+
+    def ssh_port(port)
+      self.__add_integer('ssh_port', port)
+    end
+
+    def ssh_username(username)
+      self.__add_string('ssh_username', username)
+    end
+
+    def ssh_password(password)
+      self.__add_string('ssh_password', password)
+    end
+
+    def ssh_private_key_file(filename)
+      self.__add_string('ssh_private_key_file', filename)
+    end
+
+    def ssh_pty(pty)
+      self.__add_boolean('ssh_pty', pty)
+    end
+
+    def ssh_timeout(timeout)
+      self.__add_string('ssh_timeout', timeout)
+    end
+
+    def ssh_handshake_attempts(attempts)
+      self.__add_integer('ssh_handshake_attempts', attempts)
+    end
+
+    def ssh_disable_agent(disable)
+      self.__add_boolean('ssh_disable_agent', disable)
+    end
+
+    def ssh_bastion_host(hostname)
+      self.__add_string('ssh_bastion_host', hostname)
+    end
+
+    def ssh_bastion_username(username)
+      self.__add_string('ssh_bastion_username', username)
+    end
+
+    def ssh_bastion_password(password)
+      self.__add_string('ssh_bastion_password', password)
+    end
+
+    def ssh_bastion_private_key_file(filename)
+      self.__add_string('ssh_bastion_private_key_file', filename)
+    end
+
+    # Technically these only apply if the communicator is winrm
+    def winrm_host(host)
+      self.__add_string('winrm_host', host)
+    end
+
+    def winrm_port(port)
+      self.__add_string('winrm_port', port)
+    end
+
+    def winrm_username(username)
+      self.__add_string('winrm_username', username)
+    end
+
+    def winrm_password(password)
+      self.__add_string('winrm_password', password)
+    end
+
+    def winrm_timeout(timeout)
+      self.__add_string('winrm_timeout', timeout)
+    end
+
     private
+
+    attr_writer :communicators
+
     def self.validate_type(type)
       VALID_BUILDER_TYPES.include? type
     end

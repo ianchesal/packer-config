@@ -23,6 +23,10 @@ Bonus: you can really go to town with templates when it's all done it Ruby.
 
     require 'packer-config'
 
+## Requires
+
+* [Packer](http://packer.io) version 0.8.5 or higher
+
 ### Builders
 
 The following [Packer builders](http://www.packer.io/docs/templates/builders.html) are currently implemented:
@@ -34,6 +38,8 @@ The following [Packer builders](http://www.packer.io/docs/templates/builders.htm
 * [vmware-vmx](https://www.packer.io/docs/builders/vmware-vmx)
 * [vmware-iso](https://www.packer.io/docs/builders/vmware-iso)
 * [null](https://www.packer.io/docs/builders/null.html)
+
+[Communicators](https://www.packer.io/docs/templates/communicator.html) are supported as options on Builders in `packer-config`. The `none`, `ssh`, and `winrm` communicators are all available as is the `docker` communicator on the Docker-type builders. `packer-config` will raise an error if you try to use a Communicator type that isn't valid for the Builder.
 
 ### Provisioners
 
@@ -47,6 +53,7 @@ The following [Packer provisioners](http://www.packer.io/docs/templates/provisio
 * [salt](https://www.packer.io/docs/provisioners/salt-masterless.html)
 * [puppet server](https://www.packer.io/docs/provisioners/puppet-server.html)
 * [puppet masterless](https://www.packer.io/docs/provisioners/puppet-masterless.html)
+* [windows-restart](https://www.packer.io/docs/provisioners/windows-restart.html)
 
 ### Post-Processors
 
@@ -79,15 +86,16 @@ This example is based on the integration test [spec/integration/centos_vagrant_s
     builder.guest_additions_path "VBoxGuestAdditions_#{pconfig.macro.Version}.iso"
     builder.guest_os_type "RedHat_64"
     builder.http_directory "scripts/kickstart"
-    builder.iso_checksum '08be09fd7276822bd3468af8f96198279ffc41f0'
+    builder.iso_checksum '7bb8c1c23a4fdef93e6f0a6347d570e5764d0b38'
     builder.iso_checksum_type 'sha1'
-    builder.iso_url "#{pconfig.variable 'mirror'}/6.6/isos/x86_64/CentOS-6.6-x86_64-bin-DVD1.iso"
+    builder.iso_url "#{pconfig.variable 'mirror'}/6.7/isos/x86_64/CentOS-6.7-x86_64-bin-DVD1.iso"
     builder.output_directory "#{OS}-x86_64-virtualbox"
     builder.shutdown_command "echo 'vagrant'|sudo -S /sbin/halt -h -p"
+    builder.communicator "ssh"
     builder.ssh_password "vagrant"
     builder.ssh_port 22
     builder.ssh_username "vagrant"
-    builder.ssh_wait_timeout "10000s"
+    builder.ssh_timeout "10000s"
     builder.vboxmanage [
       [
         "modifyvm",

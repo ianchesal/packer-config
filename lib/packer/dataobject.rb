@@ -3,16 +3,26 @@ module Packer
   class DataObject
     attr_accessor :data
     attr_accessor :required
+    attr_accessor :key_dependencies
 
     def initialize
       self.data = {}
       self.required = []
+      self.key_dependencies = {}
     end
 
     class DataValidationError < StandardError
     end
 
     def validate
+      validate_required
+      validate_key_dependencies
+
+      # TODO(ianc) Also validate the data with the packer command?
+      true
+    end
+
+    def validate_required
       self.required.each do |r|
         if (r.is_a? Array) && (r.length > 0)
           if r.length - (r - self.data.keys).length == 0
@@ -27,14 +37,26 @@ module Packer
           end
         end
       end
-      # TODO(ianc) Also validate the data with the packer command?
-      true
+    end
+
+    def validate_key_dependencies
+      self.data.keys.each do |data_key|
+        if self.key_dependencies.has_key? data_key
+          if ! (self.key_dependencies[data_key] - self.data.keys).empty?
+            raise DataValidationError.new("Key #{data_key} requires that keys be defined: #{self.key_dependencies[data_key]}")
+          end
+        end
+      end
     end
 
     def add_required(*keys)
       keys.each do |k|
         self.required.push(k)
       end
+    end
+
+    def add_key_dependencies(key_deps)
+      self.key_dependencies.merge!(key_deps)
     end
 
     def deep_copy
@@ -82,6 +104,12 @@ module Packer
       end
     end
 
+    def __add_array_of_ints(key, values, exclusives = [])
+      self.__exclusive_key_error(key, exclusives)
+      raise TypeError.new() unless Array.try_convert(values)
+      self.data[key.to_s] = values.to_ary.map(&:to_i)
+    end
+
     def __add_string(key, data, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
       self.data[key.to_s] = data.to_s
@@ -91,6 +119,7 @@ module Packer
       self.__exclusive_key_error(key, exclusives)
       self.data[key.to_s] = data.to_i
     end
+
 
     def __add_boolean(key, bool, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
@@ -107,6 +136,16 @@ module Packer
       self.data[key.to_s] = {}
       data.keys.each do |k|
         self.data[key.to_s][k] = data[k].to_s
+      end
+    end
+
+
+    def __add_json(key, data, exclusives = [])
+      self.__exclusive_key_error(key, exclusives)
+      raise TypeError.new() unless data.is_a?(Hash)
+      self.data[key.to_s] = {}
+      data.keys.each do |k|
+        self.data[key.to_s][k] = data[k]
       end
     end
   end

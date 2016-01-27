@@ -9,7 +9,7 @@ module Packer
         def initialize
           super
           self.data['type'] = CHEF_SOLO
-          self.add_required([])
+          #self.add_required([])
         end
 
         def config_template(filename)
@@ -36,7 +36,9 @@ module Packer
           self.__add_string('install_command', command)
         end
 
-        # TODO How to handle json?
+        def json(hash)
+          self.__add_json('json', hash)
+        end
 
         def prevent_sudo(bool)
           self.__add_boolean('prevent_sudo', bool)

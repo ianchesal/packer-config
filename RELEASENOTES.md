@@ -1,5 +1,16 @@
 # packer-config Release Notes
 
+## 1.5.0
+
+* Adds json object support the the chef-solo provisioner (via [enzo][]).
+* Fixes Travis-CI setup so tests work with newer bundler
+
+## 1.4.0
+
+* Adds support for Communicators (with help from [diamond29][]).
+* Validates the minimum version of Packer is met before running any Packer command line calls. Minimum version is set to 0.8.5 to support Communicators.
+* Bumps integration spec and working example in the README to CentOS 6.7.
+
 ## 1.3.1
 
 * Adds a fix for [issue #8](https://github.com/ianchesal/packer-config/issues/8). Removes psuedo-terminals from the runner library which were causing the problem.
@@ -34,3 +45,5 @@
   [frasercobb]: https://github.com/frasercobb
   [grepory]: https://github.com/grepory
   [ianchesal]: https://github.com/ianchesal
+  [diamond29]: https://github.com/diamond29
+  [enzor]: https://github.com/enzor

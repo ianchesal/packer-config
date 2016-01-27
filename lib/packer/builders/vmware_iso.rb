@@ -12,8 +12,9 @@ module Packer
           'iso_checksum',
           'iso_checksum_type',
           'iso_url',
-          'ssh_username'
+          'communicator'
         )
+        self.communicators = %w(none ssh winrm)
       end
 
       def iso_checksum(checksum)
@@ -30,10 +31,6 @@ module Packer
 
       def iso_urls(urls)
         self.__add_array_of_strings('iso_urls', urls, %[iso_url])
-      end
-
-      def ssh_username(username)
-        self.__add_string('ssh_username', username)
       end
 
       def boot_command(commands)
@@ -128,38 +125,6 @@ module Packer
 
       def skip_compaction(bool)
         self.__add_boolean('skip_compaction', bool)
-      end
-
-      def ssh_host(host)
-        self.__add_string('ssh_host', host)
-      end
-
-      def ssh_host_port_min(port_number)
-        self.__add_integer('ssh_host_port_min', port_number)
-      end
-
-      def ssh_host_port_max(port_number)
-        self.__add_integer('ssh_host_port_max', port_number)
-      end
-
-      def ssh_key_path(path)
-        self.__add_string('ssh_key_path', path)
-      end
-
-      def ssh_password(password)
-        self.__add_string('ssh_password', password)
-      end
-
-      def ssh_port(port_number)
-        self.__add_integer('ssh_port', port_number)
-      end
-
-      def ssh_skip_request_pty(bool)
-        self.__add_boolean('ssh_skip_request_pty', bool)
-      end
-
-      def ssh_wait_timeout(time)
-        self.__add_string('ssh_wait_timeout', time)
       end
 
       def tools_upload_flavor(flavor)

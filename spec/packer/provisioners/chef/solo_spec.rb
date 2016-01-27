@@ -95,4 +95,10 @@ RSpec.describe Packer::Provisioner::Chef::Solo do
       expect { provisioner.run_list(some_string) }.to raise_error
     end
   end
+
+  describe '#validate' do
+    it 'works with no data' do
+      expect { provisioner.validate }.to_not raise_error
+    end
+  end
 end

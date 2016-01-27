@@ -12,8 +12,9 @@ module Packer
           'instance_type',
           'region',
           'source_ami',
-          'ssh_username'
+          'communicator'
         )
+        self.communicators = %w(none ssh winrm)
       end
 
       def access_key(key)
@@ -34,10 +35,6 @@ module Packer
 
       def source_ami(name)
         self.__add_string('source_ami', name)
-      end
-
-      def ssh_username(username)
-        self.__add_string('ssh_username', username)
       end
 
       def secret_key(key)
@@ -102,18 +99,6 @@ module Packer
 
       def security_group_ids(ids)
         self.__add_array_of_strings('security_group_ids', ids, %w[security_group_id])
-      end
-
-      def ssh_port(port)
-        self.__add_integer('ssh_port', port)
-      end
-
-      def ssh_private_key_file(file)
-        self.__add_string('ssh_private_key_file', file)
-      end
-
-      def ssh_timeout(time)
-        self.__add_string('ssh_timeout', time)
       end
 
       def subnet_id(id)
