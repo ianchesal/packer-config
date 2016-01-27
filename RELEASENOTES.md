@@ -2,7 +2,7 @@
 
 ## 1.5.0
 
-* Adds json object support the the chef-solo provisioner (via [enzo][]).
+* Adds json object support the the chef-solo provisioner (via [enzor][]).
 * Fixes Travis-CI setup so tests work with newer bundler
 
 ## 1.4.0
