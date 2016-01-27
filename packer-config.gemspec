@@ -28,11 +28,11 @@ END
 
   spec.add_runtime_dependency "lowered-expectations", '~> 1'
 
-  spec.add_development_dependency "bundler", "~> 1.7"
-  spec.add_development_dependency "rake", "~> 10.3"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rspec-mocks", "~> 3.0"
-  spec.add_development_dependency "fakefs", "~> 0.5"
+  spec.add_development_dependency "bundler", "~> 1.11"
+  spec.add_development_dependency "rake", "~> 10.5"
+  spec.add_development_dependency "rspec", "~> 3.4"
+  spec.add_development_dependency "rspec-mocks", "~> 3.4"
+  spec.add_development_dependency "fakefs", "~> 0.7"
   spec.add_development_dependency "rubocop", "~> 0.36"
   spec.add_development_dependency "rubygems-tasks", "~> 0.2"
 end
