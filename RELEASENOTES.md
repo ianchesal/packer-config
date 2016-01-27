@@ -1,5 +1,10 @@
 # packer-config Release Notes
 
+## 1.5.0
+
+* Adds json object support the the chef-solo provisioner (via [enzo][]).
+* Fixes Travis-CI setup so tests work with newer bundler
+
 ## 1.4.0
 
 * Adds support for Communicators (with help from [diamond29][]).
@@ -41,3 +46,4 @@
   [grepory]: https://github.com/grepory
   [ianchesal]: https://github.com/ianchesal
   [diamond29]: https://github.com/diamond29
+  [enzor]: https://github.com/enzor
