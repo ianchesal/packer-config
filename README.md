@@ -13,7 +13,7 @@ model to build the Packer configurations in that would easily write to the
 correct JSON format. It also saved me having to remember the esoteric Packer
 syntax for referencing variables and whatnot in the JSON.
 
-Bonus: you can really go to town with templates when it's all done it Ruby.
+Bonus: you can really go to town with templates when it's all done in Ruby.
 
 ## Installation
 
