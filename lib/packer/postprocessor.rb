@@ -9,12 +9,14 @@ module Packer
     DOCKER_SAVE = 'docker-save'
     DOCKER_TAG = 'docker-tag'
     VAGRANT = 'vagrant'
+    COMPRESS = 'compress'
 
     VALID_POST_PROCESSOR_TYPES = [
       DOCKER_IMPORT,
       DOCKER_PUSH,
       DOCKER_SAVE,
       DOCKER_TAG,
+      COMPRESS,
       VAGRANT
     ]
 
@@ -30,6 +32,7 @@ module Packer
         DOCKER_PUSH   => Packer::PostProcessor::DockerPush,
         DOCKER_SAVE   => Packer::PostProcessor::DockerSave,
         DOCKER_TAG    => Packer::PostProcessor::DockerTag,
+        COMPRESS      => Packer::PostProcessor::Compress,
         VAGRANT       => Packer::PostProcessor::Vagrant
       }.fetch(type).new
     end
