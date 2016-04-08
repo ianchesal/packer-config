@@ -8,7 +8,7 @@ require 'packer/postprocessor'
 require 'packer/macro'
 require 'packer/envvar'
 require 'packer/version'
-require 'lowered/expectations'
+require 'rubygems/dependency'
 
 module Packer
   class Config < Packer::DataObject
@@ -21,7 +21,7 @@ module Packer
     attr_reader   :envvar
     attr_reader   :output_file
 
-    PACKER_VERSION = '0.8.5'
+    PACKER_VERSION = '0.9.0'
 
     def initialize(file)
       super()
@@ -39,7 +39,7 @@ module Packer
     def validate
       super
       verify_packer_version
-      if self.builders.length == 0
+      if self.builders.empty?
         raise DataValidationError.new("At least one builder is required")
       end
       self.builders.each(&:validate)
@@ -67,13 +67,13 @@ module Packer
       self.builders.each do |thing|
         data_copy['builders'].push(thing.deep_copy)
       end
-      if self.provisioners.length > 0
+      unless self.provisioners.empty?
         data_copy['provisioners'] = []
         self.provisioners.each do |thing|
           data_copy['provisioners'].push(thing.deep_copy)
         end
       end
-      if self.postprocessors.length > 0
+      unless self.postprocessors.empty?
         data_copy['post-processors'] = []
         self.postprocessors.each do |thing|
           data_copy['post-processors'].push(thing.deep_copy)
@@ -159,19 +159,22 @@ module Packer
       "{{user `#{name}`}}"
     end
 
-    private
-
-    attr_writer :output_file
-    attr_writer :macro
-    attr_writer :envvar
+    def verify_packer_version
+      min_packer_version PACKER_VERSION
+      version = /Packer v(\d+\.\d+\.\d+)/.match(
+        Packer::Runner.run!(packer, 'version', quiet: true)
+      )[1]
+      Gem::Dependency.new('', ">= #{PACKER_VERSION}").match?('', version) || raise("Packer version #{version} is not new enough (requires >= #{PACKER_VERSION})")
+    end
 
     def min_packer_version(version)
       self.__add_string('min_packer_version', version)
     end
 
-    def verify_packer_version
-      min_packer_version PACKER_VERSION
-      LoweredExpectations.expect('packer', ">= #{PACKER_VERSION}", vopt: 'version')
-    end
+    private
+
+    attr_writer :output_file
+    attr_writer :macro
+    attr_writer :envvar
   end
 end

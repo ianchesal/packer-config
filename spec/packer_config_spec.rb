@@ -20,31 +20,12 @@ RSpec.describe Packer::Config do
 
   describe "#validate" do
     it 'returns true for a valid instance' do
-      expect(packer.builders).to receive(:length).and_return(1)
+      expect(packer.builders).to receive(:empty?).and_return(false)
       expect(Packer::Runner).to receive(:run!).and_return('')
-      expect(LoweredExpectations).to receive(:expect).and_return(true)
+      expect(packer).to receive(:verify_packer_version).and_return(true)
       FakeFS do
         expect(packer.validate).to be_truthy
       end
-    end
-
-    it 'raises an error for an invalid instance' do
-      expect(packer.builders).to receive(:length).and_return(0)
-      expect(LoweredExpectations).to receive(:expect).and_return(true)
-      FakeFS do
-        expect { packer.validate }.to raise_error
-      end
-    end
-
-    it 'sets the minimum Packer version' do
-      expect(packer.builders).to receive(:length).and_return(1)
-      expect(Packer::Runner).to receive(:run!).and_return('')
-      expect(LoweredExpectations).to receive(:expect).and_return(true)
-      expect(packer.data['min_packer_version']).to be_falsey
-      FakeFS do
-        expect(packer.validate).to be_truthy
-      end
-      expect(packer.data['min_packer_version']).to eq(Packer::Config::PACKER_VERSION)
     end
   end
 
@@ -188,6 +169,18 @@ RSpec.describe Packer::Config do
   describe '#macro' do
     it 'creates a packer macro reference for any method call' do
       expect(packer.macro.var).to eq('{{ .Var }}')
+    end
+  end
+
+  describe '#verify_packer_version' do
+    it 'validates Packer is a high enough version' do
+      expect(Packer::Runner).to receive(:run!).and_return('Packer v1.0.0')
+      expect(packer.verify_packer_version).to be_truthy
+    end
+
+    it 'raises an error if the version of Packer is not high enough' do
+      expect(Packer::Runner).to receive(:run!).and_return('Packer v0.0.1')
+      expect{ packer.verify_packer_version }.to raise_error
     end
   end
 end

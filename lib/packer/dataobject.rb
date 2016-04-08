@@ -24,7 +24,7 @@ module Packer
 
     def validate_required
       self.required.each do |r|
-        if (r.is_a? Array) && (r.length > 0)
+        if (r.is_a? Array) && !r.empty?
           if r.length - (r - self.data.keys).length == 0
             raise DataValidationError.new("Missing one required setting from the set #{r}")
           end

@@ -104,7 +104,7 @@ RSpec.describe Packer::Provisioner do
   end
 
   describe '#module_paths' do
-    it 'accepts an array of strings'do
+    it 'accepts an array of strings' do
       provisioner.module_paths(some_array_of_strings)
       expect(provisioner.data['module_paths']).to eq(some_array_of_strings)
       provisioner.data.delete('module_paths')

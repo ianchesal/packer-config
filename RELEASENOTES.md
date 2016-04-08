@@ -1,8 +1,12 @@
 # packer-config Release Notes
 
+## 1.6.0
+
+* Support for running Packer on Windows!
+
 ## 1.5.0
 
-* Adds json object support the the chef-solo provisioner (via [enzo][]).
+* Adds json object support the the chef-solo provisioner (via [enzor][]).
 * Fixes Travis-CI setup so tests work with newer bundler
 
 ## 1.4.0
