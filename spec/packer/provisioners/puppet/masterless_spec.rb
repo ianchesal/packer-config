@@ -71,7 +71,7 @@ RSpec.describe Packer::Provisioner do
     end
 
     it 'raises an error if arguments cannot be made into a hash' do
-      expect{ provisioner.facter(some_string) }.to raise_error
+      expect { provisioner.facter(some_string) }.to raise_error
     end
   end
 

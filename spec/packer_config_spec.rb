@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'fakefs/spec_helpers'
 
 RSpec.describe Packer::Config do
-  let(:config_file) { 'config.json'}
+  let(:config_file) { 'config.json' }
   let(:packer) { Packer::Config.new(config_file) }
   let(:builder_type) { Packer::Builder::VIRTUALBOX_ISO }
   let(:provisioner_type) { Packer::Provisioner::FILE }
@@ -97,33 +97,33 @@ RSpec.describe Packer::Config do
 
   describe "#add_builder" do
     it 'returns a builder for a valid type' do
-      expect(packer.add_builder builder_type).to be_a_kind_of(Packer::Builder)
+      expect(packer.add_builder(builder_type)).to be_a_kind_of(Packer::Builder)
       expect(packer.builders.length).to eq(1)
       packer.builders = []
     end
 
     it 'raises an error for an invalid type' do
-      expect { packer.add_builder 'invalid' }.to raise_error
+      expect { packer.add_builder('invalid') }.to raise_error
       expect(packer.builders.length).to eq(0)
     end
   end
 
   describe "#add_provisioner" do
     it 'returns a provisioner for a valid type' do
-      expect(packer.add_provisioner provisioner_type).to be_a_kind_of(Packer::Provisioner)
+      expect(packer.add_provisioner(provisioner_type)).to be_a_kind_of(Packer::Provisioner)
       expect(packer.provisioners.length).to eq(1)
       packer.provisioners = []
     end
 
     it 'raises an error for an invalid type' do
-      expect { packer.add_provisioner 'invalid' }.to raise_error
+      expect { packer.add_provisioner('invalid') }.to raise_error
       expect(packer.provisioners.length).to eq(0)
     end
   end
 
   describe "#add_postprocessor" do
     it 'returns a post-processor for a valid type' do
-      expect(packer.add_postprocessor postprocessor_type).to be_a_kind_of(Packer::PostProcessor)
+      expect(packer.add_postprocessor(postprocessor_type)).to be_a_kind_of(Packer::PostProcessor)
       expect(packer.postprocessors.length).to eq(1)
       packer.postprocessors = []
     end
@@ -149,7 +149,7 @@ RSpec.describe Packer::Config do
     it 'creates a packer reference to a variable in the configuration' do
       expect(packer.variables).to eq({})
       packer.add_variable('key1', 'value1')
-      expect(packer.variable 'key1').to eq('{{user `key1`}}')
+      expect(packer.variable('key1')).to eq('{{user `key1`}}')
       packer.data['variables'] = {}
     end
 
@@ -180,7 +180,7 @@ RSpec.describe Packer::Config do
 
     it 'raises an error if the version of Packer is not high enough' do
       expect(Packer::Runner).to receive(:run!).and_return('Packer v0.0.1')
-      expect{ packer.verify_packer_version }.to raise_error
+      expect { packer.verify_packer_version }.to raise_error
     end
   end
 end

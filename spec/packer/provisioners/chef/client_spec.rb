@@ -23,7 +23,7 @@ RSpec.describe Packer::Provisioner::Chef::Client do
   end
 
   it 'requires a server_url setting' do
-    expect{ provisioner.validate }.to raise_error
+    expect { provisioner.validate }.to raise_error
   end
 
   describe '#initialize' do

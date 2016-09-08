@@ -44,14 +44,14 @@ module Packer
     end
 
     def only(buildname)
-      unless self.data.has_key? 'only'
+      unless self.data.key? 'only'
         self.data['only'] = []
       end
       self.data['only'] << buildname.to_s
     end
 
     def except(buildname)
-      unless self.data.has_key? 'except'
+      unless self.data.key? 'except'
         self.data['except'] = []
       end
       self.data['except'] << buildname.to_s
@@ -61,9 +61,10 @@ module Packer
       self.__add_boolean('keep_input_artifact', bool)
     end
 
-    private
     def self.validate_type(type)
       VALID_POST_PROCESSOR_TYPES.include? type
     end
+
+    private_class_method :validate_type
   end
 end

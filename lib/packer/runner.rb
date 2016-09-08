@@ -17,12 +17,12 @@ module Packer
       else
         # Run but stream as well as capture stdout to the screen
         # see: http://stackoverflow.com/a/1162850/83386
-        Open3.popen3(cmd) do |std_in, std_out, std_err, thread|
+        Open3.popen3(cmd) do |_std_in, std_out, std_err, thread|
           # read each stream from a new thread
           Thread.new do
             until (raw = std_out.getc).nil? do
               stdout << raw
-              $stdout.write "#{raw}"
+              $stdout.write raw.to_s
             end
           end
           Thread.new do
@@ -35,6 +35,7 @@ module Packer
           status = thread.value
         end
       end
+      # rubocop:disable Style/NumericPredicate
       raise CommandExecutionError.new(stderr) unless status == 0
       stdout
     end

@@ -25,26 +25,23 @@ module Packer
     def validate_required
       self.required.each do |r|
         if (r.is_a? Array) && !r.empty?
-          if r.length - (r - self.data.keys).length == 0
+          if (r.length - (r - self.data.keys).length).zero?
             raise DataValidationError.new("Missing one required setting from the set #{r}")
           end
           if r.length - (r - self.data.keys).length > 1
             raise DataValidationError.new("Found more than one exclusive setting in data from set #{r}")
           end
-        else
-          if ! self.data.keys.include? r
-            raise DataValidationError.new("Missing required setting #{r}")
-          end
+        elsif ! self.data.keys.include? r
+          raise DataValidationError.new("Missing required setting #{r}")
         end
       end
     end
 
     def validate_key_dependencies
       self.data.keys.each do |data_key|
-        if self.key_dependencies.has_key? data_key
-          if ! (self.key_dependencies[data_key] - self.data.keys).empty?
-            raise DataValidationError.new("Key #{data_key} requires that keys be defined: #{self.key_dependencies[data_key]}")
-          end
+        next unless self.key_dependencies.key? data_key
+        unless (self.key_dependencies[data_key] - self.data.keys).empty?
+          raise DataValidationError.new("Key #{data_key} requires that keys be defined: #{self.key_dependencies[data_key]}")
         end
       end
     end
@@ -68,7 +65,7 @@ module Packer
 
     def __exclusive_key_error(key, exclusives)
       exclusives.each do |e|
-        if self.data.has_key? e
+        if self.data.key? e
           raise ExclusiveKeyError.new("Only one of #{exclusives} can be used at a time")
         end
       end
@@ -123,11 +120,7 @@ module Packer
 
     def __add_boolean(key, bool, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
-      if bool
-        self.data[key.to_s] = true
-      else
-        self.data[key.to_s] = false
-      end
+      self.data[key.to_s] = bool ? true : false
     end
 
     def __add_hash(key, data, exclusives = [])

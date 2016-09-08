@@ -19,7 +19,7 @@ RSpec.describe Packer::EnvVar do
   end
 
   it 'responds to anything' do
-    expect(envvar.respond_to? 'anything').to       be_truthy
-    expect(envvar.respond_to? 'anything_else').to  be_truthy
+    expect(envvar.respond_to?('anything')).to       be_truthy
+    expect(envvar.respond_to?('anything_else')).to  be_truthy
   end
 end

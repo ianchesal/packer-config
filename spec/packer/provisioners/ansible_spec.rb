@@ -23,7 +23,7 @@ RSpec.describe Packer::Provisioner::Ansible do
   end
 
   it 'requires a playbook_file setting' do
-    expect{ provisioner.validate }.to raise_error
+    expect { provisioner.validate }.to raise_error
   end
 
   describe '#initialize' do
