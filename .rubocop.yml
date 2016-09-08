@@ -38,9 +38,20 @@ Lint/EndAlignment:
 Lint/Loop:
   Enabled: false
 
+Lint/UnusedMethodArgument:
+  Exclude:
+    - 'lib/packer/dataobject.rb'
+    - 'lib/packer/envvar.rb'
+    - 'lib/packer/macro.rb'
+    - 'lib/packer/provisioners/powershell.rb'
+
 Lint/Void:
   Exclude:
     - dashboard/spec/**/*
+
+Style/FileName:
+  Exclude:
+    - 'lib/packer-config.rb'
 
 Style/AccessModifierIndentation:
   Enabled: false
@@ -59,6 +70,15 @@ Style/AlignParameters:
 
 Metrics/BlockNesting:
   Enabled: false
+
+Metrics/AbcSize:
+  Max: 30
+
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/MethodLength:
+  Max: 27
 
 Style/BracesAroundHashParameters:
   Enabled: false
@@ -169,6 +189,9 @@ Style/WhileUntilDo:
   Enabled: false
 
 Style/WhileUntilModifier:
+  Enabled: false
+
+Style/IndentHash:
   Enabled: false
 
 # As of rubocop 0.21, it thinks kwargs are useless assignments

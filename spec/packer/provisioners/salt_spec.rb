@@ -23,7 +23,7 @@ RSpec.describe Packer::Provisioner::Salt do
   end
 
   it 'requires a local_state_tree setting' do
-    expect{ provisioner.validate }.to raise_error
+    expect { provisioner.validate }.to raise_error
   end
 
   describe '#initialize' do

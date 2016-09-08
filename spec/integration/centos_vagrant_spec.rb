@@ -14,7 +14,7 @@ RSpec.describe Packer::Config do
     builder = pconfig.add_builder Packer::Builder::VIRTUALBOX_ISO
     builder.boot_command ["<tab> text ks=http://#{pconfig.macro.HTTPIP}:#{pconfig.macro.HTTPPort}/#{OS}-ks.cfg<enter><wait>"]
     builder.boot_wait '10s'
-    builder.disk_size 40960
+    builder.disk_size 40_960
     builder.guest_additions_path "VBoxGuestAdditions_#{pconfig.macro.Version}.iso"
     builder.guest_os_type "RedHat_64"
     builder.http_directory "scripts/kickstart"

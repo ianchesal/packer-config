@@ -19,7 +19,7 @@ RSpec.describe Packer::Macro do
   end
 
   it 'responds to anything' do
-    expect(macro.respond_to? 'anything').to       be_truthy
-    expect(macro.respond_to? 'anything_else').to  be_truthy
+    expect(macro.respond_to?('anything')).to       be_truthy
+    expect(macro.respond_to?('anything_else')).to  be_truthy
   end
 end

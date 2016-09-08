@@ -144,5 +144,7 @@ module Packer
     def self.validate_type(type)
       VALID_BUILDER_TYPES.include? type
     end
+
+    private_class_method :validate_type
   end
 end
