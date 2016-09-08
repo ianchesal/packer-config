@@ -62,14 +62,14 @@ module Packer
     end
 
     def only(buildname)
-      unless self.data.has_key? 'only'
+      unless self.data.key? 'only'
         self.data['only'] = []
       end
       self.data['only'] << buildname.to_s
     end
 
     def except(buildname)
-      unless self.data.has_key? 'except'
+      unless self.data.key? 'except'
         self.data['except'] = []
       end
       self.data['except'] << buildname.to_s
@@ -81,19 +81,20 @@ module Packer
 
     def override(builddefinition, values)
       raise TypeError.new() unless values.is_a?(Hash)
-      unless self.data.has_key? 'override'
+      unless self.data.key? 'override'
         self.data['override'] = {}
       end
-      if self.data.has_key? @data['override'][builddefinition]
+      if self.data.key? @data['override'][builddefinition]
         self.data['override'][builddefinition].merge! values
       else
         self.data['override'][builddefinition] = values
       end
     end
 
-    private
     def self.validate_type(type)
       VALID_PROVISIONER_TYPES.include? type
     end
+
+    private_class_method :validate_type
   end
 end

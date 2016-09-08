@@ -153,7 +153,7 @@ module Packer
     end
 
     def variable(name)
-      unless self.variables.has_key? name
+      unless self.variables.key? name
         raise UndefinedVariableError.new("No variable named #{name} has been defined -- did you forget to call add_variable?")
       end
       "{{user `#{name}`}}"

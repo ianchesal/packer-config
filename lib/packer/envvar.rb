@@ -1,8 +1,14 @@
 # Encoding: utf-8
+# rubocop:disable Style/MethodMissing
+
 module Packer
   class EnvVar
     def method_missing(method_name, *args)
       "{{env `#{method_name}`}}"
+    end
+
+    def respond_to_missing?(method_name, include_private = false)
+      true
     end
 
     def respond_to?(symbol, include_private=false)
