@@ -36,8 +36,8 @@ module Packer
       self.envvar = EnvVar.new
     end
 
-    def validate
-      super
+    def validate(verbose: false)
+      super()
       verify_packer_version
       if self.builders.empty?
         raise DataValidationError.new("At least one builder is required")
@@ -49,7 +49,7 @@ module Packer
       stdout = nil
       Dir.chdir(File.dirname(self.output_file)) do
         begin
-          stdout = Packer::Runner.run! self.packer, 'validate', File.basename(self.output_file), quiet: true
+          stdout = Packer::Runner.run! self.packer, 'validate', File.basename(self.output_file), quiet: !verbose
         rescue Packer::Runner::CommandExecutionError => e
           raise PackerBuildError.new(e.to_s)
         end
