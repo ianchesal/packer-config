@@ -1,5 +1,9 @@
 # packer-config Release Notes
 
+## 1.6.1
+
+* Added a verbose option to the `verify` method on `Packer::Config`. Closes issue #19.
+
 ## 1.6.0
 
 * Support for running Packer on Windows!
