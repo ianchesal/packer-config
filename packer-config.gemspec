@@ -18,7 +18,7 @@ correct JSON format. It also saved me having to remember the esoteric Packer
 syntax for referencing variables and whatnot in the JSON.
 END
   spec.homepage      = 'https://github.com/ianchesal/packer-config'
-  spec.license       = 'Apache 2.0'
+  spec.license       = 'Apache-2.0'
   spec.required_ruby_version = '>= 2.0.0'
 
   spec.files         = `git ls-files -z`.split("\x0")
