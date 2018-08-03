@@ -1,5 +1,10 @@
 # packer-config Release Notes
 
+## 1.7.0
+
+* Add support for QEMU builder (via [biemond])
+* Add support for `-debug` in the packer command line call (via [diamond29])
+
 ## 1.6.2
 
 * Updates for CVE-2017-8418
@@ -61,3 +66,4 @@
   [ianchesal]: https://github.com/ianchesal
   [diamond29]: https://github.com/diamond29
   [enzor]: https://github.com/enzor
+  [biemond]: https://github.com/biemond
