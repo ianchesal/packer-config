@@ -147,7 +147,9 @@ I'm using Travis CI to build and test on every push to the public github reposit
 
 ### Branching in Git
 
-We release off the `master` branch -- open your pull requests against `master` for the time being. We were using git-flow but I've fallen out of love with its style in favor of more ad hoc branching and just keeping `master` clean for releases.
+We release off the `master` branch. Please open your pull requests against `develop`. We were using git-flow but I've fallen out of love with its style in favor of more ad hoc branching and just keeping `master` clean for releases.
+
+**PLEASE OPEN ALL PULL REQUESTS AGAINST `develop` NOT `master`!**
 
 ### TODO Work
 
