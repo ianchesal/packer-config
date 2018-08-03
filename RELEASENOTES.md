@@ -1,5 +1,11 @@
 # packer-config Release Notes
 
+## 1.6.2
+
+* Updates for CVE-2017-8418
+* Lots of fixes for things that broke because of the updates for CVE-2017-8418
+* Updated integration spec to use to a CentOS version that exists
+
 ## 1.6.1
 
 * Added a verbose option to the `verify` method on `Packer::Config`. Closes issue #19.
