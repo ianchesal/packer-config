@@ -63,4 +63,12 @@ RSpec.describe Packer::Provisioner::Chef::Client do
       expect { provisioner.run_list(some_string) }.to raise_error
     end
   end
+
+  describe '#client_key' do
+    it 'accepts a string' do
+      provisioner.client_key some_string
+      expect(provisioner.data['client_key']).to eq(some_string)
+      provisioner.data.delete('client_key')
+    end
+  end
 end

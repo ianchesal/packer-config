@@ -2,6 +2,7 @@
 
 ## 1.7.0
 
+* Add support for the shell-local provisioner (via [shinitiandrei])
 * Add support for QEMU builder (via [biemond])
 * Add support for the Compress post-processor (via [biemond])
 * Add support for `-debug` in the packer command line call (via [diamond29])
@@ -68,3 +69,4 @@
   [diamond29]: https://github.com/diamond29
   [enzor]: https://github.com/enzor
   [biemond]: https://github.com/biemond
+  [shinitiandrei]: https://github.com/shinitiandrei
