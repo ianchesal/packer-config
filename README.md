@@ -48,6 +48,7 @@ The following [Packer provisioners](http://www.packer.io/docs/templates/provisio
 
 * [file](http://www.packer.io/docs/provisioners/file.html)
 * [shell](http://www.packer.io/docs/provisioners/shell.html)
+* [shell-local](https://www.packer.io/docs/provisioners/shell-local.html)
 * [ansible](https://www.packer.io/docs/provisioners/ansible-local.html)
 * [chef-client](https://www.packer.io/docs/provisioners/chef-client.html)
 * [chef-solo](https://www.packer.io/docs/provisioners/chef-solo.html)
