@@ -24,7 +24,7 @@ RSpec.describe Packer::PostProcessor::ShellLocal do
     end
   end
 
-describe '#inline' do
+  describe '#inline' do
     it 'accepts an array of commands' do
       postprocessor.inline(some_array_of_strings)
       expect(postprocessor.data['inline']).to eq(some_array_of_strings)
