@@ -37,6 +37,7 @@ The following [Packer builders](http://www.packer.io/docs/templates/builders.htm
 * [virtualbox-iso](http://www.packer.io/docs/builders/virtualbox-iso.html)
 * [vmware-vmx](https://www.packer.io/docs/builders/vmware-vmx)
 * [vmware-iso](https://www.packer.io/docs/builders/vmware-iso)
+* [qemu](https://www.packer.io/docs/builders/qemu.html)
 * [null](https://www.packer.io/docs/builders/null.html)
 
 [Communicators](https://www.packer.io/docs/templates/communicator.html) are supported as options on Builders in `packer-config`. The `none`, `ssh`, and `winrm` communicators are all available as is the `docker` communicator on the Docker-type builders. `packer-config` will raise an error if you try to use a Communicator type that isn't valid for the Builder.
@@ -64,6 +65,7 @@ The following [Packer post-processors](http://www.packer.io/docs/templates/post-
 * [docker-save](http://www.packer.io/docs/post-processors/docker-save.html)
 * [docker-tag](http://www.packer.io/docs/post-processors/docker-tag.html)
 * [vagrant](http://www.packer.io/docs/post-processors/vagrant.html)
+* [compress](https://www.packer.io/docs/post-processors/compress.html)
 
 ## Examples
 
