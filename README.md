@@ -65,6 +65,7 @@ The following [Packer post-processors](http://www.packer.io/docs/templates/post-
 * [docker-save](http://www.packer.io/docs/post-processors/docker-save.html)
 * [docker-tag](http://www.packer.io/docs/post-processors/docker-tag.html)
 * [vagrant](http://www.packer.io/docs/post-processors/vagrant.html)
+* [compress](https://www.packer.io/docs/post-processors/compress.html)
 
 ## Examples
 

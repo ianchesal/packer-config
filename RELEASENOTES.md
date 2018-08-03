@@ -3,6 +3,7 @@
 ## 1.7.0
 
 * Add support for QEMU builder (via [biemond])
+* Add support for the Compress post-processor (via [biemond])
 * Add support for `-debug` in the packer command line call (via [diamond29])
 
 ## 1.6.2
