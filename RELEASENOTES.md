@@ -1,6 +1,6 @@
 # packer-config Release Notes
 
-## 1.7.0
+## 1.6.3
 
 * Add support for the shell-local provisioner (via [shinitiandrei])
 * Add support for QEMU builder (via [biemond])
