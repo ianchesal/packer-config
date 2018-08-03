@@ -4,7 +4,7 @@ require 'spec_helper'
 RSpec.describe Packer::Builder::VirtualBoxISO do
   let(:builder) { Packer::Builder.get_builder(Packer::Builder::VIRTUALBOX_ISO) }
   let(:in_commands_strings)  { [["command1", "1"], ["command2", "2"]] }
-  let(:in_commands_mixed)    { [["command1",  1 ], ["command2",  2 ]] }
+  let(:in_commands_mixed)    { [["command1",  1], ["command2",  2]] }
   let(:out_commands_strings) { [["command1", "1"], ["command2", "2"]] }
 
   it 'has a type of virtualbox-iso' do

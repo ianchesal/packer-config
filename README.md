@@ -147,9 +147,7 @@ I'm using Travis CI to build and test on every push to the public github reposit
 
 ### Branching in Git
 
-I'm using [git-flow](http://nvie.com/posts/a-successful-git-branching-model/) for development in git via github. I've loved the branching model git-flow proposed from day one and the addon to git makes it very intuitive and easy to follow. I generally don't push my `feature/*` branches to the public repository; I do keep `development` and `master` up to date here though.
-
-**PLEASE OPEN PULL REQUESTS AGAINST `develop` AND NOT `master`! THANK YOU!**
+We release off the `master` branch -- open your pull requests against `master` for the time being. We were using git-flow but I've fallen out of love with its style in favor of more ad hoc branching and just keeping `master` clean for releases.
 
 ### TODO Work
 

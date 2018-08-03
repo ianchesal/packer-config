@@ -10,7 +10,7 @@ RSpec.describe Packer::DataObject do
   let(:some_hash_of_mixed)    { { 'a' =>  1,  'b' =>  2  } }
   let(:some_hash_of_strings)  { { 'a' => '1', 'b' => '2' } }
   let(:in_commands_strings)   { [["command1", "1"], ["command2", "2"]] }
-  let(:in_commands_mixed)     { [["command1",  1 ], ["command2",  2 ]] }
+  let(:in_commands_mixed)     { [["command1",  1], ["command2",  2]] }
   let(:out_commands_strings)  { [["command1", "1"], ["command2", "2"]] }
 
   describe "#initialize" do
