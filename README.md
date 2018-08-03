@@ -37,6 +37,7 @@ The following [Packer builders](http://www.packer.io/docs/templates/builders.htm
 * [virtualbox-iso](http://www.packer.io/docs/builders/virtualbox-iso.html)
 * [vmware-vmx](https://www.packer.io/docs/builders/vmware-vmx)
 * [vmware-iso](https://www.packer.io/docs/builders/vmware-iso)
+* [qemu](https://www.packer.io/docs/builders/qemu.html)
 * [null](https://www.packer.io/docs/builders/null.html)
 
 [Communicators](https://www.packer.io/docs/templates/communicator.html) are supported as options on Builders in `packer-config`. The `none`, `ssh`, and `winrm` communicators are all available as is the `docker` communicator on the Docker-type builders. `packer-config` will raise an error if you try to use a Communicator type that isn't valid for the Builder.
@@ -47,6 +48,7 @@ The following [Packer provisioners](http://www.packer.io/docs/templates/provisio
 
 * [file](http://www.packer.io/docs/provisioners/file.html)
 * [shell](http://www.packer.io/docs/provisioners/shell.html)
+* [shell-local](https://www.packer.io/docs/provisioners/shell-local.html)
 * [ansible](https://www.packer.io/docs/provisioners/ansible-local.html)
 * [chef-client](https://www.packer.io/docs/provisioners/chef-client.html)
 * [chef-solo](https://www.packer.io/docs/provisioners/chef-solo.html)
@@ -64,6 +66,7 @@ The following [Packer post-processors](http://www.packer.io/docs/templates/post-
 * [docker-save](http://www.packer.io/docs/post-processors/docker-save.html)
 * [docker-tag](http://www.packer.io/docs/post-processors/docker-tag.html)
 * [vagrant](http://www.packer.io/docs/post-processors/vagrant.html)
+* [compress](https://www.packer.io/docs/post-processors/compress.html)
 
 ## Examples
 
@@ -147,7 +150,9 @@ I'm using Travis CI to build and test on every push to the public github reposit
 
 ### Branching in Git
 
-We release off the `master` branch -- open your pull requests against `master` for the time being. We were using git-flow but I've fallen out of love with its style in favor of more ad hoc branching and just keeping `master` clean for releases.
+We release off the `master` branch. Please open your pull requests against `develop`. We were using git-flow but I've fallen out of love with its style in favor of more ad hoc branching and just keeping `master` clean for releases.
+
+**PLEASE OPEN ALL PULL REQUESTS AGAINST `develop` NOT `master`!**
 
 ### TODO Work
 

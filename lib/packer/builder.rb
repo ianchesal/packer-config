@@ -9,6 +9,7 @@ module Packer
     VIRTUALBOX_ISO  = 'virtualbox-iso'
     VMWARE_VMX      = 'vmware-vmx'
     VMWARE_ISO      = 'vmware-iso'
+    QEMU            = 'qemu'
     NULL            = 'null'
 
     VALID_BUILDER_TYPES = [
@@ -18,6 +19,7 @@ module Packer
       VIRTUALBOX_ISO,
       VMWARE_VMX,
       VMWARE_ISO,
+      QEMU,
       NULL
     ]
 
@@ -35,6 +37,7 @@ module Packer
         VIRTUALBOX_ISO  => Packer::Builder::VirtualBoxISO,
         VMWARE_VMX      => Packer::Builder::VMWareVMX,
         VMWARE_ISO      => Packer::Builder::VMWareISO,
+        QEMU            => Packer::Builder::Qemu,
         NULL            => Packer::Builder::Null
       }.fetch(type).new
     end

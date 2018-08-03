@@ -1,5 +1,12 @@
 # packer-config Release Notes
 
+## 1.6.3
+
+* Add support for the shell-local provisioner (via [shinitiandrei])
+* Add support for QEMU builder (via [biemond])
+* Add support for the Compress post-processor (via [biemond])
+* Add support for `-debug` in the packer command line call (via [diamond29])
+
 ## 1.6.2
 
 * Updates for CVE-2017-8418
@@ -61,3 +68,5 @@
   [ianchesal]: https://github.com/ianchesal
   [diamond29]: https://github.com/diamond29
   [enzor]: https://github.com/enzor
+  [biemond]: https://github.com/biemond
+  [shinitiandrei]: https://github.com/shinitiandrei

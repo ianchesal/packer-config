@@ -69,6 +69,10 @@ module Packer
         def validation_key_path(path)
           self.__add_string('validation_key_path', path)
         end
+
+        def client_key(keyname)
+          self.__add_string('client_key', keyname)
+        end
       end
     end
   end
