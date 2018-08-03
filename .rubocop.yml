@@ -78,7 +78,13 @@ Metrics/ClassLength:
   Max: 150
 
 Metrics/MethodLength:
-  Max: 27
+  Max: 50
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 10
 
 Style/BracesAroundHashParameters:
   Enabled: false
