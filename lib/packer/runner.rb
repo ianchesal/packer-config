@@ -38,6 +38,7 @@ module Packer
       # rubocop:disable Style/NumericPredicate
       raise CommandExecutionError.new(stderr) unless status == 0
       stdout
+      # rubocop:enable Style/NumericPredicate
     end
 
     def self.exec!(*args)

@@ -2,8 +2,8 @@
 require 'spec_helper'
 
 RSpec.describe Packer::Config do
-  it 'can build a centos-6.7 Vagrant base box' do
-    CENTOS_VERSION = '6.8'
+  it 'can build a centos-6.10 Vagrant base box' do
+    CENTOS_VERSION = '6.10'
 
     pconfig = Packer::Config.new "centos-#{CENTOS_VERSION}-vagrant.json"
     pconfig.description "CentOS #{CENTOS_VERSION} VirtualBox Vagrant"
@@ -18,7 +18,7 @@ RSpec.describe Packer::Config do
     builder.guest_additions_path "VBoxGuestAdditions_#{pconfig.macro.Version}.iso"
     builder.guest_os_type "RedHat_64"
     builder.http_directory "scripts/kickstart"
-    builder.iso_checksum 'afab3a588cda94cd768826e77ad4db2b5ee7c485'
+    builder.iso_checksum '48908ca17bc4ba2fb8e365c9fe7648eb6cd6bd67'
     builder.iso_checksum_type 'sha1'
     builder.iso_url "#{pconfig.variable 'mirror'}/6/isos/x86_64/CentOS-#{CENTOS_VERSION}-x86_64-bin-DVD1.iso"
     builder.output_directory "centos-#{CENTOS_VERSION}-x86_64-virtualbox"
