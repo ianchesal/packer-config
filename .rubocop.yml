@@ -29,10 +29,10 @@ StringLiterals:
   - double_quotes
 
 # disabling a bunch of style linters
-Lint/BlockAlignment:
+Layout/BlockAlignment:
   Enabled: false
 
-Lint/EndAlignment:
+Layout/EndAlignment:
   Enabled: false
 
 Lint/Loop:
@@ -49,23 +49,23 @@ Lint/Void:
   Exclude:
     - dashboard/spec/**/*
 
-Style/FileName:
+Naming/FileName:
   Exclude:
     - 'lib/packer-config.rb'
 
-Style/AccessModifierIndentation:
+Layout/AccessModifierIndentation:
   Enabled: false
 
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Enabled: false
 
-Style/AlignArray:
+Layout/AlignArray:
   Enabled: false
 
-Style/AlignHash:
+Layout/AlignHash:
   Enabled: false
 
-Style/AlignParameters:
+Layout/AlignParameters:
   Enabled: false
 
 Metrics/BlockNesting:
@@ -83,7 +83,7 @@ Metrics/MethodLength:
 Style/BracesAroundHashParameters:
   Enabled: false
 
-Style/CaseIndentation:
+Layout/CaseIndentation:
   Enabled: false
 
 Style/CollectionMethods:
@@ -92,25 +92,25 @@ Style/CollectionMethods:
 Style/CommentAnnotation:
   Enabled: false
 
-Style/CommentIndentation:
+Layout/CommentIndentation:
   Enabled: false
 
 Style/DefWithParentheses:
   Enabled: false
 
-Style/DotPosition:
+Layout/DotPosition:
   Enabled: false
 
 Style/EachWithObject:
   Enabled: false
 
-Style/EmptyLineBetweenDefs:
+Layout/EmptyLineBetweenDefs:
   Enabled: false
 
-Style/EmptyLines:
+Layout/EmptyLines:
   Enabled: false
 
-Style/EmptyLinesAroundAccessModifier:
+Layout/EmptyLinesAroundAccessModifier:
   Enabled: false
 
 Style/GuardClause:
@@ -122,7 +122,7 @@ Style/HashSyntax:
 Style/IfUnlessModifier:
   Enabled: false
 
-Style/IndentationWidth:
+Layout/IndentationWidth:
   Enabled: false
 
 Style/Lambda:
@@ -131,7 +131,7 @@ Style/Lambda:
 Style/MultilineBlockChain:
   Enabled: false
 
-Style/MethodCallParentheses:
+Style/MethodCallWithoutArgsParentheses:
   Enabled: false
 
 Style/MultilineIfThen:
@@ -146,7 +146,7 @@ Style/MultilineTernaryOperator:
 Style/NilComparison:
   Enabled: false
 
-Style/PredicateName:
+Naming/PredicateName:
   Enabled: false
 
 Style/RaiseArgs:
@@ -164,22 +164,19 @@ Style/RegexpLiteral:
 Style/SingleLineMethods:
   Enabled: false
 
-Style/SpaceAfterComma:
+Layout/SpaceAfterComma:
   Enabled: false
 
-Style/SpaceAfterNot:
+Layout/SpaceAfterNot:
   Enabled: false
 
-Style/SpaceAroundEqualsInParameterDefault:
+Layout/SpaceAroundEqualsInParameterDefault:
   Enabled: false
 
-Style/SpaceInsideBrackets:
+Layout/SpaceInsideParens:
   Enabled: false
 
-Style/SpaceInsideParens:
-  Enabled: false
-
-Style/TrailingBlankLines:
+Layout/TrailingBlankLines:
   Enabled: false
 
 Style/TrivialAccessors:
@@ -191,7 +188,7 @@ Style/WhileUntilDo:
 Style/WhileUntilModifier:
   Enabled: false
 
-Style/IndentHash:
+Layout/IndentHash:
   Enabled: false
 
 # As of rubocop 0.21, it thinks kwargs are useless assignments
@@ -199,4 +196,25 @@ UselessAssignment:
   Enabled: false
 
 WordArray:
+  Enabled: false
+
+Style/Encoding:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Layout/EmptyLineAfterMagicComment:
+  Enabled: false
+
+Layout/IndentHeredoc:
+  Enabled: false
+
+Layout/ClosingHeredocIndentation:
+  Enabled: false
+
+Naming/HeredocDelimiterNaming:
+  Enabled: false
+
+Gemspec/RequiredRubyVersion:
   Enabled: false

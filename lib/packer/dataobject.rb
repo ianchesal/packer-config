@@ -31,7 +31,7 @@ module Packer
           if r.length - (r - self.data.keys).length > 1
             raise DataValidationError.new("Found more than one exclusive setting in data from set #{r}")
           end
-        elsif ! self.data.keys.include? r
+        elsif ! self.data.key? r
           raise DataValidationError.new("Missing required setting #{r}")
         end
       end
