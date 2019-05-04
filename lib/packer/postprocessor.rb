@@ -11,6 +11,7 @@ module Packer
     VAGRANT = 'vagrant'
     COMPRESS = 'compress'
     SHELL_LOCAL = 'shell-local'
+    MANIFEST = 'manifest'
 
     VALID_POST_PROCESSOR_TYPES = [
       DOCKER_IMPORT,
@@ -19,7 +20,8 @@ module Packer
       DOCKER_TAG,
       COMPRESS,
       VAGRANT,
-      SHELL_LOCAL
+      SHELL_LOCAL,
+      MANIFEST
     ]
 
     class UnrecognizedPostProcessorTypeError < StandardError
@@ -29,6 +31,7 @@ module Packer
       unless validate_type(type)
         raise UnrecognizedPostProcessorTypeError.new("Unrecognized post-processor type #{type}")
       end
+
       {
         DOCKER_IMPORT => Packer::PostProcessor::DockerImport,
         DOCKER_PUSH   => Packer::PostProcessor::DockerPush,
@@ -36,7 +39,8 @@ module Packer
         DOCKER_TAG    => Packer::PostProcessor::DockerTag,
         COMPRESS      => Packer::PostProcessor::Compress,
         SHELL_LOCAL   => Packer::PostProcessor::ShellLocal,
-        VAGRANT       => Packer::PostProcessor::Vagrant
+        VAGRANT       => Packer::PostProcessor::Vagrant,
+        MANIFEST      => Packer::PostProcessor::Manifest
       }.fetch(type).new
     end
 

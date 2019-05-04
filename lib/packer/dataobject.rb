@@ -75,15 +75,18 @@ module Packer
     def __add_array_of_strings(key, values, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
       raise TypeError.new() unless Array.try_convert(values)
+
       self.data[key.to_s] = values.to_ary.map(&:to_s)
     end
 
     def __add_array_of_array_of_strings(key, values, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
       raise TypeError.new() unless Array.try_convert(values)
+
       self.data[key.to_s] = []
       values.each do |v|
         raise TypeError.new() unless Array.try_convert(v)
+
         self.data[key.to_s].push(v.to_ary.map(&:to_s))
       end
     end
@@ -91,9 +94,11 @@ module Packer
     def __add_array_of_hashes(key, values, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
       raise TypeError.new() unless Array.try_convert(values)
+
       self.data[key.to_s] = []
       values.each do |v|
         raise TypeError.new() unless v.is_a?(Hash)
+
         self.data[key.to_s].push({})
         v.keys.each do |k|
           self.data[key.to_s][-1][k] = v[k].to_s
@@ -104,6 +109,7 @@ module Packer
     def __add_array_of_ints(key, values, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
       raise TypeError.new() unless Array.try_convert(values)
+
       self.data[key.to_s] = values.to_ary.map(&:to_i)
     end
 
@@ -126,6 +132,7 @@ module Packer
     def __add_hash(key, data, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
       raise TypeError.new() unless data.is_a?(Hash)
+
       self.data[key.to_s] = {}
       data.keys.each do |k|
         self.data[key.to_s][k] = data[k].to_s
@@ -136,6 +143,7 @@ module Packer
     def __add_json(key, data, exclusives = [])
       self.__exclusive_key_error(key, exclusives)
       raise TypeError.new() unless data.is_a?(Hash)
+
       self.data[key.to_s] = {}
       data.keys.each do |k|
         self.data[key.to_s][k] = data[k]

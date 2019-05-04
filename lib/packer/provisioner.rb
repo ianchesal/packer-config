@@ -37,6 +37,7 @@ module Packer
       unless validate_type(type)
         raise UnrecognizedProvisionerTypeError.new("Unrecognized provisioner type #{type}")
       end
+
       {
         SHELL             => Packer::Provisioner::Shell,
         WINDOWS_SHELL     => Packer::Provisioner::WindowsShell,
@@ -81,6 +82,7 @@ module Packer
 
     def override(builddefinition, values)
       raise TypeError.new() unless values.is_a?(Hash)
+
       unless self.data.key? 'override'
         self.data['override'] = {}
       end

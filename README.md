@@ -25,7 +25,7 @@ Bonus: you can really go to town with templates when it's all done in Ruby.
 
 ## Requires
 
-* [Packer](http://packer.io) version 0.8.5 or higher
+* [Packer](http://packer.io) version 1.0.0 or higher
 
 ### Builders
 
@@ -67,6 +67,7 @@ The following [Packer post-processors](http://www.packer.io/docs/templates/post-
 * [docker-tag](http://www.packer.io/docs/post-processors/docker-tag.html)
 * [vagrant](http://www.packer.io/docs/post-processors/vagrant.html)
 * [compress](https://www.packer.io/docs/post-processors/compress.html)
+* [manifest](https://www.packer.io/docs/post-processors/manifest.html)
 
 ## Examples
 
@@ -74,11 +75,12 @@ The following [Packer post-processors](http://www.packer.io/docs/templates/post-
 
 This example is based on the integration test [spec/integration/centos_vagrant_spec.rb](spec/integration/centos_vagrant_spec.rb). It produces a Vagrant Basebox that's provisionable with [Chef](http://www.getchef.com/) and the packer config and provisioning is based on work done in the [Bento](https://github.com/opscode/bento) project from the OpsCode crew.
 
-    CENTOS_VERSION = '6.8'
+    CENTOS_VERSION = '7'
 
     pconfig = Packer::Config.new "centos-#{CENTOS_VERSION}-vagrant.json"
     pconfig.description "CentOS #{CENTOS_VERSION} VirtualBox Vagrant"
-    pconfig.add_variable 'mirror', 'http://mirrors.sonic.net/centos/'
+    pconfig.add_variable 'mirror', 'http://mirrors.sonic.net/centos'
+    pconfig.add_variable 'mirror', 'http://ftp.pbone.net/pub/centos'
     pconfig.add_variable 'my_version', '0.0.1'
     pconfig.add_variable 'chef_version', 'latest'
 
@@ -89,9 +91,9 @@ This example is based on the integration test [spec/integration/centos_vagrant_s
     builder.guest_additions_path "VBoxGuestAdditions_#{pconfig.macro.Version}.iso"
     builder.guest_os_type "RedHat_64"
     builder.http_directory "scripts/kickstart"
-    builder.iso_checksum 'afab3a588cda94cd768826e77ad4db2b5ee7c485'
-    builder.iso_checksum_type 'sha1'
-    builder.iso_url "#{pconfig.variable 'mirror'}/6/isos/x86_64/CentOS-#{CENTOS_VERSION}-x86_64-bin-DVD1.iso"
+    builder.iso_checksum '38d5d51d9d100fd73df031ffd6bd8b1297ce24660dc8c13a3b8b4534a4bd291c'
+    builder.iso_checksum_type 'sha256'
+    builder.iso_url "#{pconfig.variable 'mirror'}/#{CENTOS_VERSION}/isos/x86_64/CentOS-7-x86_64-Minimal-1810.iso"
     builder.output_directory "centos-#{CENTOS_VERSION}-x86_64-virtualbox"
     builder.shutdown_command "echo 'vagrant'|sudo -S /sbin/halt -h -p"
     builder.communicator "ssh"
@@ -122,13 +124,8 @@ This example is based on the integration test [spec/integration/centos_vagrant_s
 
     provisioner = pconfig.add_provisioner Packer::Provisioner::SHELL
     provisioner.scripts [
-      'scripts/fix-slow-dns.sh',
       'scripts/sshd.sh',
-      'scripts/vagrant.sh',
-      'scripts/vmtools.sh',
-      'scripts/chef.sh',
-      'scripts/cleanup.sh',
-      'scripts/minimize.sh'
+      'scripts/vagrant.sh'
     ]
     provisioner.environment_vars [
       "CHEF_VERSION=#{pconfig.variable 'chef_version'}",
@@ -160,4 +157,4 @@ Please see [TODO.md](TODO.md) for the short list of big things I thought worth w
 
 ## Contact Me
 
-Questions or comments about `packer-config`? Hit me up at ian.chesal@gmail.com or ianc@squareup.com.
+Questions or comments about `packer-config`? Hit me up at ian.chesal@gmail.com.
