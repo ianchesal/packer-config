@@ -25,7 +25,7 @@ Bonus: you can really go to town with templates when it's all done in Ruby.
 
 ## Requires
 
-* [Packer](http://packer.io) version 1.4.0 or higher
+* [Packer](http://packer.io) version 1.0.0 or higher
 
 ### Builders
 
