@@ -6,7 +6,7 @@ require 'packer/version'
 Gem::Specification.new do |spec|
   spec.name          = 'packer-config'
   spec.version       = Packer::VERSION
-  spec.authors       = ["Ian Chesal", "Fraser Cobb", "Greg Poirier", "Matasano Security", "Greg Diamond", "Enzo Rivello", "Edwin Biemond", "Andrei Shiniti Nakagawa"]
+  spec.authors       = ["Ian Chesal", "Fraser Cobb", "Greg Poirier", "Matasano Security", "Greg Diamond", "Enzo Rivello", "Edwin Biemond", "Andrei Shiniti Nakagawa", "Kevin Formsma"]
   spec.email         = %w(ian.chesal@gmail.com)
   spec.summary       = 'An object model to build packer.io configurations in Ruby.'
   spec.description   = <<-END
@@ -19,7 +19,7 @@ syntax for referencing variables and whatnot in the JSON.
 END
   spec.homepage      = 'https://github.com/ianchesal/packer-config'
   spec.license       = 'Apache-2.0'
-  spec.required_ruby_version = '>= 2.0.0'
+  spec.required_ruby_version = '>= 2.4.0'
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

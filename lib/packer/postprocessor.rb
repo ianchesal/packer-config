@@ -31,6 +31,7 @@ module Packer
       unless validate_type(type)
         raise UnrecognizedPostProcessorTypeError.new("Unrecognized post-processor type #{type}")
       end
+
       {
         DOCKER_IMPORT => Packer::PostProcessor::DockerImport,
         DOCKER_PUSH   => Packer::PostProcessor::DockerPush,

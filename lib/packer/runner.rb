@@ -44,6 +44,7 @@ module Packer
       end
       # rubocop:disable Style/NumericPredicate
       raise CommandExecutionError.new(stderr) unless status == 0
+
       stdout
       # rubocop:enable Style/NumericPredicate
     end

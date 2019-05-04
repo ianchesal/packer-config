@@ -1,3 +1,4 @@
+# rubocop:disable Naming/FileName
 # Encoding: utf-8
 require 'packer/postprocessor'
 require 'packer/dataobject'
@@ -44,3 +45,5 @@ module Packer
     end
   end
 end
+
+# rubocop:enable Naming/FileName

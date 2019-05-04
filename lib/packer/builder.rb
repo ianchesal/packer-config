@@ -30,6 +30,7 @@ module Packer
       unless validate_type(type)
         raise UnrecognizedBuilderTypeError.new("Unrecognized builder type #{type}")
       end
+
       {
         AMAZON_EBS      => Packer::Builder::Amazon::EBS,
         AMAZON_INSTANCE => Packer::Builder::Amazon::Instance,
@@ -63,6 +64,7 @@ module Packer
     # See: https://packer.io/docs/templates/communicator.html
     def communicator(comm)
       raise(DataValidationError, "unknown communicator protocol #{comm}") unless communicators.include? comm
+
       self.__add_string('communicator', comm)
     end
 

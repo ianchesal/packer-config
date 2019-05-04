@@ -1,3 +1,4 @@
+require: rubocop-performance
 inherit_from: .rubocop_todo.yml
 
 Documentation:
@@ -119,6 +120,9 @@ Layout/EmptyLines:
 Layout/EmptyLinesAroundAccessModifier:
   Enabled: false
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 Style/GuardClause:
   Enabled: false
 
@@ -141,9 +145,6 @@ Style/MethodCallWithoutArgsParentheses:
   Enabled: false
 
 Style/MultilineIfThen:
-  Enabled: false
-
-Style/MultilineTernaryOperator:
   Enabled: false
 
 Style/MultilineTernaryOperator:
@@ -194,7 +195,7 @@ Style/WhileUntilDo:
 Style/WhileUntilModifier:
   Enabled: false
 
-Layout/IndentHash:
+Layout/IndentFirstHashElement:
   Enabled: false
 
 # As of rubocop 0.21, it thinks kwargs are useless assignments

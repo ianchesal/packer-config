@@ -1,5 +1,13 @@
 # packer-config Release Notes
 
+## 1.6.4
+
+* Add support for the manifest post-provisioner (via [arothian])
+* Fix broken test and development environments
+* Fix broken integration test, update to CentOS 7
+* Minimum Ruby version updated to 2.4.0
+* Minimum Packer version updated to 1.0.0
+
 ## 1.6.3
 
 * Add support for the shell-local provisioner (via [shinitiandrei])
@@ -70,3 +78,4 @@
   [enzor]: https://github.com/enzor
   [biemond]: https://github.com/biemond
   [shinitiandrei]: https://github.com/shinitiandrei
+  [arothian]: https://github.com/arothian

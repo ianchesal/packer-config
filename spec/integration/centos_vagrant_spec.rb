@@ -2,12 +2,13 @@
 require 'spec_helper'
 
 RSpec.describe Packer::Config do
-  it 'can build a centos-6.10 Vagrant base box' do
-    CENTOS_VERSION = '6.10'
+  it 'can build a centos-7 Vagrant base box' do
+    CENTOS_VERSION = '7'
 
     pconfig = Packer::Config.new "centos-#{CENTOS_VERSION}-vagrant.json"
     pconfig.description "CentOS #{CENTOS_VERSION} VirtualBox Vagrant"
-    pconfig.add_variable 'mirror', 'http://mirrors.sonic.net/centos/'
+    pconfig.add_variable 'mirror', 'http://mirrors.sonic.net/centos'
+    pconfig.add_variable 'mirror', 'http://ftp.pbone.net/pub/centos'
     pconfig.add_variable 'my_version', '0.0.1'
     pconfig.add_variable 'chef_version', 'latest'
 
@@ -18,9 +19,9 @@ RSpec.describe Packer::Config do
     builder.guest_additions_path "VBoxGuestAdditions_#{pconfig.macro.Version}.iso"
     builder.guest_os_type "RedHat_64"
     builder.http_directory "scripts/kickstart"
-    builder.iso_checksum '48908ca17bc4ba2fb8e365c9fe7648eb6cd6bd67'
-    builder.iso_checksum_type 'sha1'
-    builder.iso_url "#{pconfig.variable 'mirror'}/6/isos/x86_64/CentOS-#{CENTOS_VERSION}-x86_64-bin-DVD1.iso"
+    builder.iso_checksum '38d5d51d9d100fd73df031ffd6bd8b1297ce24660dc8c13a3b8b4534a4bd291c'
+    builder.iso_checksum_type 'sha256'
+    builder.iso_url "#{pconfig.variable 'mirror'}/#{CENTOS_VERSION}/isos/x86_64/CentOS-7-x86_64-Minimal-1810.iso"
     builder.output_directory "centos-#{CENTOS_VERSION}-x86_64-virtualbox"
     builder.shutdown_command "echo 'vagrant'|sudo -S /sbin/halt -h -p"
     builder.communicator "ssh"
@@ -51,13 +52,8 @@ RSpec.describe Packer::Config do
 
     provisioner = pconfig.add_provisioner Packer::Provisioner::SHELL
     provisioner.scripts [
-      'scripts/fix-slow-dns.sh',
       'scripts/sshd.sh',
-      'scripts/vagrant.sh',
-      'scripts/vmtools.sh',
-      'scripts/chef.sh',
-      'scripts/cleanup.sh',
-      'scripts/minimize.sh'
+      'scripts/vagrant.sh'
     ]
     provisioner.environment_vars [
       "CHEF_VERSION=#{pconfig.variable 'chef_version'}",
