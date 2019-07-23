@@ -8,14 +8,15 @@ module Packer
       def initialize
         super
         self.data['type'] = DOCKER
-        self.add_required(
-          'export_path',
-          'image'
-        )
+        self.add_required('image')
       end
 
       def export_path(path)
-        self.__add_string('export_path', path)
+        self.__add_string('export_path', path, ['commit'])
+      end
+
+      def commit(bool)
+        self.__add_boolean('commit', bool, ['export_path'])
       end
 
       def image(name)
