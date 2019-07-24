@@ -39,7 +39,7 @@ module Packer
     end
 
     def chained_postprocessors?
-      !!self.chained_postprocessors
+      self.chained_postprocessors ? true : false
     end
 
     def validate(verbose: false)
@@ -85,7 +85,7 @@ module Packer
         self.postprocessors.each do |thing|
           data_copy['post-processors'].push(thing.deep_copy)
         end
-        if !self.chained_postprocessors?
+        unless self.chained_postprocessors?
           data_copy['post-processors'] = [data_copy['post-processors']]
         end
       end
