@@ -26,6 +26,10 @@ module Packer
       def pull(bool)
         self.__add_boolean('pull', bool)
       end
+      
+      def changes(changes)
+        self.__add_array_of_strings('changes', changes)
+      end
 
       def run_command(commands)
         self.__add_array_of_strings('run_command', commands)
