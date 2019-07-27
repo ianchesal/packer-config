@@ -1,5 +1,11 @@
 # packer-config Release Notes
 
+## 1.6.5
+
+* Docker builder: Expose the `commit` and `changes` parameters. (via [sabishiii])
+* Made the `commit` parameter mutually exclusive with the `export_path` one. (via [sabishiii])
+* Unchained postprocessors: added a Packer::Config boolean switch to nest the array of postprocessors (via [sabishiii])
+
 ## 1.6.4
 
 * Add support for the manifest post-provisioner (via [arothian])
@@ -79,3 +85,4 @@
   [biemond]: https://github.com/biemond
   [shinitiandrei]: https://github.com/shinitiandrei
   [arothian]: https://github.com/arothian
+  [sabishiii]: https://github.com/sabishiii
