@@ -17,6 +17,7 @@ module Packer
     attr_accessor :provisioners
     attr_accessor :packer
     attr_accessor :packer_options
+    attr_accessor :chained_postprocessors
     attr_reader   :macro
     attr_reader   :envvar
     attr_reader   :output_file
@@ -34,6 +35,11 @@ module Packer
       self.packer_options = []
       self.macro = Macro.new
       self.envvar = EnvVar.new
+      self.chained_postprocessors = true
+    end
+
+    def chained_postprocessors?
+      self.chained_postprocessors ? true : false
     end
 
     def validate(verbose: false)
@@ -78,6 +84,9 @@ module Packer
         data_copy['post-processors'] = []
         self.postprocessors.each do |thing|
           data_copy['post-processors'].push(thing.deep_copy)
+        end
+        unless self.chained_postprocessors?
+          data_copy['post-processors'] = [data_copy['post-processors']]
         end
       end
       case format
