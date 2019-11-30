@@ -60,13 +60,13 @@ Layout/AccessModifierIndentation:
 Naming/AccessorMethodName:
   Enabled: false
 
-Layout/AlignArray:
+Layout/ArrayAlignment:
   Enabled: false
 
-Layout/AlignHash:
+Layout/HashAlignment:
   Enabled: false
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   Enabled: false
 
 Metrics/BlockNesting:
@@ -183,7 +183,7 @@ Layout/SpaceAroundEqualsInParameterDefault:
 Layout/SpaceInsideParens:
   Enabled: false
 
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
   Enabled: false
 
 Style/TrivialAccessors:
@@ -195,7 +195,7 @@ Style/WhileUntilDo:
 Style/WhileUntilModifier:
   Enabled: false
 
-Layout/IndentFirstHashElement:
+Layout/FirstHashElementIndentation:
   Enabled: false
 
 # As of rubocop 0.21, it thinks kwargs are useless assignments
@@ -214,7 +214,7 @@ Metrics/BlockLength:
 Layout/EmptyLineAfterMagicComment:
   Enabled: false
 
-Layout/IndentHeredoc:
+Layout/HeredocIndentation:
   Enabled: false
 
 Layout/ClosingHeredocIndentation:
