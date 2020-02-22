@@ -87,9 +87,6 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Max: 10
 
-Style/BracesAroundHashParameters:
-  Enabled: false
-
 Layout/CaseIndentation:
   Enabled: false
 
@@ -128,6 +125,15 @@ Style/GuardClause:
 
 Style/HashSyntax:
   Enabled: false
+
+Style/HashEachMethods:
+  Enabled: false
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
 
 Style/IfUnlessModifier:
   Enabled: false
