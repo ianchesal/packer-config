@@ -73,7 +73,7 @@ Metrics/BlockNesting:
   Enabled: false
 
 Metrics/AbcSize:
-  Max: 30
+  Max: 40
 
 Metrics/ClassLength:
   Max: 150
