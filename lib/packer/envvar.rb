@@ -2,11 +2,10 @@
 
 module Packer
   class EnvVar
-    # rubocop:disable Style/MethodMissingSuper
     def method_missing(method_name, *args)
       "{{env `#{method_name}`}}"
     end
-    # rubocop:enable Style/MethodMissingSuper
+
 
     def respond_to_missing?(method_name, include_private = false)
       true

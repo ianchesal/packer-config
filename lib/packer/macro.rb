@@ -2,12 +2,11 @@
 
 module Packer
   class Macro
-    # rubocop:disable Style/MethodMissingSuper
     def method_missing(method_name, *args)
       name = method_name.to_s.slice(0,1).capitalize + method_name.to_s.slice(1..-1)
       "{{ .#{name} }}"
     end
-    # rubocop:enable Style/MethodMissingSuper
+
 
     def respond_to_missing?(method_name, include_private = false)
       true
