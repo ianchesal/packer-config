@@ -1,9 +1,9 @@
 # Encoding: utf-8
 require 'spec_helper'
 
-RSpec.describe Packer::PostProcessor do
-  POSTPROCESSOR_TYPE = 'vagrant'
+POSTPROCESSOR_TYPE = 'vagrant'
 
+RSpec.describe Packer::PostProcessor do
   let(:postprocessor) do
     Packer::PostProcessor.new
   end

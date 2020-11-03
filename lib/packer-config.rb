@@ -12,15 +12,8 @@ require 'rubygems/dependency'
 
 module Packer
   class Config < Packer::DataObject
-    attr_accessor :builders
-    attr_accessor :postprocessors
-    attr_accessor :provisioners
-    attr_accessor :packer
-    attr_accessor :packer_options
-    attr_accessor :chained_postprocessors
-    attr_reader   :macro
-    attr_reader   :envvar
-    attr_reader   :output_file
+    attr_accessor :builders, :postprocessors, :provisioners, :packer, :packer_options, :chained_postprocessors
+    attr_reader :macro, :envvar, :output_file
 
     PACKER_VERSION = '1.0.0'
 
@@ -68,7 +61,7 @@ module Packer
     class DumpError < StandardError
     end
 
-    def dump(format='json', pretty=false)
+    def dump(format='json', pretty: false)
       data_copy = self.deep_copy
       data_copy['builders'] = []
       self.builders.each do |thing|
@@ -184,8 +177,6 @@ module Packer
 
     private
 
-    attr_writer :output_file
-    attr_writer :macro
-    attr_writer :envvar
+    attr_writer :output_file, :macro, :envvar
   end
 end

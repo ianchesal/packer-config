@@ -12,7 +12,7 @@ module Packer
       true
     end
 
-    def respond_to?(symbol, include_private=false)
+    def respond_to?(symbol, include_private: false)
       # We literally respond to everything...
       true
     end

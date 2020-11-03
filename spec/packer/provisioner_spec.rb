@@ -1,9 +1,9 @@
 # Encoding: utf-8
 require 'spec_helper'
 
-RSpec.describe Packer::Provisioner do
-  PROVISIONER_TYPE = 'shell'
+PROVISIONER_TYPE = 'shell'
 
+RSpec.describe Packer::Provisioner do
   let(:provisioner) do
     Packer::Provisioner.new
   end
