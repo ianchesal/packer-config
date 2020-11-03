@@ -1,9 +1,7 @@
 # Encoding: utf-8
 module Packer
   class DataObject
-    attr_accessor :data
-    attr_accessor :required
-    attr_accessor :key_dependencies
+    attr_accessor :data, :required, :key_dependencies
 
     def initialize
       self.data = {}

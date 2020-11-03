@@ -1,10 +1,10 @@
 # Encoding: utf-8
 require 'spec_helper'
 
+CENTOS_VERSION = '7'
+
 RSpec.describe Packer::Config do
   it 'can build a centos-7 Vagrant base box' do
-    CENTOS_VERSION = '7'
-
     pconfig = Packer::Config.new "centos-#{CENTOS_VERSION}-vagrant.json"
     pconfig.description "CentOS #{CENTOS_VERSION} VirtualBox Vagrant"
     pconfig.add_variable 'mirror', 'http://mirrors.sonic.net/centos'

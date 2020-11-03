@@ -1,9 +1,9 @@
 # Encoding: utf-8
 require 'spec_helper'
 
-RSpec.describe Packer::Builder do
-  VALID_BUILDER_TYPE = Packer::Builder::VIRTUALBOX_ISO
+VALID_BUILDER_TYPE = Packer::Builder::VIRTUALBOX_ISO
 
+RSpec.describe Packer::Builder do
   let(:builder) { Packer::Builder.new }
 
   describe '.get_builder' do

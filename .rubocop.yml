@@ -50,9 +50,15 @@ Lint/Void:
   Exclude:
     - dashboard/spec/**/*
 
+Lint/MissingSuper:
+  Exclude:
+    - 'lib/packer/envvar.rb'
+    - 'lib/packer/macro.rb'
+
 Naming/FileName:
   Exclude:
     - 'lib/packer-config.rb'
+    - 'lib/packer/macro.rb'
 
 Layout/AccessModifierIndentation:
   Enabled: false
